@@ -1,6 +1,7 @@
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,13 @@ import { DistributerComponent } from './distributer/distributer.component';
 import { NotificationComponent } from './notification/notification.component';
 import { ReportsComponent } from './reports/reports.component';
 import { AttendenceComponent } from './attendence/attendence.component';
+import { LoginComponent } from './login/login.component';
+import { MainuiComponent } from './mainui/mainui.component';
+import { EditmodalproductComponent } from './editmodalproduct/editmodalproduct.component';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,48 +33,66 @@ import { AttendenceComponent } from './attendence/attendence.component';
     DistributerComponent,
     NotificationComponent,
     ReportsComponent,
-    AttendenceComponent
-    
+    AttendenceComponent,
+    LoginComponent,
+    MainuiComponent,
+    EditmodalproductComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatButtonModule,
+    MatDialogModule,
+    FormsModule,
+    HttpClientModule,
     RouterModule.forRoot([
       {
-        path:'dashboard',
-        component:DashbordComponent
+        path: 'dashboard',
+        component: DashbordComponent
       },
       {
-        path:'orders',
-        component:OrdersComponent
+        path: 'orders',
+        component: OrdersComponent
       },
       {
-        path:'product',
-        component:ProductComponent
+        path: 'product',
+        component: ProductComponent
       },
       {
-        path:'employee',
-        component:EmployeeComponent
+        path: 'employee',
+        component: EmployeeComponent
       },
       {
-      path:'retailer',
-      component:RetailersComponent
+        path: 'retailer',
+        component: RetailersComponent
       },
       {
-      path:'distributer',
-      component:DistributerComponent
+        path: 'distributer',
+        component: DistributerComponent
       },
       {
-      path:'reports',
-      component:ReportsComponent
+        path: 'reports',
+        component: ReportsComponent
       },
       {
-      path:'notification',
-      component:NotificationComponent
+        path: 'notification',
+        component: NotificationComponent
       },
       {
-      path:'attendence',
-      component:AttendenceComponent
+        path: 'attendence',
+        component: AttendenceComponent
+      },
+      {
+        path: 'mainui',
+        component: MainuiComponent
+      },
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: 'modal',
+        component: EditmodalproductComponent
       }
     ])
   ],

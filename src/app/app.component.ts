@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Routes,Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,13 +7,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'MachineTest';
-  rcart= 'Rcart';
-  dash='Dash Board';
-  order= 'Order';
-  employee='Employee';
-  distributer='Distributer';
-  retailers='Retailers';
-  product='Products'
+  constructor(public routes:Router) { }
+  ngOnInit(): void {
+    logincheck();
+  this.routes.navigate(['/login']);
 
+  }
+
+
+}
+function logincheck(){
+ var check = localStorage.getItem('strName')
+ console.log(check);
+ if(check == null)
+  this.routes.navigate(['/login']);
 }

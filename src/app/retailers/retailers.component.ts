@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import {arrRetailersList} from'./retailersdemmy'
+import {arrRetailersList} from './retailerdemmy'
 import { from } from 'rxjs';
 @Component({
   selector: 'app-retailers',

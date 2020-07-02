@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {arrOrderList} from'../orders/demmy'
 
 @Component({
   selector: 'app-product',
@@ -8,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class ProductComponent implements OnInit {
 
   constructor() { }
+  arrOrderList=arrOrderList;
 
   ngOnInit(): void {
   }

@@ -1,0 +1,22 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 border mt-5">
+            <h2 align="center" class="mt-5">
+                Login
+            </h2>
+            <input type="email" [(ngModel)]="login_obj.strName" class="form-control mt-2 "  placeholder="Enter your email">
+
+            <input type="password" [(ngModel)]="login_obj.strPassword" class="form-control mt-3"  placeholder="Enter password">
+
+            <button class="btn-outline-secondary mt-3 form-control col-md-3" type="submit"  (click)="fn_login_email()">LOGIN
+            </button> 
+
+            
+            <p class="small text-center text-danger">Forget password?</p>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<!-- routerLink="/mainui" -->
