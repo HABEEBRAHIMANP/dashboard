@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-mainui',
@@ -7,17 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainuiComponent implements OnInit {
 
-  title = 'MachineTest';
-  rcart= 'Rcart';
-  dash='Dash Board';
-  order= 'Order';
-  employee='Employee';
-  distributer='Distributer';
-  retailers='Retailers';
-  product='Products'
-  constructor() { }
+  constructor(private route: Router) { }
 
   ngOnInit(): void {
+    this.fn_logincheck();
+  }
+  fn_logincheck(){
+    if(localStorage.getItem('strType')== 'ADMIN'){
+      this.route.navigate(['mainui'])
+    }else{
+      this.route.navigate(['/login'])
+    }
+  }
+  fn_logout(){
+    localStorage.clear();
+    this.route.navigate(['login']);
   }
 
 }

@@ -21,6 +21,10 @@ import { EditmodalproductComponent } from './editmodalproduct/editmodalproduct.c
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditProductComponent } from './Modalpopup/edit-product/edit-product.component';
+import { DeleteProductComponent } from './Modalpopup/delete-product/delete-product.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -37,6 +41,8 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     MainuiComponent,
     EditmodalproductComponent,
+    EditProductComponent,
+    DeleteProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,56 +51,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatDialogModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot([
-      {
-        path: 'dashboard',
-        component: DashbordComponent
-      },
-      {
-        path: 'orders',
-        component: OrdersComponent
-      },
-      {
-        path: 'product',
-        component: ProductComponent
-      },
-      {
-        path: 'employee',
-        component: EmployeeComponent
-      },
-      {
-        path: 'retailer',
-        component: RetailersComponent
-      },
-      {
-        path: 'distributer',
-        component: DistributerComponent
-      },
-      {
-        path: 'reports',
-        component: ReportsComponent
-      },
-      {
-        path: 'notification',
-        component: NotificationComponent
-      },
-      {
-        path: 'attendence',
-        component: AttendenceComponent
-      },
-      {
-        path: 'mainui',
-        component: MainuiComponent
-      },
-      {
-        path: 'login',
-        component: LoginComponent
-      },
-      {
-        path: 'modal',
-        component: EditmodalproductComponent
-      }
-    ])
+    NgbModule,
+    MatSelectModule
+ 
   ],
   providers: [],
   bootstrap: [AppComponent]

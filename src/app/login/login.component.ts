@@ -1,8 +1,7 @@
 import { Component, OnInit ,Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders, } from '@angular/common/http';
 import { Router } from '@angular/router';
- const headers = new HttpHeaders()
-            .set( 'Content-Type: application/json','strAppInfo: TNT1')
+ const headers = new HttpHeaders({'Content-Type': 'application/json','strAppInfo': 'TNT1'})
 
 @Component({
   selector: 'app-login',
@@ -12,7 +11,8 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   public login_obj: any ={
     strName: 'TNTONE',
-    strPassword:'admin123'
+    strPassword:'admin123',
+    strType:'ADMIN'
    
     
   }
@@ -22,15 +22,15 @@ export class LoginComponent {
   ngOnInit(): void {
   } 
   fn_login_email(){
-    this.http.post('http://15.206.134.157:3000/user/login_user', this.login_obj,{headers}).subscribe((body) => {
-      console.log(body)
-      if (body['strName']) {
-        localStorage.setItem('strName', body['strType']);
-        if (body['strType'] == 'ADMIN') {
-          this.route.navigate(['/mainui']);
-        } else {
-          this.route.navigate(['/login']);
-        }
+   this.http.post('http://15.206.134.157:3000/user/login_user', this.login_obj,{headers}).subscribe((body) => {
+      localStorage.setItem('strToken',body['strToken']);
+      localStorage.setItem("id", body['_id']);
+      localStorage.setItem('strType',body['strType']);
+      if (localStorage.getItem('strType') == 'ADMIN'){
+          this.route.navigate(['/mainui'])
+      }else{
+        this.route.navigate(['/login'])
+        console.log('not admin')
       }
     });
   }

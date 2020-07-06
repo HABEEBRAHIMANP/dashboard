@@ -1,44 +1,52 @@
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<div class="container-fluid">
- 
-    <div class="row">
-        <div class="col-6"><h2>Product List</h2></div>
-        <div class="col-6"><input type="text"><input type="text"></div>
-    </div>
-    
-</div>
+<div class="container-fluid" >
 
-<table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Si.No</th>
-            <th>Product ID</th>
-            <th>Name</th>
-            <th>Time</th>
-            <th>Distributer</th>
-            <th>Status</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let objOrder of arrOrderList">
-            <td>{{objOrder.slNo}}</td>
-            <td>{{objOrder.strOrderId}}</td>
-            <td>{{objOrder.strName}}</td>
-            <td>{{objOrder.strOrderName}}</td>
-            <td>{{objOrder.strDistributer}}</td>
-            <td>{{objOrder.strStatus}}</td>
-            <td>{{objOrder.strAmount}}</td>
-            <td><svg class="bi bi-pencil-square" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-              </svg></td>
-              <td>
-                <i class="fa fa-trash"></i>
-              </td>
-        </tbody>
-        <div> </div>
-      </table>
+  <div class="row">
+    <div class="col-6">
+      <h2>Product List</h2>
+    </div>
+    <div class="row col-6">
+      <input type="text" placeholder=" Search" class="border-success form-control col-md-4">
+      <span><img style="width: 42px;" src="https://img.icons8.com/nolan/64/google-web-search.png" /></span>
+      <input type="text" class="border-success form-control col-md-4">
+    </div>
+
+  </div>
+
+</div>
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Si.No</th>
+        <th>Product Name</th>
+        <th>Product ID</th>
+        <th>Product MRP</th>
+        <th>Selling Price</th>
+        <th>retail price</th>
+        <th>Images</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let objproduct of prodGET_obj ;let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{objproduct.strName}}</td>
+        <td>{{objproduct.strProductId}}</td>
+        <td>{{objproduct.dblMRP}}</td>
+        <td>{{objproduct.dblSellingPrice}}</td>
+        <td>{{objproduct.intAmountLimit}}</td>
+        <td>{{objproduct.dblRetailerPrice}}</td>
+        <td><img style="width: 28px;" src="{{objproduct.strImageUrl}}" alt="strImageUrl"></td>
+        <td (click)="Openeditproduct()"> <img src="https://img.icons8.com/office/16/000000/multi-edit.png" />
+        <td>
+          <i (click)="fn_deleteProduct(objproduct._id);OpenDeleteDiloge()">
+            <img style="width: 20px;" src="https://img.icons8.com/color/48/000000/delete-forever.png" />
+          </i>
+        </td>
+    </tbody>
+  </table>
+</div>
