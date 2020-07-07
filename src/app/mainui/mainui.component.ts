@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as $ from 'jquery'
 
 
 @Component({
@@ -13,6 +14,12 @@ export class MainuiComponent implements OnInit {
 
   ngOnInit(): void {
     this.fn_logincheck();
+    $(document).ready(function(){
+      $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+      });
+    });
   }
   fn_logincheck(){
     if(localStorage.getItem('strType')== 'ADMIN'){
@@ -25,5 +32,6 @@ export class MainuiComponent implements OnInit {
     localStorage.clear();
     this.route.navigate(['login']);
   }
+
 
 }

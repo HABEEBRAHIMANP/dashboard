@@ -25,6 +25,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditProductComponent } from './Modalpopup/edit-product/edit-product.component';
 import { DeleteProductComponent } from './Modalpopup/delete-product/delete-product.component';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSidenavModule} from '@angular/material/sidenav';
+
+
 
 @NgModule({
   declarations: [
@@ -52,7 +55,8 @@ import {MatSelectModule} from '@angular/material/select';
     FormsModule,
     HttpClientModule,
     NgbModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSidenavModule
  
   ],
   providers: [],

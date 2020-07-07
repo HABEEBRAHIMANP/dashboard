@@ -22,42 +22,42 @@ const routes: Routes = [
     component:MainuiComponent,
     children:[
       { path:'',component:MainuiComponent},
-      {path:'product', component:ProductComponent},
+      {path:'product', component:ProductComponent, outlet: 'sidebar'},
       {
         path: 'dashboard',
-        component: DashbordComponent
+        component: DashbordComponent , outlet: 'sidebar'
       },
       {
         path: 'orders',
-        component: OrdersComponent
+        component: OrdersComponent , outlet: 'sidebar'
       },
       {
         path: 'employee',
-        component: EmployeeComponent
+        component: EmployeeComponent , outlet: 'sidebar'
       },
       {
         path: 'retailer',
-        component: RetailersComponent
+        component: RetailersComponent , outlet: 'sidebar'
       },
       {
         path: 'distributer',
-        component: DistributerComponent
+        component: DistributerComponent , outlet: 'sidebar'
       },
       {
         path: 'reports',
-        component: ReportsComponent
+        component: ReportsComponent , outlet: 'sidebar'
       },
       {
         path: 'notification',
-        component: NotificationComponent
+        component: NotificationComponent , outlet: 'sidebar'
       },
       {
         path: 'attendence',
-        component: AttendenceComponent
+        component: AttendenceComponent , outlet: 'sidebar'
       },  
       {
         path: 'modal',
-        component: EditmodalproductComponent
+        component: EditmodalproductComponent , outlet: 'sidebar'
       }
     ]
 
