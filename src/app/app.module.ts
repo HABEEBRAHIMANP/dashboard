@@ -1,7 +1,7 @@
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule ,ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +26,21 @@ import { EditProductComponent } from './Modalpopup/edit-product/edit-product.com
 import { DeleteProductComponent } from './Modalpopup/delete-product/delete-product.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { AddproductComponent } from './productSec/addproduct/addproduct.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatInputModule } from "@angular/material/input";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {Observable} from 'rxjs';
+import { MastersComponent } from './masters/masters/masters.component';
+import { BrandComponent } from './masters/brand/brand.component';
+import { CategoryComponent } from './masters/category/category.component';
+import { MaterialComponent } from './masters/material/material.component';
+import { SizeComponent } from './masters/size/size.component';
+import { ColorComponent } from './masters/color/color.component';
+import { ColorChromeModule } from 'ngx-color/chrome';
+
+import { ChartsModule } from 'ng2-charts';
+
 
 
 
@@ -46,6 +61,13 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     EditmodalproductComponent,
     EditProductComponent,
     DeleteProductComponent,
+    AddproductComponent,
+    MastersComponent,
+    BrandComponent,
+    CategoryComponent,
+    MaterialComponent,
+    SizeComponent,
+    ColorComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +78,15 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     HttpClientModule,
     NgbModule,
     MatSelectModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    ColorChromeModule,
+
+    ChartsModule
+    
  
   ],
   providers: [],

@@ -12,52 +12,88 @@ import { ReportsComponent } from './reports/reports.component';
 import { NotificationComponent } from './notification/notification.component';
 import { AttendenceComponent } from './attendence/attendence.component';
 import { EditmodalproductComponent } from './editmodalproduct/editmodalproduct.component';
+import { AddproductComponent } from './productSec/addproduct/addproduct.component';
+import { MastersComponent } from './masters/masters/masters.component';
+import { BrandComponent } from './masters/brand/brand.component';
+import { CategoryComponent } from './masters/category/category.component';
+import { MaterialComponent } from './masters/material/material.component';
+import { SizeComponent } from './masters/size/size.component';
+import { ColorComponent } from './masters/color/color.component';
 
 
 const routes: Routes = [
-  { path:'', redirectTo:'/mainui' ,pathMatch:'full'},
-  {path:'login',component:LoginComponent},
+  { path: '', redirectTo: '/mainui', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
 
-  { path:'mainui',
-    component:MainuiComponent,
-    children:[
-      { path:'',component:MainuiComponent},
-      {path:'product', component:ProductComponent, outlet: 'sidebar'},
+  {
+    path: 'mainui',
+    component: MainuiComponent,
+    children: [
+      { path: 'dashboard', component: DashbordComponent,outlet: 'sidebar' },
+      { path: 'product', component: ProductComponent, outlet: 'sidebar' },
       {
-        path: 'dashboard',
-        component: DashbordComponent , outlet: 'sidebar'
+        path: '',
+        component: DashbordComponent, outlet: 'sidebar'
       },
       {
         path: 'orders',
-        component: OrdersComponent , outlet: 'sidebar'
+        component: OrdersComponent, outlet: 'sidebar'
       },
       {
         path: 'employee',
-        component: EmployeeComponent , outlet: 'sidebar'
+        component: EmployeeComponent, outlet: 'sidebar'
       },
       {
         path: 'retailer',
-        component: RetailersComponent , outlet: 'sidebar'
+        component: RetailersComponent, outlet: 'sidebar'
       },
       {
         path: 'distributer',
-        component: DistributerComponent , outlet: 'sidebar'
+        component: DistributerComponent, outlet: 'sidebar'
       },
       {
         path: 'reports',
-        component: ReportsComponent , outlet: 'sidebar'
+        component: ReportsComponent, outlet: 'sidebar'
       },
       {
         path: 'notification',
-        component: NotificationComponent , outlet: 'sidebar'
+        component: NotificationComponent, outlet: 'sidebar'
       },
       {
         path: 'attendence',
-        component: AttendenceComponent , outlet: 'sidebar'
-      },  
+        component: AttendenceComponent, outlet: 'sidebar'
+      },
       {
         path: 'modal',
-        component: EditmodalproductComponent , outlet: 'sidebar'
+        component: EditmodalproductComponent, outlet: 'sidebar'
+      },
+      {
+        path: 'addproduct',
+        component: AddproductComponent, outlet: 'sidebar'
+      },
+      {
+        path: 'masters',
+        component: MastersComponent, outlet: 'sidebar'
+      },
+      {
+        path: 'brand',
+        component: BrandComponent, outlet: 'sidebar'
+      },
+      {
+        path: 'category',
+        component: CategoryComponent, outlet: 'sidebar'
+      },
+      {
+        path: 'material',
+        component: MaterialComponent, outlet: 'sidebar'
+      },
+      {
+        path: 'size',
+        component: SizeComponent, outlet: 'sidebar'
+      },
+      {
+        path: 'color',
+        component: ColorComponent, outlet: 'sidebar'
       }
     ]
 

@@ -1,0 +1,134 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-4 border mt-2 fileupback" style="height: 155px;background-image:url('./assets/images/fileupload.png');">
+
+                    <img style="height: 104px;" src="{{imagePreviewArray[0]}}" alt="">
+                    <i class="fa fa-trash ml-2 fa-lg" (click)="fn_remove_img(0);" aria-hidden="true"> </i>
+                </div>
+                <div class="col-md-4 border mt-2 carryBorder " style="height: 155px;background-image:url('./assets/images/fileupload.png');" >
+                    <img style="height: 104px;" src="{{imagePreviewArray[1]}}" alt="">
+                    <i class="fa fa-trash ml-2 fa-lg" (click)="fn_remove_img(1);" aria-hidden="true"> </i>
+                </div>
+
+                <div class="col-md-4 border mt-2 " style="height: 155px;">
+                    <img style="height: 104px;" src="{{imagePreviewArray[2]}}" alt="">
+                    <i class="fa fa-trash ml-2 fa-lg" (click)="fn_remove_img(2);" aria-hidden="true"> </i>
+                </div>
+
+                <div class="col-md-4 border mt-2 " style="height: 155px;">
+                    <img style="height: 104px;" src="{{imagePreviewArray[3]}}" alt="">
+                    <i class="fa fa-trash ml-2 fa-lg" (click)="fn_remove_img(3);" aria-hidden="true"> </i>
+                </div>
+
+                <div class="col-md-4 border mt-2 " style="height: 155px;">
+                    <img style="height: 104px;" src="{{imagePreviewArray[4]}}" alt="">
+                    <i class="fa fa-trash ml-2 fa-lg" (click)="fn_remove_img(4);" aria-hidden="true"> </i>
+                </div>
+                <div class="col-md-4 border mt-2 " style="height: 155px;">
+                    <img style="height: 104px;" src="{{imagePreviewArray[5]}}" alt="">
+                    <i class="fa fa-trash ml-2 fa-lg" (click)="fn_remove_img(5);" aria-hidden="true"> </i>
+
+                </div>
+                <!-- <div *ngFor="let img of imagePreviewArray; let i=index" class="col-md-4">
+                    <img class="card-img-top" [src]="img" alt="no images!!" style="width:100%">
+                    <button class="btn-sm alert-danger" (click)="fn_remove_img(i);">delete</button>
+                </div> -->
+            </div>
+            <div class="upload-btn-wrapper">
+                <button class="btn">Upload a file</button>
+                <input type="file" name="myfile" (change)="onFileInput($event);" />
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="ml-2 mt-2">
+                        <span class="fontm mr-2"> Product to </span> <input type="checkbox"> <span class="fontm mr-2">
+                            B2B</span><input type="checkbox"><span class="fontm">B2C</span>
+                    </div>
+                    <div class="border mt-2 rounded bg-light text-dark carryBorder rounded">
+                        <p class="text-center">ITEM UNIT IN</p>
+                        <input type="radio" name="unit" class=" ml-2 "> liter
+                        <input type="radio" name="unit" class=" ml-2 "> Kg
+                        <input type="radio" name="unit" class=" ml-2 "> Qty
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- <button class="form-control btn-secondary">Select Size</button> -->
+                    <ng-template #popContent>
+                        <div class="row" *ngFor="let option of colorpicker">
+                            <span class="form-control col-md-11 ml-1 text-center" [ngStyle]="{'background-color':option.strName}" (click)="p1.close()">{{ option.strName}}</span>
+                        </div>
+
+                    </ng-template>
+                    <button type="button" class=" carryBorder form-control bg-light" [ngbPopover]="popContent"
+                        [autoClose]="false" triggers="manual" #p1="ngbPopover" (click)="p1.open()"
+                        popoverTitle="Choose Color">
+                        Select Color
+                    </button>
+                    
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- ############ enter details ########### -->
+        <div class="col-md-4 row ml-2 ">
+            <h1 class="col-10">Product Entery</h1> <button (click)="closDilog()" class="btn-danger col-1"> X</button>
+            <input type="text" class="form-control mt-2 carryBorder" placeholder="Product ID">
+            <input type="text" class="form-control mt-2 carryBorder" placeholder="Product Title">
+            <input type="number" class="form-control mt-2 carryBorder " placeholder="MRP">
+            <input type="number" class="form-control mt-2 carryBorder col-md-6" placeholder="Selling Price">
+            <input type="number" class="form-control mt-2 carryBorder col-md-6" placeholder="Retailer Price">
+            <input type="number" class="form-control mt-2 carryBorder" placeholder="Stock">
+            <section>fjd</section>
+
+            <mat-autocomplete #auto="matAutocomplete" style="z-index: 9000;">
+                <mat-option *ngFor="let option of options" [value]="option.strName">
+                    {{option.strName}}
+                </mat-option>
+            </mat-autocomplete>
+
+            <input type="text" class="form-control mt-2 carryBorder "
+                 [matAutocomplete]="auto" placeholder="Brand"
+                (input)="valueChanged($event.target.value)" (input)="Autocomplete()">
+
+
+            <mat-autocomplete #auto1="matAutocomplete" >
+                <mat-option *ngFor="let Category of categorymain"[value]="Category.strName" >
+                    {{Category.strName}}
+                </mat-option>
+            </mat-autocomplete>
+
+            <input type="text" class="form-control mt-2 carryBorder " aria-label="Number" matInput
+                [formControl]="control1" [matAutocomplete]="auto1" placeholder="Category"
+                (input)="valueChangedCate($event.target.value)" (input)="AutocompleteCate()">
+
+            <mat-autocomplete #auto2="matAutocomplete">
+                <mat-option *ngFor="let Category of categorysub" [value]="Category.strName">
+                    {{Category.strName}}
+                </mat-option>
+            </mat-autocomplete>
+
+            <input type="text" class="form-control mt-2 carryBorder " aria-label="Number" matInput
+                [formControl]="control1" [matAutocomplete]="auto2" placeholder="Sub Category"
+                (input)="valueChangedsub($event.target.value)" (input)="Autocompletesub()">
+
+                <mat-autocomplete #auto3="matAutocomplete">
+                    <mat-option *ngFor="let Category of materialList" [value]="Category.strName">
+                        {{Category.strName}}
+                    </mat-option>
+                </mat-autocomplete>
+    
+                <input type="text" class="form-control mt-2 carryBorder " aria-label="Number" matInput
+                    [formControl]="control1" [matAutocomplete]="auto3" placeholder="Sub Category"
+                    (input)="valuechangeMaterial($event.target.value)" (input)="materials()">
+
+            <!-- <input type="text" class="form-control mt-2 carryBorder " placeholder="Category"> -->
+            <!-- <input type="text" class="form-control mt-2 carryBorder " placeholder="Material"> -->
+            <textarea name="" class="mt-2 carryBorder" id="" cols="40" rows="7" placeholder="Description"></textarea>
+
+        </div>
+    </div>
+</div>

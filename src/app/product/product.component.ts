@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { arrOrderList } from '../orders/demmy'
+import { Router } from '@angular/router';
+
 import { HttpClient, HttpHeaders, } from '@angular/common/http';
 import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { EditmodalproductComponent } from '../editmodalproduct/editmodalproduct.component';
 import { DeleteProductComponent } from '../Modalpopup/delete-product/delete-product.component';
+import { AddproductComponent } from '../productSec/addproduct/addproduct.component';
 
 const headers = new HttpHeaders({'Content-Type': 'application/json','strAppInfo': 'TNT1'});
       
@@ -45,6 +48,9 @@ export class ProductComponent implements OnInit {
   }
   closDilog(){
     this.modalServ.dismissAll();
+  }
+  openaddProduct(){
+    this.modalServ.open(AddproductComponent, {size:'xl'})
   }
 
  
