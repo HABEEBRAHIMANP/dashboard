@@ -22,7 +22,7 @@ import { ColorComponent } from './masters/color/color.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/mainui', pathMatch: 'full' },
+  { path: '', redirectTo: 'mainui', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
 
   {

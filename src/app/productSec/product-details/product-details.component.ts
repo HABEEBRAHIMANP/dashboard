@@ -1,31 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Input} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { stringify } from 'querystring';
 
 
 const token = localStorage.getItem('strToken');
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token, 'strAppInfo': 'TNT1' })
-
 interface genders {
   value: string;
   viewValue: string;
 }
-
-
 @Component({
-  selector: 'app-addproduct',
-  templateUrl: './addproduct.component.html',
-  styleUrls: ['./addproduct.component.css']
+  selector: 'app-product-details',
+  templateUrl: './product-details.component.html',
+  styleUrls: ['./product-details.component.css']
 })
-export class AddproductComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit {
+  @Input()fromParent;
+
   public imageArray = [];
   public imagePreviewArray = [];
   public popover;
+  // private productD:any={
+  //   "strProductId":this.fromParent._id
+  // }
 
+  
+
+  
+  
   private master: any = {
     "strCollection": "cln_brand",
     "strValue": "",
@@ -53,20 +60,24 @@ export class AddproductComponent implements OnInit {
 
   }
 
-
   constructor(private http: HttpClient, private modalServ: NgbModal) { }
 
   ngOnInit(): void {
     this.filteredOptions = this.myControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
-    this.Autocomplete();
-    this.AutocompleteCate();
-    this.Autocompletesub();
-    this.materials()
-    this.fn_color();
+    .pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+  this.Autocomplete();
+  this.AutocompleteCate();
+  this.Autocompletesub();
+  this.materials()
+  this.fn_color();
+  console.log(this.fromParent);
+  this.fn_getProductDetails();
+  // console.log(this.productD)
+  
+
   }
   onFileInput(e) {
     if (e.target.files.length > 0) {
@@ -93,7 +104,7 @@ export class AddproductComponent implements OnInit {
   // ################## AUTO COMPOLETE ###############
   myControl = new FormControl();
   control1 = new FormControl();
-
+  details_obj:any =[]
   options: string[];
   categorymain: string[];
   categorysub: string[];
@@ -117,11 +128,12 @@ export class AddproductComponent implements OnInit {
   }
   valueChanged(e) {
     this.master.strValue = e
-    console.log(this.master)
+    // console.log(this.master)
   }
   AutocompleteCate() {
     this.http.post('http://15.206.134.157:3000/common/get_autocomplete', this.category, { headers }).subscribe((body) => {
       this.categorymain = body['arrList'];
+      let hdhd = this.fromParent._id
 
       // console.log(body)
 
@@ -154,12 +166,12 @@ export class AddproductComponent implements OnInit {
   }
   valuechangeMaterial(e) {
     this.material.strValue = e;
-    console.log(this.material);
+    // console.log(this.material);
   }
 
   fn_color() {
     this.http.post('http://15.206.134.157:3000/master/get_master', this.color, { headers }).subscribe((body) => {
-      console.log(body)
+      // console.log(body)
       this.colorpicker = body['cln_color']
 
 
@@ -175,4 +187,14 @@ export class AddproductComponent implements OnInit {
     {value: 'women', viewValue: 'women'}
   ];
 
+  fn_getProductDetails() {
+    this.http.post('http://15.206.134.157:3000/product/get_product_details',{'strProductId':this.fromParent._id} ,{ headers }).subscribe((body) => {
+      this.details_obj = body
+
+      console.log(body)
+      // this.productD.push('strProductId',this.fromParent._id)
+
+    });
+  }
+   
 }

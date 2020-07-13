@@ -12,7 +12,8 @@ export class LoginComponent {
   public login_obj: any ={
     strName: 'TNTONE',
     strPassword:'admin123',
-    strType:'ADMIN'
+    strType:'ADMIN',
+    strFirbaseToken:'abcd'
    
     
   }

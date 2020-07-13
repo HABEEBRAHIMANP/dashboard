@@ -1,0 +1,15 @@
+.element::-webkit-scrollbar { width: 0 !important }
+
+/*   
+  th {
+    background: white;
+    position: sticky;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+    width:115px;
+  } */
+  td{
+      width: 100px;
+  }
+  th{
+      width: 115px;
+  }

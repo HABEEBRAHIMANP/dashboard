@@ -40,6 +40,7 @@ import { ColorComponent } from './masters/color/color.component';
 import { ColorChromeModule } from 'ngx-color/chrome';
 
 import { ChartsModule } from 'ng2-charts';
+import { ProductDetailsComponent } from './productSec/product-details/product-details.component';
 
 
 
@@ -68,6 +69,7 @@ import { ChartsModule } from 'ng2-charts';
     MaterialComponent,
     SizeComponent,
     ColorComponent,
+    ProductDetailsComponent,
   ],
   imports: [
     BrowserModule,

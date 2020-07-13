@@ -47,7 +47,7 @@
         <th>Amount</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody  style="display: inline-block;overflow-y: scroll;height: 480px;">
       <tr *ngFor="let objOrder of orderList_obj;let i = index">
         <td>{{i + 1}}</td>
         <td>{{objOrder.strOrderId}}</td>

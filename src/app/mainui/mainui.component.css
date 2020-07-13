@@ -41,5 +41,9 @@
   #wrapper.toggled #sidebar-wrapper {
     margin-left: -15rem;
   }
+  .element::-webkit-scrollbar { width: 0 !important }
 
+}
+.hover:hover{
+ background-color: rgba(113, 149, 211, 0.308);
 }

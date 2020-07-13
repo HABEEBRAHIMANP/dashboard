@@ -7,6 +7,7 @@ import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { EditmodalproductComponent } from '../editmodalproduct/editmodalproduct.component';
 import { DeleteProductComponent } from '../Modalpopup/delete-product/delete-product.component';
 import { AddproductComponent } from '../productSec/addproduct/addproduct.component';
+import { ProductDetailsComponent } from '../productSec/product-details/product-details.component';
 
 const headers = new HttpHeaders({'Content-Type': 'application/json','strAppInfo': 'TNT1'});
       
@@ -17,10 +18,9 @@ const headers = new HttpHeaders({'Content-Type': 'application/json','strAppInfo'
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-
-  public prodGET_obj: any=[]
+  public prodGET_obj: any=[];
   prodelete: any;
-  constructor(private http: HttpClient,
+  constructor(private http: HttpClient,private route: Router,
     private modalServ: NgbModal) { 
 
     }
@@ -40,8 +40,14 @@ export class ProductComponent implements OnInit {
       // console.log(body)
     });
   }
-  Openeditproduct(){
-    this.modalServ.open(EditmodalproductComponent,{size:'md'})
+  Openeditproduct(res){
+    const modalRef= this.modalServ.open(ProductDetailsComponent,{size:'xl'});
+    let data = res
+    modalRef.componentInstance.fromParent = data;
+    // modalRef.result.then((result) => {
+    //   console.log(result);
+    // }, (reason) => {
+    // });
   }
   OpenDeleteDiloge(){
     this.modalServ.open(DeleteProductComponent,{size:'md',centered:true})
@@ -51,6 +57,7 @@ export class ProductComponent implements OnInit {
   }
   openaddProduct(){
     this.modalServ.open(AddproductComponent, {size:'xl'})
+    // this.route.navigate( [ '/ mainui /addproduct', {outlets: { aux: ['sidebar']}}]);
   }
 
  
