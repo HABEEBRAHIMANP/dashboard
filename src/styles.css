@@ -8,3 +8,4 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .carryBorder{
   border:  #030374 solid 2px;
 }
+/* Mat Autocomplete on Modal Fixes */ .cdk-overlay-container {z-index: 999999 !important;}

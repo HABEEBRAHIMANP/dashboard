@@ -8,7 +8,7 @@ import { from } from 'rxjs';
 })
 export class RetailersComponent  {
 
-  arrRetailersList=arrRetailersList
+ public arrRetailersList:any=[]
   // constructor() { }
 
   // ngOnInit(): void {

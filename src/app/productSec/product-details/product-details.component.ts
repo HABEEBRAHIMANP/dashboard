@@ -6,7 +6,6 @@ import { HttpClient, HttpHeaders, } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { stringify } from 'querystring';
 
-
 const token = localStorage.getItem('strToken');
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token, 'strAppInfo': 'TNT1' })
@@ -21,7 +20,7 @@ interface genders {
 })
 export class ProductDetailsComponent implements OnInit {
   @Input()fromParent;
-
+  arrSizeStock = [];
   public imageArray = [];
   public imagePreviewArray = [];
   public popover;
@@ -61,7 +60,9 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   constructor(private http: HttpClient, private modalServ: NgbModal) { }
-
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings = {};
   ngOnInit(): void {
     this.filteredOptions = this.myControl.valueChanges
     .pipe(
@@ -76,8 +77,24 @@ export class ProductDetailsComponent implements OnInit {
   console.log(this.fromParent);
   this.fn_getProductDetails();
   // console.log(this.productD)
-  
+  this.dropdownList = [
+    { item_id: 1, item_text: 'Mumbai' },
+    { item_id: 2, item_text: 'Bangaluru' },
+    { item_id: 3, item_text: 'Pune' },
+    { item_id: 4, item_text: 'Navsari' },
+    { item_id: 5, item_text: 'New Delhi' }
+  ];
+  this.selectedItems = [
+    { item_id: 3, item_text: 'Pune' },
+    { item_id: 4, item_text: 'Navsari' }
+  ];
 
+  }
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
   }
   onFileInput(e) {
     if (e.target.files.length > 0) {
@@ -196,5 +213,6 @@ export class ProductDetailsComponent implements OnInit {
 
     });
   }
+
    
 }

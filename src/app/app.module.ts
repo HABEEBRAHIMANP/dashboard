@@ -41,6 +41,9 @@ import { ColorChromeModule } from 'ngx-color/chrome';
 
 import { ChartsModule } from 'ng2-charts';
 import { ProductDetailsComponent } from './productSec/product-details/product-details.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 
@@ -70,6 +73,7 @@ import { ProductDetailsComponent } from './productSec/product-details/product-de
     SizeComponent,
     ColorComponent,
     ProductDetailsComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -86,8 +90,11 @@ import { ProductDetailsComponent } from './productSec/product-details/product-de
     MatInputModule,
     BrowserAnimationsModule,
     ColorChromeModule,
+    MatSnackBarModule,
 
-    ChartsModule
+    ChartsModule,
+    NgMultiSelectDropDownModule.forRoot(),
+    MatPaginatorModule
     
  
   ],

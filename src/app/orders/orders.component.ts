@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders, } from '@angular/common/http';
-
-const token = localStorage.getItem('strToken');
-const headers = new HttpHeaders({  'Authorization': token ,'Content-Type': 'application/json' });
+import { Component, OnInit, } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http'
+import { ApiserviceService } from '../apiservice.service';
 
 @Component({
   selector: 'app-orders',
@@ -10,21 +9,27 @@ const headers = new HttpHeaders({  'Authorization': token ,'Content-Type': 'appl
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit {
+
   public orderList_obj: any = []
-  constructor(private http: HttpClient) { }
+
+  constructor(private apiService: ApiserviceService) { }
 
   ngOnInit(): void {
-    this.fn_get_orderList()
+    this.fetchProducts();
   }
-  fn_get_orderList() {
-    console.log(token)
-    this.http.post('http://15.206.134.157:3001/order/get_order', { headers }).subscribe((body) => {
-      console.log(body)
+  fetchProducts() {
+    let param = {
+      // "strSort": "strName",
+      // "strSortActive": "ASC",
+      // "intLimit": 2,
+      // "arrBrand": [],
+      // "arrCategory": [],
+      // "arrProductName": [],
+      // "intAmountLimit": 65000
+    }
+    this.apiService.fn_OrderPost('order/get_order', param, '3001').subscribe(res => {
+      console.log("res", res);
+      this.orderList_obj = res['arrList'];
     });
-
   }
-  // ##################################sidenav#############
-
-
 }
-
