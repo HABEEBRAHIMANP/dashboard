@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { stringify } from 'querystring';
 import { JSDocTagName } from '@angular/compiler/src/output/output_ast';
 import {PageEvent} from '@angular/material/paginator';
+import { url } from 'inspector';
 
 const token = localStorage.getItem('strToken');
 
@@ -68,7 +69,7 @@ export class ProductDetailsComponent implements OnInit {
     private objFormBuilder: FormBuilder,
     private apiService: ApiserviceService) { }
 
-
+  public imageUrls:any=''
   dropdownList = [];
   selectedItems = [];
   dropdownSettings = {};
@@ -224,7 +225,7 @@ export class ProductDetailsComponent implements OnInit {
     strGenderCategory: ['',Validators.required],
     strCategoryId: ['',Validators.required],
     strDescription:['',Validators.required],
-    arrImageUrl:[''],
+    arrImageUrl:'https://axef.s3.ap-south-1.amazonaws.com/0mdlmaster1594911093064.webp',
     strUnit:['Qty',Validators.required],
     arrScheme:[[23,34] ],
     arrSizeStock: this.objFormBuilder.group({
@@ -252,6 +253,7 @@ export class ProductDetailsComponent implements OnInit {
       image: this.urls
     });
     console.log(this.form.value)
+    console.log(this.imageUrls)
     
 
   }
@@ -261,9 +263,11 @@ export class ProductDetailsComponent implements OnInit {
   resData: any;
   selectedFile = null;
   urls = [];
+  
   onSelectFile(event) {
     this.selectedFile = event.target.files[0];
     console.log(this.selectedFile);
+    
     // if (event.target.files && event.target.files[0]) {
     //   var filesAmount = event.target.files.length;
     //   for (let i = 0; i < filesAmount; i++) {
@@ -289,6 +293,7 @@ export class ProductDetailsComponent implements OnInit {
 
     const payload = new FormData();
     payload.append('image', this.selectedFile, this.selectedFile.name);
+    console.log(this.imageUrls)
     //   const formData = new FormData();
     //   for  (var i =  0; i <  this.imageArray.length; i++)  {  
     //     formData.append("images",  this.imageArray[i],'fileupload.png');
@@ -311,19 +316,22 @@ export class ProductDetailsComponent implements OnInit {
 
     this.apiService.fun_apiPostImage('file/files_upload', payload, '3001').subscribe((body) => {
       console.log(body)
-      this.imageUrl = body['arrImageUrl'],
+      if(body['arrImageUrl']){
+        this.urls = body['arrImageUrl']
+
+      }
       // this.form.setValue({arrImageUrl: body['arrImageUrl']})
       // this.form.patchValue(this.arrColorStock:body['arrImageUrl'])
       // this.form.get(arrImageUrl).patchValue('fg');
       // this.form.addControl('arrImageUrl',body['arrImageUrl']);
       // this.form.controls['arrImageUrl'].setValue(body['arrImageUrl']);
-      this.form.patchValue({arrImageUrl : body['arrImageUrl']});
+      this.form.patchValue({arrImageUrl : this.urls})
     })
 
 
     if (this.imageUrl !== '')
 
-      this.apiService.fn_OrderPost('product/create_product',this.form.value,'3001').subscribe((body) => {
+      this.apiService.fn_OrderPost('product/create_product',this.form.value,'3001').subscribe(body => {
         console.log(this.form.value)
         // this.form.value.arrImageUrl.append(this.imageUrl)
       })
