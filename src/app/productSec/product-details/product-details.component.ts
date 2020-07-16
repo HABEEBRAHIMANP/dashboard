@@ -1,10 +1,13 @@
-import { Component, OnInit ,Input} from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormControlName, FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { ApiserviceService } from '../../apiservice.service';
 import { Observable, from } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { HttpClient, HttpHeaders, } from '@angular/common/http';
+import { HttpClient, HttpHeaders,HttpParams,HttpClientModule } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { stringify } from 'querystring';
+import { JSDocTagName } from '@angular/compiler/src/output/output_ast';
+import {PageEvent} from '@angular/material/paginator';
 
 const token = localStorage.getItem('strToken');
 
@@ -19,8 +22,10 @@ interface genders {
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit {
-  @Input()fromParent;
+
+  @Input() fromParent;
   arrSizeStock = [];
+  arrColorStock = [];
   public imageArray = [];
   public imagePreviewArray = [];
   public popover;
@@ -28,10 +33,8 @@ export class ProductDetailsComponent implements OnInit {
   //   "strProductId":this.fromParent._id
   // }
 
-  
 
-  
-  
+
   private master: any = {
     "strCollection": "cln_brand",
     "strValue": "",
@@ -59,35 +62,31 @@ export class ProductDetailsComponent implements OnInit {
 
   }
 
-  constructor(private http: HttpClient, private modalServ: NgbModal) { }
+
+  constructor(private http: HttpClient,
+    private modalServ: NgbModal,
+    private objFormBuilder: FormBuilder,
+    private apiService: ApiserviceService) { }
+
+
   dropdownList = [];
   selectedItems = [];
   dropdownSettings = {};
   ngOnInit(): void {
     this.filteredOptions = this.myControl.valueChanges
-    .pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
-  this.Autocomplete();
-  this.AutocompleteCate();
-  this.Autocompletesub();
-  this.materials()
-  this.fn_color();
-  console.log(this.fromParent);
-  this.fn_getProductDetails();
-  // console.log(this.productD)
-  this.dropdownList = [
-    { item_id: 1, item_text: 'Mumbai' },
-    { item_id: 2, item_text: 'Bangaluru' },
-    { item_id: 3, item_text: 'Pune' },
-    { item_id: 4, item_text: 'Navsari' },
-    { item_id: 5, item_text: 'New Delhi' }
-  ];
-  this.selectedItems = [
-    { item_id: 3, item_text: 'Pune' },
-    { item_id: 4, item_text: 'Navsari' }
-  ];
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+    this.Autocomplete();
+    this.AutocompleteCate();
+    this.Autocompletesub();
+    this.materials()
+    this.fn_color();
+    console.log(this.fromParent);
+    this.fn_getProductDetails();
+    // console.log(this.productD)
+
 
   }
   onItemSelect(item: any) {
@@ -96,37 +95,17 @@ export class ProductDetailsComponent implements OnInit {
   onSelectAll(items: any) {
     console.log(items);
   }
-  onFileInput(e) {
-    if (e.target.files.length > 0) {
-      const file = e.target.files[0];
-      this.imageArray.push(file);
-      const reader = new FileReader();
-      reader.onload = e => this.imagePreviewArray.push(reader.result);
-      reader.readAsDataURL(file);
-    }
-  }
-  fn_remove_img(index) {
-    this.imagePreviewArray.splice(index, 1);
-    this.imageArray.splice(index, 1);
-  }
-  public greeting: any
-  public changeGreeting(greeting: any): void {
-    const isOpen = this.popover.isOpen();
-    this.popover.close();
-    if (greeting !== this.greeting || !isOpen) {
-      this.greeting = greeting;
-      this.popover.open(greeting);
-    }
-  }
+
   // ################## AUTO COMPOLETE ###############
   myControl = new FormControl();
   control1 = new FormControl();
-  details_obj:any =[]
+  details_obj: any = []
   options: string[];
   categorymain: string[];
   categorysub: string[];
   materialList: string[];
-  colorpicker: any = []
+  colorpicker: any = [];
+  private dataform: any[]
 
 
   filteredOptions: Observable<string[]>;
@@ -197,15 +176,15 @@ export class ProductDetailsComponent implements OnInit {
   closDilog() {
     this.modalServ.dismissAll();
   }
-  
+
   gender: genders[] = [
-    {value: 'none', viewValue: 'none'},
-    {value: 'men', viewValue: 'men'},
-    {value: 'women', viewValue: 'women'}
+    { value: 'none', viewValue: 'none' },
+    { value: 'men', viewValue: 'men' },
+    { value: 'women', viewValue: 'women' }
   ];
 
   fn_getProductDetails() {
-    this.http.post('http://15.206.134.157:3000/product/get_product_details',{'strProductId':this.fromParent._id} ,{ headers }).subscribe((body) => {
+    this.http.post('http://15.206.134.157:3000/product/get_product_details', { 'strProductId': this.fromParent._id }, { headers }).subscribe((body) => {
       this.details_obj = body
 
       console.log(body)
@@ -214,5 +193,140 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
-   
+
+  //   fileProgress(fileInput: any) {
+  //     this.fileData = <File>fileInput.target.files[0];
+  //     this.preview();
+  // }
+  //   fileData: File = null;
+  //   previewUrl: any = null;
+  //   preview() {
+  //     // Show preview 
+  //     var mimeType = this.fileData.type;
+  //     if (mimeType.match(/image\/*/) == null) {
+  //       return;
+  //     }
+
+  //     var reader = new FileReader();
+  //     reader.readAsDataURL(this.fileData);
+  //     reader.onload = (_event) => {
+  //       this.previewUrl = reader.result;
+  //     }
+  //   }
+  form = this.objFormBuilder.group({
+    strName: ['', Validators.required],
+    strProductId: ['',Validators.required],
+    dblMRP: ['',Validators.required],
+    dblSellingPrice: ['',Validators.required],
+    dblRetailerPrice: ['',Validators.required],
+    strBrandId: ['',Validators.required],
+    dblTotalStock: ['',Validators.required],
+    strGenderCategory: ['',Validators.required],
+    strCategoryId: ['',Validators.required],
+    strDescription:['',Validators.required],
+    arrImageUrl:[''],
+    strUnit:['Qty',Validators.required],
+    arrScheme:[[23,34] ],
+    arrSizeStock: this.objFormBuilder.group({
+      strName: ['',Validators.required],
+      dblStock: ['',Validators.required]
+    }),
+
+    arrColorStock: this.objFormBuilder.group({
+      strName: ['',Validators.required],
+      dblStock: ['',Validators.required]
+    })
+
+
+    // SubCategory: [''],
+    // Material: [''],
+    // color: [''],
+    // colorstock: [''],
+    // description: [''],
+    // image: ['']
+
+
+  });
+  updateProfile() {
+    this.form.patchValue({
+      image: this.urls
+    });
+    console.log(this.form.value)
+    
+
+  }
+
+
+  image: File;
+  resData: any;
+  selectedFile = null;
+  urls = [];
+  onSelectFile(event) {
+    this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile);
+    // if (event.target.files && event.target.files[0]) {
+    //   var filesAmount = event.target.files.length;
+    //   for (let i = 0; i < filesAmount; i++) {
+    //     var reader = new FileReader();
+
+    //     reader.onload = (event: any) => {
+    //       // console.log(event.target.result);
+    //       this.urls.push(event.target.result);
+    //       const file = event.target.files
+    //       this.imageArray.push(file);
+
+    //     }
+
+    //     reader.readAsDataURL(event.target.files[i]);
+
+    //   }
+    // }
+  }
+  images: File;
+  public imageUrl: any
+
+  onSubmit() {
+
+    const payload = new FormData();
+    payload.append('image', this.selectedFile, this.selectedFile.name);
+    //   const formData = new FormData();
+    //   for  (var i =  0; i <  this.imageArray.length; i++)  {  
+    //     formData.append("images",  this.imageArray[i],'fileupload.png');
+    // }
+    // var formData: any = new FormData();
+    // this.imageArray.forEach(img => {
+    //   formData.append('images', this.imageArray[0]);
+    // });
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ', ' + pair[1]);
+
+    // }
+    // let images ={
+    //   formData
+    // }
+    let params = new HttpParams().append('hh',this.form.value)
+    params.toString
+
+
+
+    this.apiService.fun_apiPostImage('file/files_upload', payload, '3001').subscribe((body) => {
+      console.log(body)
+      this.imageUrl = body['arrImageUrl'],
+      // this.form.setValue({arrImageUrl: body['arrImageUrl']})
+      // this.form.patchValue(this.arrColorStock:body['arrImageUrl'])
+      // this.form.get(arrImageUrl).patchValue('fg');
+      // this.form.addControl('arrImageUrl',body['arrImageUrl']);
+      // this.form.controls['arrImageUrl'].setValue(body['arrImageUrl']);
+      this.form.patchValue({arrImageUrl : body['arrImageUrl']});
+    })
+
+
+    if (this.imageUrl !== '')
+
+      this.apiService.fn_OrderPost('product/create_product',this.form.value,'3001').subscribe((body) => {
+        console.log(this.form.value)
+        // this.form.value.arrImageUrl.append(this.imageUrl)
+      })
+  }
+
 }

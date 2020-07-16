@@ -28,3 +28,6 @@
     background-position:center;
     background-repeat:no-repeat;
   }
+  .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: rgba(251, 253, 253, 0.972);
+ }

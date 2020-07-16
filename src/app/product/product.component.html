@@ -92,10 +92,10 @@
         <td>{{objproduct.dblRetailerPrice}}</td>
       </tr>
     </table> -->
-    <mat-paginator  [length]="length"
+    <mat-paginator #paginator  [length]="length"
                [pageSize]="pageSize"
                [pageSizeOptions]="pageSizeOptions"
-               (page)="pageEvents = $event">
+               (page)="onpager($event)">
 </mat-paginator>
   </div>
 

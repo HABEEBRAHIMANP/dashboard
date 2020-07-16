@@ -28,6 +28,24 @@ export class ApiserviceService {
     };
     return this.http.request('delete',this.myurl(this.host, port, path), options)
   }
+  fun_apiPostImage(path: string = "", param, port ? : string): Observable < any > {
+    let headers = new HttpHeaders({
+      // 'Content-Type': 'multipart/form-data',
+      // 'Accept': 'multipart/form-data',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Headers': '*',
+      'Authorization': `${this.getToken()}`
+    });
+    let options = {
+      headers: headers
+    };
+    const formData = new FormData();
+    param.forEach((element) => {
+      formData.append('images',element,"");
+    });
+    return this.http.post(this.myurl(this.host, port, path), formData, options)
+  }
   private setHeaders() {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',

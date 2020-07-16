@@ -28,3 +28,55 @@
     background-position:center;
     background-repeat:no-repeat;
   }
+  /* ################################ */
+  .example-full-width{
+    width:100%
+}
+th.mat-sort-header-sorted {
+    color: black;
+  }
+
+.slNo{
+    margin-right:10px
+}
+.sizeName{
+    text-transform: uppercase;
+}
+.stock{
+    margin-right: 10px;
+
+}
+.edit-btn{
+    padding: 4px 6px;
+    color: white;
+    background-color: #ffb22b;
+    cursor: pointer;
+    border-radius: 50%;
+    margin-right: 5px;
+
+}
+.delete-btn{
+    padding: 4px 6px;
+    color: white;
+    background-color: #ef5350;
+    cursor: pointer;
+    border-radius: 50%;
+    
+}
+.btn-functional{
+    float: right
+}
+
+.image-delete-btn{
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    padding: 4px 8px;
+    color: white;
+    background-color: #ef5350;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+  background-color: rgba(251, 253, 253, 0.972);
+}
