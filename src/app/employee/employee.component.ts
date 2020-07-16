@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {arrEmployeeList} from'./employeedemmy'
+
 
 const token = localStorage.getItem('strToken');
 

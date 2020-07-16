@@ -1,5 +1,5 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
-import { arrOrderList } from '../orders/demmy'
+import { arrOrderList } from '../removed files/demmy'
 import { Router } from '@angular/router';
 import { ApiserviceService } from '../apiservice.service';
 
