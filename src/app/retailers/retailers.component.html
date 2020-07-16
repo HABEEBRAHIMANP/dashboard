@@ -1,12 +1,34 @@
 
 <div class="container-fluid">
  
-    <div class="row">
-        <div class="col-6"><h2>Retailer List</h2></div>
-        <div class="col-6"><input type="text"><input type="text"></div>
+  <div class="row">
+    <div class="col-6 mt-2">
+      <h2>Retailer List</h2>
     </div>
-    
-</div>
+    <div class="row col-6 mt-2">
+      <div class="border-ligth form-control col-md-4 rounded-pill">
+        <!-- hgdfdf --><input type="text" placeholder=" Search" class="border-0 col-md-10">
+        <i class="fa fa-search"></i>
+
+      </div>
+      <div class="border-ligth form-control col-md-4 rounded-pill ml-3">
+        <nav class="navbar mt-n3 ml-3">
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown">Filter</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" [routerLink]="[{outlets:{sidebar:['product/addproduct']}}]">Brand</a>
+                <a class="dropdown-item">Catogorey</a>
+                <a class="dropdown-item"> something</a>
+
+
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      </div>
+      </div>
 
 <table class="table table-striped">
         <thead>

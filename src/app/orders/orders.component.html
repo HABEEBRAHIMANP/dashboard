@@ -5,10 +5,10 @@
 <div class="container-fluid">
 
   <div class="row">
-    <div class="col-6">
+    <div class="col-6 mt-2">
       <h2>Order List</h2>
     </div>
-    <div class="row col-6">
+    <div class="row col-6 mt-2">
       <div class="border-ligth form-control col-md-4 rounded-pill">
         <!-- hgdfdf --><input type="text" placeholder=" Search" class="border-0 col-md-10">
         <i class="fa fa-search"></i>
@@ -20,7 +20,7 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown">Filter</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item">Brand</a>
+                <a class="dropdown-item" [routerLink]="[{outlets:{sidebar:['product/addproduct']}}]">Brand</a>
                 <a class="dropdown-item">Catogorey</a>
                 <a class="dropdown-item"> something</a>
 
