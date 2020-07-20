@@ -26,8 +26,10 @@
     <tr *ngFor="let objEmployee of employee;let i = index">
       <td>{{ i + 1}}</td>
       <td>{{objEmployee.strName}}</td>
-      <td>{{objEmployee.strEmployeeId}}</td>
-      <td>{{objEmployee.chrCheckInStatus}}</td>
+      <td>{{objEmployee.strEmployeType}}</td>
+      <td *ngIf="objEmployee.chrCheckInStatus == 'O'">Absent</td>
+      <td *ngIf="objEmployee.chrCheckInStatus == 'I'">Present</td>
+      
       <td>{{objEmployee.strMobileNo}}</td>
       <td>{{objEmployee.strEmail}}</td>
       <td>{{objEmployee.strAddress}}</td>
