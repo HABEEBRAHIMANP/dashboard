@@ -282,7 +282,7 @@ export class ProductDetailsComponent implements OnInit {
               this.apiService.fn_OrderPost('product/create_product', parameter, '3001').subscribe(body => {
                 console.log(this.form.value) 
               });
-            }, 40000);
+            }, 400);
         }
       });
 
