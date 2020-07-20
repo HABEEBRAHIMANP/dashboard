@@ -44,6 +44,11 @@ import { ProductDetailsComponent } from './productSec/product-details/product-de
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatIconModule } from "@angular/material/icon";
+import { MatListModule } from "@angular/material/list";
+import {MatSortModule} from '@angular/material/sort';
+
+
 
 
 
@@ -91,6 +96,14 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     BrowserAnimationsModule,
     ColorChromeModule,
     MatSnackBarModule,
+
+     MatIconModule,
+     MatListModule,
+     MatSortModule,
+
+
+     
+
 
     ChartsModule,
     NgMultiSelectDropDownModule.forRoot(),

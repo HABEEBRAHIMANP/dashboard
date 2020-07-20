@@ -3,11 +3,11 @@ import { FormControlName, FormGroup, FormArray, FormControl, FormBuilder, Valida
 import { ApiserviceService } from '../../apiservice.service';
 import { Observable, from } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { HttpClient, HttpHeaders,HttpParams,HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpClientModule } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { stringify } from 'querystring';
-import { JSDocTagName } from '@angular/compiler/src/output/output_ast';
-import {PageEvent} from '@angular/material/paginator';
+import { JSDocTagName, IfStmt } from '@angular/compiler/src/output/output_ast';
+import { PageEvent } from '@angular/material/paginator';
 
 const token = localStorage.getItem('strToken');
 
@@ -26,8 +26,6 @@ export class ProductDetailsComponent implements OnInit {
   @Input() fromParent;
   arrSizeStock = [];
   arrColorStock = [];
-  public imageArray = [];
-  public imagePreviewArray = [];
   public popover;
   // private productD:any={
   //   "strProductId":this.fromParent._id
@@ -68,7 +66,7 @@ export class ProductDetailsComponent implements OnInit {
     private objFormBuilder: FormBuilder,
     private apiService: ApiserviceService) { }
 
-
+  public imageUrls: any = ''
   dropdownList = [];
   selectedItems = [];
   dropdownSettings = {};
@@ -83,8 +81,12 @@ export class ProductDetailsComponent implements OnInit {
     this.Autocompletesub();
     this.materials()
     this.fn_color();
+    this.fn_size();
     console.log(this.fromParent);
     this.fn_getProductDetails();
+        this.fn_product();
+        console.log(this.fromParent)
+
     // console.log(this.productD)
 
 
@@ -194,139 +196,109 @@ export class ProductDetailsComponent implements OnInit {
   }
 
 
-  //   fileProgress(fileInput: any) {
-  //     this.fileData = <File>fileInput.target.files[0];
-  //     this.preview();
-  // }
-  //   fileData: File = null;
-  //   previewUrl: any = null;
-  //   preview() {
-  //     // Show preview 
-  //     var mimeType = this.fileData.type;
-  //     if (mimeType.match(/image\/*/) == null) {
-  //       return;
-  //     }
 
-  //     var reader = new FileReader();
-  //     reader.readAsDataURL(this.fileData);
-  //     reader.onload = (_event) => {
-  //       this.previewUrl = reader.result;
-  //     }
-  //   }
   form = this.objFormBuilder.group({
     strName: ['', Validators.required],
-    strProductId: ['',Validators.required],
-    dblMRP: ['',Validators.required],
-    dblSellingPrice: ['',Validators.required],
-    dblRetailerPrice: ['',Validators.required],
-    strBrandId: ['',Validators.required],
-    dblTotalStock: ['',Validators.required],
-    strGenderCategory: ['',Validators.required],
-    strCategoryId: ['',Validators.required],
-    strDescription:['',Validators.required],
-    arrImageUrl:[''],
-    strUnit:['Qty',Validators.required],
-    arrScheme:[[23,34] ],
+    strProductId: ['', Validators.required],
+    dblMRP: ['', Validators.required],
+    dblSellingPrice: ['', Validators.required],
+    dblRetailerPrice: ['', Validators.required],
+    strBrandId: ['', Validators.required],
+    dblTotalStock: ['', Validators.required],
+    strGenderCategory: ['', Validators.required],
+    strCategoryId: ['', Validators.required],
+    strDescription: ['', Validators.required],
+    // arrImageUrl: 'https://axef.s3.ap-south-1.amazonaws.com/0mdlmaster1594911093064.webp',
+    strUnit: ['', Validators.required],
+    arrScheme: [[23, 34]],
     arrSizeStock: this.objFormBuilder.group({
-      strName: ['',Validators.required],
-      dblStock: ['',Validators.required]
+      strName: ['', Validators.required],
+      dblStock: ['', Validators.required]
     }),
 
     arrColorStock: this.objFormBuilder.group({
-      strName: ['',Validators.required],
-      dblStock: ['',Validators.required]
+      strName: ['', Validators.required],
+      dblStock: ['', Validators.required]
     })
 
-
-    // SubCategory: [''],
-    // Material: [''],
-    // color: [''],
-    // colorstock: [''],
-    // description: [''],
-    // image: ['']
 
 
   });
-  updateProfile() {
-    this.form.patchValue({
-      image: this.urls
-    });
-    console.log(this.form.value)
-    
-
-  }
 
 
-  image: File;
-  resData: any;
-  selectedFile = null;
-  urls = [];
-  onSelectFile(event) {
-    this.selectedFile = event.target.files[0];
-    console.log(this.selectedFile);
-    // if (event.target.files && event.target.files[0]) {
-    //   var filesAmount = event.target.files.length;
-    //   for (let i = 0; i < filesAmount; i++) {
-    //     var reader = new FileReader();
+  public sizeList_obj = []
 
-    //     reader.onload = (event: any) => {
-    //       // console.log(event.target.result);
-    //       this.urls.push(event.target.result);
-    //       const file = event.target.files
-    //       this.imageArray.push(file);
+  fn_size() {
 
-    //     }
-
-    //     reader.readAsDataURL(event.target.files[i]);
-
-    //   }
-    // }
-  }
-  images: File;
-  public imageUrl: any
-
-  onSubmit() {
-
-    const payload = new FormData();
-    payload.append('image', this.selectedFile, this.selectedFile.name);
-    //   const formData = new FormData();
-    //   for  (var i =  0; i <  this.imageArray.length; i++)  {  
-    //     formData.append("images",  this.imageArray[i],'fileupload.png');
-    // }
-    // var formData: any = new FormData();
-    // this.imageArray.forEach(img => {
-    //   formData.append('images', this.imageArray[0]);
-    // });
-    // for (var pair of formData.entries()) {
-    //   console.log(pair[0] + ', ' + pair[1]);
-
-    // }
-    // let images ={
-    //   formData
-    // }
-    let params = new HttpParams().append('hh',this.form.value)
-    params.toString
-
-
-
-    this.apiService.fun_apiPostImage('file/files_upload', payload, '3001').subscribe((body) => {
+    let size = {
+      "arrCollection": [
+        { "strCollection": "cln_size", "intLimit": 10 },]
+    }
+    this.apiService.fn_OrderPost('master/get_master', size).subscribe((body) => {
       console.log(body)
-      this.imageUrl = body['arrImageUrl'],
-      // this.form.setValue({arrImageUrl: body['arrImageUrl']})
-      // this.form.patchValue(this.arrColorStock:body['arrImageUrl'])
-      // this.form.get(arrImageUrl).patchValue('fg');
-      // this.form.addControl('arrImageUrl',body['arrImageUrl']);
-      // this.form.controls['arrImageUrl'].setValue(body['arrImageUrl']);
-      this.form.patchValue({arrImageUrl : body['arrImageUrl']});
+      this.sizeList_obj = body['cln_size']
+    });
+  }
+  // ###################################### IMAGEE UPLOAD   ###########################
+  // ________________________________________STARTS________________________________
+  public imageArray = [];
+  public imagePreviewArray = [];
+
+
+
+
+
+  fn_remove_img(index) {
+    this.imagePreviewArray.splice(index, 1);
+    this.imageArray.splice(index, 1);
+  }
+
+  onFileInput(e) {
+    if (e.target.files.length > 0) {
+      const file = e.target.files[0];
+      this.imageArray.push(file);
+      const reader = new FileReader();
+      reader.onload = e => this.imagePreviewArray.push(reader.result);
+      reader.readAsDataURL(file);
+    }
+  }
+
+  fn_reg_comp() {
+    const formData = new FormData();
+    console.log(this.form.value)
+    this.imageArray.forEach(img => {
+      formData.append('image', img);
+      console.log(img.name);
+      this.apiService.fun_apiPostImage('file/files_upload', formData, '3001').subscribe((body) => {
+        console.log(body)
+        if(body['blnAPIStatus']	= true){
+
+          let parameter = { ...this.form.value }
+
+          Object.assign(parameter, { arrImageUrl: body['arrImageUrl'] })
+  
+
+            setTimeout(() => {
+              this.apiService.fn_OrderPost('product/create_product', parameter, '3001').subscribe(body => {
+                console.log(this.form.value) 
+              });
+            }, 40000);
+        }
+      });
+
+
+
+
+
     })
+  }
 
 
-    if (this.imageUrl !== '')
+  // _______________________________________END_____________________________________________________________________
 
-      this.apiService.fn_OrderPost('product/create_product',this.form.value,'3001').subscribe((body) => {
-        console.log(this.form.value)
-        // this.form.value.arrImageUrl.append(this.imageUrl)
-      })
+  public productObj:any={}
+  fn_product(){
+    console.log(this.productObj)
   }
 
 }

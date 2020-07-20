@@ -1,40 +1,41 @@
-
 <div class="container-fluid">
- 
-    <div class="row">
-        <div class="col-6"><h2>Employee List</h2></div>
-        <div class="col-6"><input type="text"><input type="text"></div>
+
+  <div class="row">
+    <div class="col-6">
+      <h2>Employee List</h2>
     </div>
-    
+    <div class="col-6"><input type="text"><input type="text"></div>
+  </div>
+
 </div>
 
 <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Si.No</th>
-            <th>Name</th>
-            <th>Employee ID</th>
-            <th>Present/Absent</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>Target</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let objEmployee of employee;let i = index">
-            <td>{{ i + 1}}</td>
-            <td>{{objEmployee.strName}}</td>
-            <td>{{objEmployee.strEmployeeId}}</td>
-            <td>{{objEmployee.chrCheckInStatus}}</td>
-            <td>{{objEmployee.strMobileNo}}</td>
-            <td>{{objEmployee.strEmail}}</td>
-            <td>{{objEmployee.strAddress}}</td>
-            <td>{{objEmployee.strTarget}}</td>
-        </tr>
+  <thead>
+    <tr>
+      <th>Si.No</th>
+      <th>Name</th>
+      <th>Employee ID</th>
+      <th>Present/Absent</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let objEmployee of employee;let i = index">
+      <td>{{ i + 1}}</td>
+      <td>{{objEmployee.strName}}</td>
+      <td>{{objEmployee.strEmployeeId}}</td>
+      <td>{{objEmployee.chrCheckInStatus}}</td>
+      <td>{{objEmployee.strMobileNo}}</td>
+      <td>{{objEmployee.strEmail}}</td>
+      <td>{{objEmployee.strAddress}}</td>
+      <td>{{objEmployee.strTarget}}</td>
+    </tr>
 
-        
-        <!--     <tr>
+
+    <!--     <tr>
             <td>Mary</td>
             <td>Moe</td>
             <td>mary@example.com</td>
@@ -44,5 +45,8 @@
             <td>Dooley</td>
             <td>july@example.com</td>
           </tr> -->
-        </tbody>
-      </table>
+  </tbody>
+</table>
+<mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+  (page)="onpager($event)">
+</mat-paginator>

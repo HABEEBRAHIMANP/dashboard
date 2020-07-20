@@ -1,3 +1,29 @@
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
     background-color: rgba(251, 253, 253, 0.972);
  }
+ .mat-icon {
+    font-size: 20px;
+    border: none !important;
+  }
+  .element::-webkit-scrollbar { width: 0 !important }
+
+
+  .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: rgba(251, 253, 253, 0.972);
+ }
+
+ th{
+   font-weight: 200;
+ }
+ tbody {
+  display:block;
+  height:440px;
+  overflow:auto;
+}
+thead, tbody tr {
+  display:table;
+  width:100%;
+  table-layout:fixed;
+}
+thead {
+}

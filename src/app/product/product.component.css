@@ -1,18 +1,20 @@
 .element::-webkit-scrollbar { width: 0 !important }
 
-/*   
-  th {
-    background: white;
-    position: sticky;
-    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
-    width:115px;
-  } */
-  td{
-      width: 100px;
-  }
-  th{
-      width: 115px;
-  }
+
   .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
     background-color: rgba(251, 253, 253, 0.972);
  }
+
+ th{
+   font-weight: 200;
+ }
+ tbody {
+  display:block;
+  height:440px;
+  overflow:auto;
+}
+thead, tbody tr {
+  display:table;
+  width:100%;
+  table-layout:fixed;
+}
