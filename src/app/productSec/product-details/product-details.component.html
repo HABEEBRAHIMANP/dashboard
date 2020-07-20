@@ -1,15 +1,15 @@
 <div class="modal-header">
     <h4 class="modal-title">Create Products</h4>
 </div>
-<form [formGroup]="form" >
+<form [formGroup]="form">
     <div class="modal-body row">
 
         <!-- Name -->
         <div class="col-md-6">
             <div class="">
                 <label class="small" for="strName">Product Title</label>
-                <input type="text" class="form-control" id="strName"  [formControl]="strName" value="fromParent.strName"
-                    placeholder="Product Title" required>
+                <input type="text" class="form-control" id="strName" formControlName="strName"
+                    [(ngModel)]=fromParent.strName placeholder="Product Title" required>
 
             </div>
         </div>
@@ -18,7 +18,7 @@
             <div class="">
                 <label class="small" for="product">Product ID</label>
                 <input type="text" class="form-control" id="strProductId" aria-describedby="gender"
-                    formControlName="strProductId" placeholder="Productid">
+                    [(ngModel)]=fromParent.strProductId formControlName="strProductId" placeholder="Productid">
 
             </div>
         </div>
@@ -26,8 +26,8 @@
         <div class="col-md-3 mt-4">
             <div class="">
                 <label class="small" for="mrp">MRP </label>
-                <input type="number" class="form-control" id="mrp" aria-describedby="name" formControlName="dblMRP" value="fromParent.strName"
-                    placeholder="MRP">
+                <input type="number" class="form-control" id="mrp" aria-describedby="name" formControlName="dblMRP"
+                    value="fromParent.strName" [(ngModel)]=fromParent.dblMRP placeholder="MRP">
 
             </div>
         </div>
@@ -36,7 +36,8 @@
             <div class="">
                 <label class="small" for="mrp">Selling Price </label>
                 <input type="number" class="form-control" id="dblSellingPrice" aria-describedby="name"
-                    formControlName="dblSellingPrice" placeholder="Selling Price">
+                    formControlName="dblSellingPrice" [(ngModel)]=fromParent.dblSellingPrice
+                    placeholder="Selling Price">
 
             </div>
         </div>
@@ -45,7 +46,8 @@
             <div class="">
                 <label class="small" for="mrp">Retail Price </label>
                 <input type="number" class="form-control" id="dblRetailerPrice" aria-describedby="name"
-                    formControlName="dblRetailerPrice" placeholder="Retail Price">
+                    formControlName="dblRetailerPrice" [(ngModel)]=fromParent.dblRetailerPrice
+                    placeholder="Retail Price">
 
             </div>
         </div>
@@ -54,7 +56,7 @@
             <div class="">
                 <label class="small" for="mrp">Stock </label>
                 <input type="number" class="form-control" id="dblTotalStock" aria-describedby="name"
-                    formControlName="dblTotalStock" placeholder="Stock">
+                    formControlName="dblTotalStock" [(ngModel)]=fromParent.dblTotalStock placeholder="Stock">
 
             </div>
         </div>
@@ -69,7 +71,8 @@
             </mat-autocomplete>
 
             <input type="text" class="form-control  " [matAutocomplete]="auto" placeholder="Brand"
-                (input)="valueChanged($event.target.value)" (input)="Autocomplete()" formControlName="strBrandId">
+                (input)="valueChanged($event.target.value)" (input)="Autocomplete()" formControlName="strBrandId"
+                [(ngModel)]=fromParent.strBrandId>
         </div>
         <!-- gender -->
         <!-- <div class="col-md-6">
@@ -83,7 +86,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="sel1">Gender <span class="required">*</span></label>
-                <select class="form-control" formControlName="strGenderCategory" [value]="" placeholder="Select Gender">
+                <select class="form-control" formControlName="strGenderCategory" [(ngModel)]=fromParent.strGenderCategory [value]="" placeholder="Select Gender">
                     <option value="Men">Men</option>
                     <option value="Women">Women</option>
                     <option value="Kids">Kids</option>
@@ -101,7 +104,7 @@
             <label class="small" for="product">Category</label>
             <input type="text" class="form-control mt-2  " [formControl]="control1" [matAutocomplete]="auto1"
                 placeholder="Category" (input)="valueChangedCate($event.target.value)" (input)="AutocompleteCate()"
-                formControlName="strCategoryId">
+                formControlName="strCategoryId" [(ngModel)]=fromParent.strCategoryId>
         </div>
         <!-- sub Category -->
         <div class="col-md-6">
@@ -114,7 +117,7 @@
             <label class="small" for="product">Sub Category</label>
             <input type="text" class="form-control mt-2  " [formControl]="control1" [matAutocomplete]="auto2"
                 placeholder="Sub Category" (input)="valueChangedsub($event.target.value)" (input)="Autocompletesub()"
-                formControlName="SubCategory">
+                formControlName="SubCategory" [(ngModel)]=fromParent.SubCategory>
         </div>
         <!-- material -->
         <div class="col-md-6">
@@ -126,18 +129,18 @@
             <label class="small" for="stock">Materials</label>
             <input type="text" class="form-control mt-2  " [formControl]="control1" [matAutocomplete]="auto3"
                 placeholder="Material name" (input)="valuechangeMaterial($event.target.value)" (input)="materials()"
-                formControlName="Material">
+                formControlName="Material" [(ngModel)]=fromParent.Material>
         </div>
 
         <!-- SIZE STOCK -->
         <!-- enter SIZE -->
-        <div>
+        <div>   
             <form formGroupName="arrSizeStock" class="mt-2">
 
 
                 <mat-form-field appearance="fill">
                     <mat-label>size</mat-label>
-                    <mat-select formControlName="strName" multiple>
+                    <mat-select formControlName="strName" [(ngModel)]=fromParent  multiple>
                         <mat-option *ngFor="let topping of sizeList_obj" [value]="topping.strName">{{topping.strName}}
                         </mat-option>
                     </mat-select>
@@ -154,7 +157,7 @@
                 <div class="col-md-12 mt-4">
                     <label class="small" for="mrp">stock </label>
                     <input type="number" class="form-control" id="mrp" aria-describedby="name"
-                        formControlName="dblStock" placeholder="dblStock">
+                        formControlName="dblStock" [(ngModel)]=fromParent.dblStock placeholder="dblStock">
 
                 </div>
             </form>
@@ -196,9 +199,9 @@
             </div>
             <div class="border mt-2 rounded bg-light text-dark carryBorder rounded">
                 <p class="text-center">ITEM UNIT IN</p>
-                <input type="radio" name="unit" class=" ml-2 " value="Liter" formControlName="strUnit"> liter
-                <input type="radio" name="unit" class=" ml-2 " value="Kg" formControlName="strUnit"> Kg
-                <input type="radio" name="unit" class=" ml-2 " value="Qty" formControlName="strUnit"> Qty
+                <input type="radio" name="unit" class=" ml-2 " value="Liter" formControlName="strUnit" [(ngModel)]=fromParent.strUnit> liter
+                <input type="radio" name="unit" class=" ml-2 " value="Kg" formControlName="strUnit" [(ngModel)]=fromParent.strUnit> Kg
+                <input type="radio" name="unit" class=" ml-2 " value="Qty" formControlName="strUnit" [(ngModel)]=fromParent.strUnit> Qty
             </div>
         </div>
 
@@ -217,7 +220,12 @@
             <button class="btn-sm alert-danger" (click)="fn_remove_img(i);">delete</button>
             <img class="card-img-top" [src]="img" alt="no images!!" style="width:30%">
         </div>
-    
+        <div >
+            <img [src]=fromParent.strImageUrl style="width:30%">
+
+
+        </div>
+
     </div>
 
     <!-- 

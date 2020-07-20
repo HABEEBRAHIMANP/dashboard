@@ -84,6 +84,8 @@ export class ProductDetailsComponent implements OnInit {
     this.fn_size();
     console.log(this.fromParent);
     this.fn_getProductDetails();
+        this.fn_product();
+        console.log(this.fromParent)
 
     // console.log(this.productD)
 
@@ -222,52 +224,6 @@ export class ProductDetailsComponent implements OnInit {
 
 
   });
-  // updateProfile() {
-
-  //   console.log(this.form.value)
-  //   console.log(this.imageUrls)
-
-
-  // }
-
-
-  // image: File;
-  // resData: any;
-  // selectedFile = null;
-  // urls = [];
-
-  // onSelectFile(event) {
-  //   this.selectedFile = event.target.files[0];
-  //   console.log(this.selectedFile);
-
-  // }
-  // images: File;
-  // public imageUrl: any
-
-  // onSubmit() {
-  //   console.log(this.form.value)
-  //   if (this.selectedFile != null) {
-  //     const payload = new FormData();
-  //     payload.append('image', this.selectedFile, this.selectedFile.name);
-  //     console.log(this.imageUrls)
-  //     this.apiService.fun_apiPostImage('file/files_upload', payload, '3001').subscribe((body) => {
-  //       console.log(body)
-
-  //       let parameter = { ...this.form.value }
-  //       Object.assign(parameter, { arrImageUrl: body['arrImageUrl'] })
-  //       this.apiService.fn_OrderPost('product/create_product', parameter, '3001').subscribe(body => {
-  //         console.log(this.form.value)
-  //         if (body['blnAPIStatus'].value = false) {
-  //           alert('product add failed')
-  //         }
-  //       });
-  //     });
-
-
-  //   } else {
-  //     console.log("create product fail");
-  //   }
-  // }
 
 
   public sizeList_obj = []
@@ -337,8 +293,12 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
 
+
   // _______________________________________END_____________________________________________________________________
 
-
+  public productObj:any={}
+  fn_product(){
+    console.log(this.productObj)
+  }
 
 }
