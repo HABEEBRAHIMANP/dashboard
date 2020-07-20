@@ -1,34 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ApiserviceService } from '.././apiservice.service';
 
 
 @Component({
-  selector: 'app-editmodalproduct',
-  templateUrl: './editmodalproduct.component.html',
-  styleUrls: ['./editmodalproduct.component.css']
+	selector: 'app-editmodalproduct',
+	templateUrl: './editmodalproduct.component.html',
+	styleUrls: ['./editmodalproduct.component.css']
 })
+
+
 export class EditmodalproductComponent implements OnInit {
-
-  constructor(private modalService: NgbModal) { }
-  closeResult: string;
-  ngOnInit(): void {
-  }
-  open2(content2) {
-		this.modalService.open(content2, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-			this.closeResult = `Closed with: ${result}`;
-		}, (reason) => {
-			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-		});
-  }
-  private getDismissReason(reason: any): string {
-		if (reason === ModalDismissReasons.ESC) {
-			return 'by pressing ESC';
-		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-			return 'by clicking on a backdrop';
-		} else {
-			return  `with: ${reason}`;
-		}
+	constructor(private apiservice: ApiserviceService) { }
+	options: string[];
+	ngOnInit() {
+		// this.Autocomplete();
 	}
+	public productObj: any = {}
+	fn_svaeProduct() {
+		console.log(this.productObj)
+	}
+	public strcolvalue="";
+	public param = {
+		"strCollection":this.strcolvalue,
+		"strValue": "",
+	}
+	Autocomplete(e) {
+		this.strcolvalue = e;
+		this.apiservice.fn_OrderPost('common/get_autocomplete', this.param).subscribe((body) => {
+			this.options = body['arrList']
 
+			// console.log(body)
 
+		});
+	}
+	valueChanged(e) {
+		this.param.strValue = e
+		// console.log(this.master)
+	  }
 }
+

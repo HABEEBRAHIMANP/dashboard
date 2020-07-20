@@ -14,17 +14,25 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authoriza
 export class EmployeeComponent  {
   constructor(private http: HttpClient) { }
   public employee: any[]
-  body = {
 
-    "strType": "EMPLOYEE"
-  }
 
 
   ngOnInit(): void {
-    this.fn_getDistr()
+    this.onpager(event)
   }
-  fn_getDistr() {
-    this.http.post('http://15.206.134.157.:3001/user/get_user', this.body, {headers}).subscribe((body) => {
+  length = 1000000;
+  pageSize: number
+  pageSizeOptions: number[] = [,5, 10, 25, 100,200,500]
+  onpager(event: any) {
+    let body = {
+
+      "strType": "EMPLOYEE",
+      "strSort": '',
+      "strSortActive": "DSC",
+      "intLimit":event.pageSize,
+      "intPageNo":event.pageIndex
+    }
+    this.http.post('http://15.206.134.157.:3001/user/get_user', body, {headers}).subscribe((body) => {
       this.employee = body['arrList']
       console.log(body)
 

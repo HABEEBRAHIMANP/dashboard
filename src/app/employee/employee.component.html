@@ -1,63 +1,43 @@
-
 <div class="container-fluid">
- 
+
   <div class="row">
-    <div class="col-6 mt-2">
+    <div class="col-6">
       <h2>Employee List</h2>
     </div>
-    <div class="row col-6 mt-2">
-      <div class="border-ligth form-control col-md-4 rounded-pill">
-        <!-- hgdfdf --><input type="text" placeholder=" Search" class="border-0 col-md-10">
-        <i class="fa fa-search"></i>
+    <div class="col-6"><input type="text"><input type="text"></div>
+  </div>
 
-      </div>
-      <div class="border-ligth form-control col-md-4 rounded-pill ml-3">
-        <nav class="navbar mt-n3 ml-3">
-          <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown">Filter</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" [routerLink]="[{outlets:{sidebar:['product/addproduct']}}]">Brand</a>
-                <a class="dropdown-item">Catogorey</a>
-                <a class="dropdown-item"> something</a>
-
-
-              </div>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      </div>
-      </div>
+</div>
 
 <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Si.No</th>
-            <th>Name</th>
-            <th>Employee Type</th>
-            <th>Present/Absent</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>Target</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let objEmployee of employee;let i = index">
-            <td>{{ i + 1}}</td>
-            <td>{{objEmployee.strName}}</td>
-            <td>{{objEmployee.strEmployeeType}}</td>
-            <td *ngIf = "objEmployee.chrCheckInStatus=='o'; present">{{objEmployee.chrCheckInStatus}}</td>
-            
-            <td>{{objEmployee.strMobileNo}}</td>
-            <td>{{objEmployee.strEmail}}</td>
-            <td>{{objEmployee.strAddress}}</td>
-            <td>{{objEmployee.strTarget}}</td>
-        </tr>
+  <thead>
+    <tr>
+      <th>Si.No</th>
+      <th>Name</th>
+      <th>Employee ID</th>
+      <th>Present/Absent</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let objEmployee of employee;let i = index">
+      <td>{{ i + 1}}</td>
+      <td>{{objEmployee.strName}}</td>
+      <td>{{objEmployee.strEmployeType}}</td>
+      <td *ngIf="objEmployee.chrCheckInStatus == 'O'">Absent</td>
+      <td *ngIf="objEmployee.chrCheckInStatus == 'I'">Present</td>
+      
+      <td>{{objEmployee.strMobileNo}}</td>
+      <td>{{objEmployee.strEmail}}</td>
+      <td>{{objEmployee.strAddress}}</td>
+      <td>{{objEmployee.strTarget}}</td>
+    </tr>
 
-        
-        <!--     <tr>
+
+    <!--     <tr>
             <td>Mary</td>
             <td>Moe</td>
             <td>mary@example.com</td>
@@ -67,5 +47,8 @@
             <td>Dooley</td>
             <td>july@example.com</td>
           </tr> -->
-        </tbody>
-      </table>
+  </tbody>
+</table>
+<mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+  (page)="onpager($event)">
+</mat-paginator>

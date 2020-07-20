@@ -12,16 +12,24 @@ export class DistributerComponent implements OnInit {
   // arrDistributerList=arrDistributerList
   distlist: any[]
   constructor(private http: HttpClient) { }
-  body = {
+  length = 1000000;
+  pageSize: number
+  pageSizeOptions: number[] = [,5, 10, 25, 100,200,500]
 
-    "strType": "DISTRIBUTER"
-  }
 
   ngOnInit(): void {
-    this.fn_getDistr();
+    this.onpager(event);
   }
-  fn_getDistr() {
-    this.http.post('http://15.206.134.157.:3001/user/get_user', this.body, {headers}).subscribe((body) => {
+  onpager(event: any){
+    let body = {
+
+      "strType": "DISTRIBUTER",
+      "strSort": '',
+      "strSortActive": "DSC",
+      "intLimit":event.pageSize,
+      "intPageNo":event.pageIndex
+    }
+    this.http.post('http://15.206.134.157.:3001/user/get_user', body, {headers}).subscribe((body) => {
       console.log(body)
       this.distlist = body['arrList']
     });

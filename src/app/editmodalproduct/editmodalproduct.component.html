@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="row">
+        <!-- *********************************PRODUCT NAME************************** -->
+
+        <div class="col-md-6">
+            <label class="small" for="strName">Product Title</label>
+            <input type="text" class="form-control" [(ngModel)]="productObj.strName">
+        </div>
+        <!-- *********************************PRODUCT ID************************** -->
+
+        <div class="col-md-6">
+            <label class="small" for="strName">Product ID</label>
+            <input type="text" class="form-control" [(ngModel)]="productObj.strProductId" >
+        </div>
+        <!-- *********************************MRP ************************** -->
+
+        <div class="col-md-3">
+            <label class="small" for="strName">MRP</label>
+            <input type="number" class="form-control" [(ngModel)]="productObj.dblMRP">
+        </div>
+        <!-- *********************************Selling Price************************** -->
+
+        <div class="col-md-3">
+            <label class="small" for="strName">Selling Price</label>
+            <input type="number" class="form-control" [(ngModel)]="productObj.dblSellingPrice">
+        </div>
+        <!-- *********************************Retail Price ************************** -->
+
+        <div class="col-md-3">
+            <label class="small" for="strName">Retail Price</label>
+            <input type="number" class="form-control" [(ngModel)]="productObj.dblRetailerPrice">
+        </div>
+        <!-- *********************************Stock************************** -->
+
+        <div class="col-md-3">
+            <label class="small" for="strName">Stock</label>
+            <input type="number" class="form-control" [(ngModel)]="productObj.dblTotalStock">
+        </div>
+        <!-- ****************************BRAND AUTO COMPLETE****************** -->
+        <div class="col-md-6">
+            <label class="small" for="product">Brand</label>
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let brand of options" [value]="brand.strName">
+                    {{brand.strName}}
+                </mat-option>
+            </mat-autocomplete>
+
+            <input type="text" class="form-control  " [matAutocomplete]="auto" placeholder="Brand"
+                (input)="valueChanged($event.target.value)" (input)="Autocomplete('cln_brand')" [(ngModel)]="productObj.strBrandId">
+        </div>
+
+        <button (click)="fn_svaeProduct()"> save</button>
+    </div>
+</div>
