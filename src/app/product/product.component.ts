@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ɵConsole } from '@angular/core';
-import { arrOrderList } from '../orders/demmy'
 import { Router } from '@angular/router';
 import { ApiserviceService } from '../apiservice.service';
 
