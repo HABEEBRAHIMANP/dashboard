@@ -13,90 +13,67 @@
         <i class="fa fa-search"></i>
 
       </div>
-      <div class="border-ligth form-control col-md-4 rounded-pill ml-3">
-        <nav class="navbar mt-n3 ml-3">
-          <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown">Filter</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" [routerLink]="[{outlets:{sidebar:['product/addproduct']}}]">Brand</a>
-                <a class="dropdown-item">Catogorey</a>
-                <a class="dropdown-item"> something</a>
 
 
-              </div>
-            </li>
-          </ul>
-        </nav>
-      </div>
 
       <div class="ml-5">
         <i class="fa fa-plus-circle" [routerLink]="['/mainui', { outlets: { 'sidebar': ['addproduct']} } ]"
           style="font-size:40px;color:gray"></i>
       </div>
+      <mat-icon (click)="sideNav.toggle()" style="float: right;" class="col-1 mt-2 ml-4">filter_list</mat-icon>
+
 
     </div>
 
-  </div>
-  <div>
-    <table class="table table-striped"
-      style="position: relative; display: inline-block;overflow-x: scroll;width: 100%;">
-      <thead>
-        <tr>
-          <th>Si.No</th>
-          <th>Product Name</th>
-          <th>Product ID</th>
-          <th>Product MRP</th>
-          <th>Selling Price</th>
-          <th>retail price</th>
-          <th>Images</th>
-        </tr>
-      </thead>
-      <tbody class="element" style="display:inline-block;overflow-x: scroll;height: 480px;">
-        <tr *ngFor="let objproduct of prodGET_obj ;let i = index">
-          <td>{{i + 1}}</td>
-          <td>{{objproduct.strName}}</td>
-          <td>{{objproduct.strProductId}}</td>
-          <td>{{objproduct.dblMRP}}</td>
-          <td>{{objproduct.dblSellingPrice}}</td>
-          <td>{{objproduct.intAmountLimit}}</td>
-          <td>{{objproduct.dblRetailerPrice}}</td>
-          <td><img style="width: 28px;" src="{{objproduct.strImageUrl}}" alt="strImageUrl"></td>
-          <td (click)="Openeditproduct(objproduct)"> <svg class="bi bi-pencil-square" width="1em" height="1em"
-              viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-              <path fill-rule="evenodd"
-                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-            </svg>
-          <td>
-            <i class="fa fa-trash" (click)="fn_deleteProduct(objproduct)"></i>
-          </td>
-      </tbody>
-    </table>
-    <!-- <table  mdbTable  striped="true" matSort (matSortChange)="sortData($event)">
-      <tr>
-        <th mat-sort-header="name">Dessert (100g)</th>
-        <th mat-sort-header="calories">Calories</th>
-        <th mat-sort-header="fat">Fat (g)</th>
-        <th mat-sort-header="carbs">Carbs (g)</th>
-        <th mat-sort-header="protein">Protein (g)</th>
-      </tr>
-    
-      <tr class="element" *ngFor="let objproduct of prodGET_obj">
-        <td>{{objproduct.strName}}</td>
-        <td>{{objproduct.strProductId}}</td>
-        <td>{{objproduct.dblMRP}}</td>
-        <td>{{objproduct.dblSellingPrice}}</td>
-        <td>{{objproduct.intAmountLimit}}</td>
-        <td>{{objproduct.dblRetailerPrice}}</td>
-      </tr>
-    </table> -->
-    <mat-paginator #paginator  [length]="length"
-               [pageSize]="pageSize"
-               [pageSizeOptions]="pageSizeOptions"
-               (page)="onpager($event)">
-</mat-paginator>
-  </div>
 
-      <!-- ############################################################### -->
+  </div>
+  <mat-drawer-container class="example-container">
+    <mat-drawer #sideNav mode="side" opened="false" [position]="nav_position">
+      Drawer content
+    </mat-drawer>
+    <mat-drawer-content>
+
+      <table class="table table-striped" matSort (matSortChange)="sortData($event);onpager($event);">
+        <thead>
+          <tr>
+            <th>Si.No</th>
+            <th mat-sort-header="strName">Product Name</th>
+            <th mat-sort-header="strProductId">Product ID</th>
+            <th mat-sort-header="dblMRP">Product MRP</th>
+            <th mat-sort-header="dblSellingPrice">Selling Price</th>
+            <th mat-sort-header="dblRetailerPrice">retail price</th>
+            <th>Images</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class="element text-center">
+          <tr *ngFor="let objproduct of prodGET_obj ;let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{objproduct.strName}}</td>
+            <td>{{objproduct.strProductId}}</td>
+            <td>{{objproduct.dblMRP}}</td>
+            <td>{{objproduct.dblSellingPrice}}</td>
+            <!-- <td>{{objproduct.intAmountLimit}}</td> -->
+            <td>{{objproduct.dblRetailerPrice}}</td>
+            <td><img style="width: 28px;" src="{{objproduct.strImageUrl}}" alt="strImageUrl"></td>
+            <td (click)="Openeditproduct(objproduct)"> <svg class="bi bi-pencil-square" width="1em" height="1em"
+                viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                <path fill-rule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+              </svg>
+            <td>
+              <i class="fa fa-trash" (click)="OpenDeleteDiloge(objproduct) "></i>
+            </td>
+        </tbody>
+      </table>
+    </mat-drawer-content>
+  </mat-drawer-container>
+  <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+    (page)="onpager($event);sortData($event);">
+  </mat-paginator>
+</div>
+
+<!-- ############################################################### -->

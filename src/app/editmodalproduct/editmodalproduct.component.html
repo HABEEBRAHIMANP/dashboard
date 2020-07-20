@@ -1,0 +1,424 @@
+<app-common-list-header [strTitle]="strTitle" (objEventFromHeader)="objEventFromHeader($event,content3)">
+</app-common-list-header>
+<table mat-table [dataSource]="dataSet" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+        <td mat-cell *matCellDef="let element;let i=index"> {{i+1}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="strName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.strName}} </td>
+    </ng-container>
+
+       <!-- Name Column -->
+    <ng-container matColumnDef="strGenderCategory">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender </th>
+        <td mat-cell *matCellDef="let element"> {{element.strGenderCategory}} </td>
+    </ng-container>
+
+    <!-- Category Column -->
+    <ng-container matColumnDef="strCategoryId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+        <td mat-cell *matCellDef="let element"> {{element.strCategoryId}} </td>
+    </ng-container>
+
+     <!-- Category Column -->
+    <ng-container matColumnDef="strBrandId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Brand </th>
+        <td mat-cell *matCellDef="let element"> {{element.strBrandId}} </td>
+    </ng-container>
+
+    <!-- Functional icon Column -->
+    <ng-container matColumnDef="functional-menu">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell class="table-list" *matCellDef="let row;let i=index" [style.opacity]="row.show  ? 100 : 0">
+            <i class="fa fa-trash" aria-hidden="true" matTooltip="Delete" (click)="deleteThisItem(i)"></i>
+            <i class="fa fa-pencil" aria-hidden="true" matTooltip="Edit" (click)="editThisItem(i,content3)"></i>
+        </td>
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;let i=index" (mouseover)="handleMouseOver(row)"
+        (mouseleave)="handleMouseLeave(row)" (click)="editThisItem(i,content3)"></tr>
+</table>
+<mat-paginator [length]="dataSet.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
+
+<div class="col-md-12">
+
+
+    <ng-template #content3 let-modal>
+        <div class="modal-header">
+            
+            <h4 class="modal-title">{{strOperation}} {{strTitle}}</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="warning-message" *ngIf="strErrorMessage" >
+                <p>{{strErrorMessage}}</p>
+            </div>
+            <form [formGroup]="objLocationForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="strName">Name <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="strName" aria-describedby="name"
+                                formControlName="strName" [ngClass]="{ 'is-invalid': objFormMessages?.strName}"
+                                placeholder="Name">
+                            <div *ngIf="objFormMessages?.strName" class="invalid-feedback">
+                                <div>{{objFormMessages?.strName}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Gender -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        <label for="sel1">Gender <span class="required">*</span></label>
+                        <select class="form-control" formControlName="strGenderCategory" [value]="Men"
+                        placeholder="Select Gender"
+                        [ngClass]="{ 'is-invalid': objFormMessages?.strGenderCategory}" id="sel1">
+                          <option value="Men">Men</option>
+                          <option value="Women">Women</option>
+                          <option value="Boys">Boys</option>
+                          <option value="Girls">Girls</option>
+                        </select>
+                        <div *ngIf="objFormMessages?.strGenderCategory" class="invalid-feedback">
+                            <div>{{objFormMessages?.strGenderCategory}}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Shop -->
+                    <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="typeahead-format">Shop <span class="required">*</span></label>
+                        <input  #instance="ngbTypeahead" (selectItem)="selectedItem($event,'strShopId')" placeholder="Select Shop"
+                        id="typeahead-format" type="text" class="form-control" formControlName="strShopId" (focusout)="checkValidShop($event)"
+                            [ngbTypeahead]="arrShopFilter" [resultFormatter]="formatter"  [ngClass]="{ 'is-invalid': objFormMessages?.strShopId}"
+                            [resultTemplate]="rt"/>
+                            <div *ngIf="objFormMessages?.strShopId" class="invalid-feedback">
+                            <div>{{objFormMessages?.strShopId}}</div>
+                        </div>  
+                    </div>
+                    </div>
+                      <!-- Shop -->
+                <ng-container formGroupName="objShopAddress">
+                    <!-- location -->
+                    <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="typeahead-format">Location <span class="required">*</span></label>
+                        <input  #instance="ngbTypeahead" (selectItem)="selectedLocation($event)" placeholder="Select Location"
+                        id="typeahead-format" type="text" class="form-control" formControlName="strLocation" (focusout)="checkValidLocation($event)"
+                            [ngbTypeahead]="arrLocationFilter" [resultFormatter]="formatter"  [ngClass]="{ 'is-invalid': objFormMessages?.objShopAddress?.strLocation}"
+                            [resultTemplate]="rt"/>
+                        <div *ngIf="objFormMessages?.objShopAddress?.strLocation" class="invalid-feedback">
+                            <div>{{objFormMessages?.objShopAddress?.strLocation}}</div>
+                        </div>  
+                    </div>
+                    </div>
+                    <!-- address -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="strAddress">Address <span class="required">*</span></label>
+                            <textarea type="text" class="form-control" id="strAddress" aria-describedby="name"
+                                formControlName="strAddress"  rows="1"
+                                placeholder="Shop address" [ngClass]="{ 'is-invalid': objFormMessages?.objShopAddress?.strAddress}"></textarea>
+                            <div *ngIf="objFormMessages?.objShopAddress?.strAddress" class="invalid-feedback">
+                                <div>{{objFormMessages?.objShopAddress?.strAddress}}</div>
+                            </div>  
+                        </div>
+                    </div>
+                    <!-- Mobile -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="strMobileNo">Mobile <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="strMobileNo" aria-describedby="name"
+                                formControlName="strMobileNo"  [ngClass]="{ 'is-invalid': objFormMessages?.objShopAddress?.strMobileNo}"
+                                placeholder="Mobile" maxlength="10" numbersOnly/>
+                            <div *ngIf="objFormMessages?.objShopAddress?.strMobileNo" class="invalid-feedback">
+                                <div>{{objFormMessages?.objShopAddress?.strMobileNo}}</div>
+                            </div>  
+                        </div>
+                    </div>
+                    <!-- Pin Code -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="strPinCode">Pin Code <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="strPinCode" aria-describedby="name"
+                                formControlName="strPinCode"  [ngClass]="{ 'is-invalid': objFormMessages?.objShopAddress?.strPinCode}"
+                                placeholder="Pin Code" maxlength="6"  numbersOnly/>
+                            <div *ngIf="objFormMessages?.objShopAddress?.strPinCode" class="invalid-feedback">
+                                <div>{{objFormMessages?.objShopAddress?.strPinCode}}</div>
+                            </div>  
+                        </div>
+                    </div>
+                </ng-container>
+                    <!-- Category -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="typeahead-format">Category <span class="required">*</span></label>
+                            <input  #instance="ngbTypeahead" (selectItem)="selectedItem($event,'strCategoryId')" placeholder="Select Category"
+                            id="typeahead-format" type="text" class="form-control" formControlName="strCategoryId" (focusout)="checkValidCategory($event)"
+                             [ngbTypeahead]="arrCategoryFilter" [resultFormatter]="formatter"  [ngClass]="{ 'is-invalid': objFormMessages?.strCategoryId}"
+                             [resultTemplate]="rt"/>
+                             <div *ngIf="objFormMessages?.strCategoryId" class="invalid-feedback">
+                                <div>{{objFormMessages?.strCategoryId}}</div>
+                            </div>  
+                        </div>
+                    </div>
+
+                     <!-- Brand -->
+                     <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="typeahead-format">Brand <span class="required">*</span></label>
+                            <input  #instance="ngbTypeahead" (selectItem)="selectedItem($event,'strBrandId')" placeholder="Select Brand"
+                            id="typeahead-format" type="text" class="form-control" formControlName="strBrandId" (focusout)="checkValidBrand($event)"
+                             [ngbTypeahead]="arrBrandFilter" [resultFormatter]="formatter"  [ngClass]="{ 'is-invalid': objFormMessages?.strBrandId}"
+                             [resultTemplate]="rt"/>
+                             <div *ngIf="objFormMessages?.strBrandId" class="invalid-feedback">
+                                <div>{{objFormMessages?.strBrandId}}</div>
+                            </div>  
+                        </div>
+                    </div>
+
+                    <!-- Description fields -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="strProductId">Description <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="strDescription" aria-describedby="description"
+                                formControlName="strDescription"
+                                [ngClass]="{ 'is-invalid': objFormMessages?.strDescription}" placeholder="description">
+                            <div *ngIf="objFormMessages?.strDescription" class="invalid-feedback">
+                                <div>{{objFormMessages?.strDescription}}</div>
+                            </div>  
+                        </div>
+                    </div>
+                    
+                     <!-- MRP -->
+                     <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="dblMRP">MRP <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="dblMRP" aria-describedby="name" (focusout)="checkMRP($event)"
+                                formControlName="dblMRP"  [ngClass]="{ 'is-invalid': objFormMessages?.dblMRP}"
+                                placeholder="MRP" floatNumber/>
+                        <div *ngIf="objFormMessages?.dblMRP" class="invalid-feedback">
+                            <div>{{objFormMessages?.dblMRP}}</div>
+                        </div>  
+                        </div>
+                    </div>
+
+                    <!-- Selling Price -->
+                    <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="dblSellingPrice">Selling Price <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="dblSellingPrice" aria-describedby="name" (focusout)="checkSellingPrice($event)"
+                            formControlName="dblSellingPrice"  [ngClass]="{ 'is-invalid': objFormMessages?.dblSellingPrice}"
+                            placeholder="Selling Price" floatNumber/>
+                    <div *ngIf="objFormMessages?.dblSellingPrice" class="invalid-feedback">
+                        <div>{{objFormMessages?.dblSellingPrice}}</div>
+                    </div>  
+                    </div>
+                </div>
+
+                 <!-- Total stock -->
+                 <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="dblTotalStock">Total Stock <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="dblTotalStock" aria-describedby="name"
+                            formControlName="dblTotalStock"  [ngClass]="{ 'is-invalid': objFormMessages?.dblTotalStock}"
+                            placeholder="Total Stock" numbersOnly/>
+                    <div *ngIf="objFormMessages?.dblTotalStock" class="invalid-feedback">
+                        <div>{{objFormMessages?.dblTotalStock}}</div>
+                    </div>  
+                    </div>
+                </div>
+
+                <!-- Quantity -->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="strUnit">Unit <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="strUnit" aria-describedby="name"
+                            formControlName="strUnit"   [ngClass]="{ 'is-invalid': objFormMessages?.strUnit}"
+                            placeholder="Qty" >
+                    <div *ngIf="objFormMessages?.strUnit" class="invalid-feedback">
+                        <div>{{objFormMessages?.strUnit}}</div>
+                    </div>  
+                    </div>
+                </div>
+
+                 <!-- Total stock -->
+                 <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="intTotalSales">Total Sale <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="intTotalSales" aria-describedby="name"
+                            formControlName="intTotalSales"  [ngClass]="{ 'is-invalid': objFormMessages?.intTotalSales}"
+                            placeholder="Total Sale" numbersOnly>
+                    <div *ngIf="objFormMessages?.intTotalSales" class="invalid-feedback">
+                        <div>{{objFormMessages?.intTotalSales}}</div>
+                    </div>  
+                    </div>
+                </div>
+                
+                <!-- SIZE STOCK -->
+                <ng-container  formGroupName="objSizeStock">
+                
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="strName">Size </label>
+                        <input type="text" class="form-control" id="strName" 
+                            formControlName="strName"  
+                            placeholder="Size" alphabetOnly upperCase/>
+                       
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="dblStock">Stock </label>
+                        <input type="text" class="form-control" id="dblStock" 
+                            formControlName="dblStock"  
+                            placeholder="Stock" numbersOnly/>
+                       
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-t-30 stock-func-btn">
+                        <span class="add-btn1"(click)="addSizeStock()"  ><i class="fa fa-plus" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+                
+        </ng-container>  
+        
+        <div class="col-md-12" >
+            <div class="col-md-4" *ngFor="let item of arrSizeStockV;let i=index" >
+            <p >
+                <span class="slNo"> {{i+1}}.</span>
+                <span class="strName sizeName">{{item.strName}} ::</span>
+                <span class="stock"> {{item.dblStock}}</span>
+                <span class="btn-functional">
+                <span class="edit-btn" (click)="editStock(i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                <span class="delete-btn" (click)="deleteStock(i)"><i class="fa fa-trash"></i></span>
+            </span>
+            </p></div>
+            
+           
+            
+        </div>
+         <!-- SIZE STOCK END -->
+
+        <!-- COLOR STOCK -->
+        <ng-container  formGroupName="objColorStock">
+                
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="strName">Color </label>
+                    <input type="text" class="form-control" id="strName" 
+                        formControlName="strName"  
+                        placeholder="Color" >
+                   
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="dblStock">Stock </label>
+                    <input type="text" class="form-control" id="dblStock" 
+                        formControlName="dblStock"  
+                        placeholder="Stock" numbersOnly>
+                   
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-t-30 stock-func-btn">
+                    <span class="add-btn1"(click)="addColorStock()"  ><i class="fa fa-plus" aria-hidden="true"></i></span>
+                </div>
+            </div>
+            
+    </ng-container>  
+    
+    <div class="col-md-12" >
+        <div class="col-md-4" *ngFor="let item of arrColorStock;let i=index" >
+        <p >
+            <span class="slNo"> {{i+1}}.</span>
+            <span class="strName">{{item.strName}} ::</span>
+            <span class="stock"> {{item.dblStock}}</span>
+            <span class="btn-functional">
+            <span class="edit-btn" (click)="editColorStock(i)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+            <span class="delete-btn" (click)="deleteColorStock(i)"><i class="fa fa-trash"></i></span>
+        </span>
+        </p></div>
+        
+       
+        
+    </div>
+         <!-- COLOR STOCK END -->
+        
+                      
+                    <div class="col-md-6">
+                        <div class="form-group m-t-30">
+                            <input type="file" accept="image/*" (change)="fileChangeEvent($event)" />
+                        </div>
+                    </div>
+                   
+                    <!-- imageUpload start-->
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+
+                            <image-cropper style="width: 50%;" [imageChangedEvent]="imageChangedEvent"
+                                [maintainAspectRatio]="true" [aspectRatio]="12 / 16" format="png"
+                                (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+                                (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+                            <button type="button" class="btn btn-info " (click)="cropThis()">Crop this</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4" *ngFor="let item of strImageUrls;let i=index">
+                        <div class="form-group"  style="position: relative;">
+                            <img src="{{item}}" style="width: 250px;" />
+                            <span class="image-delete-btn" (click)="deleteThis(i)"><i class="fa fa-trash"></i></span>
+                        </div>
+                    </div> 
+                    <div class="col-md-6" *ngIf="strButtonName ==='Update'">
+                        <div class="form-group">
+                            <img class="img-responsive edit-img-br" src="{{strImageUrl}}">
+                        </div>
+                    </div>
+                    <!-- imageUpload end-->
+                </div>
+            </form>
+            <!-- createdBy modifiedBy start-->
+            <div class="row modified-status" *ngIf="this.varCreatedModified.create_name || this.varCreatedModified.create_time" >
+            <div class="col-md-6" >
+                <label>Created by: <span>{{this.varCreatedModified.create_name}}
+                        ({{this.varCreatedModified.create_time}})</span></label>
+            </div>
+            <div class="col-md-6"
+                *ngIf="this.varCreatedModified.modified_name || this.varCreatedModified.modified_time">
+                <label>Modified by: <span>{{this.varCreatedModified.modified_name}}
+                        ({{this.varCreatedModified.modified_time}})</span></label>
+            </div>
+        </div>
+            <!-- createdBy modifiedBy end-->
+        </div>
+        <div class="modal-footer">
+
+            <button type="button" class="btn btn-light clear-btn" (click)="clearForm()">Clear</button>
+
+
+            <button type="button" class="btn btn-light " (click)="modal.close('Close click')">Cancel</button>
+            <button type="button" class="btn btn-info " (click)="saveThis()">{{strButtonName}}</button>
+
+
+
+        </div>
+    </ng-template>
+
+
+</div>

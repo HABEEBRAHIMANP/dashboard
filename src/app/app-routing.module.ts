@@ -19,6 +19,7 @@ import { CategoryComponent } from './masters/category/category.component';
 import { MaterialComponent } from './masters/material/material.component';
 import { SizeComponent } from './masters/size/size.component';
 import { ColorComponent } from './masters/color/color.component';
+import { ProductDetailsComponent } from './productSec/product-details/product-details.component';
 
 
 const routes: Routes = [
@@ -69,7 +70,7 @@ const routes: Routes = [
       },
       {
         path: 'addproduct',
-        component: AddproductComponent, outlet: 'sidebar'
+        component: ProductDetailsComponent, outlet: 'sidebar'
       },
       {
         path: 'masters',

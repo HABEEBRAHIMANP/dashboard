@@ -65,8 +65,10 @@ export class ProductComponent implements OnInit {
     // }, (reason) => {s
     // });
   }
-  OpenDeleteDiloge() {
-    this.modalServ.open(DeleteProductComponent, { size: 'md', centered: true })
+  OpenDeleteDiloge(res) {
+    const modalRef= this.modalServ.open(DeleteProductComponent, { size: 'md', centered: true })
+    let data = res
+    modalRef.componentInstance.fromParent = data;
   }
   closDilog() {
     this.modalServ.dismissAll();
@@ -97,8 +99,8 @@ export class ProductComponent implements OnInit {
   onpager(event: any) {
     console.log(event.pageIndex)
     let param = {
-      "strSort": '',
-      "strSortActive": "DSC",
+      "strSortActive": this.sortedData,
+      "strSort":this.sortname,
       "intLimit":event.pageSize,
       "intPageNo":event.pageIndex  
 
@@ -109,6 +111,27 @@ export class ProductComponent implements OnInit {
 
 
   }
+  public sortedData;
+  public sortname;
+  sortData(sort: Sort) {
+    console.log(sort.direction, sort.active)
+    if(sort.direction == 'asc'){
+      this.sortedData = 'ASC',
+      this.sortname = sort.active
+    }else{
+      this.sortedData = 'DSC',
+      this.sortname = sort.active
+
+    }
+
+  }
+  nav_position: string = 'end';
+
+  onTogglePosition(position: string) {
+    this.nav_position = position === 'start' ? 'end' : 'end';
+
+  }
+
 
 
 
