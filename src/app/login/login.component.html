@@ -23,6 +23,9 @@
                 style="font-size: 12px;text-align:center;">
                 Enter password
             </div>
+            <div class="alert alert-danger small" *ngIf="!(password_worng)">
+               wrong password
+            </div>
 
             <button [disabled]="login_obj.strPassword.length < 2 || login_obj.strName.length < 2 " class="btn-outline-secondary mt-3 form-control col-md-3" type="submit"
                 (click)="fn_login_email()">LOGIN

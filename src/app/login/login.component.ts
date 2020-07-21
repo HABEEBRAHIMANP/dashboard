@@ -12,10 +12,11 @@ export class LoginComponent {
   public inputTouched = false
   public inputTouched2 = false;
   public username_exists = true;
+  public password_worng = true;
 
   public login_obj: any = {
-    strName: 'admint7',
-    strPassword: 'admin123',
+    strName: '',
+    strPassword: '',
     strType: 'ADMIN',
     strFirbaseToken: 'abc'
 
@@ -26,6 +27,7 @@ export class LoginComponent {
 
   ngOnInit(): void {
   }
+  public errors =[];
   fn_login_email() {
     this.http.post('http://15.206.134.157:3000/user/login_user', this.login_obj, { headers }).subscribe((body) => {
       // this.username_exists = err['blnAPIStatus']
@@ -46,19 +48,24 @@ export class LoginComponent {
         }
       }
 
-
-      // localStorage.setItem('strToken',body['strToken']);
-      // localStorage.setItem("id", body['_id']);
-      // localStorage.setItem('strType',body['strType']);
-      // if (localStorage.getItem('strType') == 'ADMIN'){
-      //     this.route.navigate(['/mainui'])
-      // }else{
-      //   this.route.navigate(['/login'])
-      //   console.log('not admin')
-      // }
     }, (error) => {
       console.log(error['error']['blnAPIStatus']);
-      this.username_exists = error.blnAPIStatus
+      // this.username_exists = error.blnAPIStatus
+      if(error){
+        this.errors = error['error']
+        console.log(this.errors)
+        if(this.errors['arrErrors'][0] == "CREDENTIAL_INVALID"){
+          this.password_worng = false;
+          console.log(this.errors)
+
+        }
+        if(this.errors['arrErrors'][0] == "INVALID_USER_NAME"){
+          this.username_exists = false;
+          console.log(this.errors)
+
+        }
+        
+      }
 
 
     });
