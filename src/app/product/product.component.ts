@@ -36,6 +36,9 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() {
     this.fn_productList();
+    this.fn_filter_brand();
+    this.fn_filtercate();
+    this.fn_filterMaterial();
   }
   fn_productList() {
     let param = {
@@ -78,7 +81,7 @@ export class ProductComponent implements OnInit {
     // this.route.navigate( [ '/ mainui /addproduct', {outlets: { aux: ['sidebar']}}]);
   }
   Autocomplete() {
-    this.http.post('http://15.206.134.157:3000/common/get_autocomplete', this.master, { headers }).subscribe((body) => {
+    this.apiService.fn_OrderPost('common/get_autocomplete', this.master ).subscribe((body) => {
       this.options = body['arrList']
     });
 
@@ -97,16 +100,18 @@ export class ProductComponent implements OnInit {
   // MatPaginator Output
   // pageEvent: PageEvent;
   onpager(event: any) {
-    console.log(event.pageIndex)
     let param = {
       "strSortActive": this.sortedData,
       "strSort":this.sortname,
       "intLimit":event.pageSize,
-      "intPageNo":event.pageIndex  
+      "intPageNo":event.pageIndex,
+      "arrBrand": this.filterObj.arrBrands,
+      "arrCategory":this.filterObj.arrCategory
 
     }
     this.apiService.fn_OrderPost('product/get_product', param).subscribe((body) => {
       this.prodGET_obj = body['arrList']
+    console.log(param)  
     });
 
 
@@ -131,7 +136,48 @@ export class ProductComponent implements OnInit {
     this.nav_position = position === 'start' ? 'end' : 'end';
 
   }
+// ################################################################FILTER ME FILTER ##################################################
+  public filterbrand=[]
+  fn_filter_brand(){
+    let param = {
 
+      "arrCollection":[
+        {"strCollection":"cln_brand","intLimit":10}
+      ]
+    }
+    this.apiService.fn_OrderPost('master/get_master',param).subscribe(res=>{
+        this.filterbrand = res['cln_brand']
+        console.log(res)
+    })
+  }
+  public filtercategory=[]
+  fn_filtercate(){
+    let param = {
+
+      "arrCollection":[
+        {"strCollection":"cln_category","intLimit":10}
+      ]
+    }
+    this.apiService.fn_OrderPost('master/get_master',param).subscribe(res=>{
+      this.filtercategory = res['cln_category']
+      console.log(res)
+  })
+  }
+
+  public filtermaterial=[]
+  fn_filterMaterial(){
+    let param = {
+
+      "arrCollection":[
+        {"strCollection":"cln_material","intLimit":10}
+      ]
+    }
+    this.apiService.fn_OrderPost('master/get_master',param).subscribe(res=>{
+      this.filtermaterial = res['cln_material']
+      console.log(res)
+  })
+  }
+  public filterObj={'arrBrands':[],"arrCategory":[]}
 
 
 

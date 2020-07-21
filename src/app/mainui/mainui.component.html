@@ -7,16 +7,13 @@
 
   <!-- Sidebar -->
   <div class="bg-light border-right mt-2 " id="sidebar-wrapper">
-    <div class="sidebar-heading" style="background-color: white;"> <svg class="bi bi-cart3" width="22px" height="22px"
-        viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd"
-          d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-      </svg> <img style="width: 110px; height: 110px;" src="./assets/images/carry mark.png" alt=""> </div>
+    <div class="sidebar-heading ml-2" style="background-color: white;"> <img style="width: 110px; height: 110px;"
+        src="./assets/images/carry mark.png" alt=""> </div>
 
     <div class="list-group list-group-flush element" style="height:500px; overflow-y: scroll;">
 
-      <a [routerLink]="[{outlets:{sidebar:['dashboard']}}]" class="list-group-item hover list-group-item-action  fontm"> <i
-          class="fa fa-tachometer ml-2 mr-3" aria-hidden="true"> </i>Dashboard</a>
+      <a [routerLink]="[{outlets:{sidebar:['dashboard']}}]" class="list-group-item hover list-group-item-action  fontm">
+        <i class="fa fa-tachometer ml-2 mr-3" aria-hidden="true"> </i>Dashboard</a>
 
       <a [routerLink]="[{outlets:{sidebar:['orders']}}]" class="list-group-item list-group-item-action hover fontm"> <i
           class="fa fa-cart-plus ml-2 mr-3" aria-hidden="true"> </i>Order</a>
@@ -24,26 +21,29 @@
       <a [routerLink]="[{outlets:{sidebar:['product']}}]" class="list-group-item list-group-item-action hover fontm"> <i
           class="fa  fa-product-hunt ml-2 mr-3" aria-hidden="true"> </i>Product</a>
 
-      <a [routerLink]="[{outlets:{sidebar:['employee']}}]" class="list-group-item list-group-item-action hover fontm"> <i
-          class="fa fa-user ml-2 mr-3" aria-hidden="true"> </i>Employee</a>
+      <a [routerLink]="[{outlets:{sidebar:['employee']}}]" class="list-group-item list-group-item-action hover fontm">
+        <i class="fa fa-user ml-2 mr-3" aria-hidden="true"> </i>Employee</a>
 
-      <a [routerLink]="[{outlets:{sidebar:['distributer']}}]" class="list-group-item list-group-item-action hover fontm"> <i
-          class="fa fa-share-alt-square ml-2 mr-3" aria-hidden="true"> </i>Distributor</a>
+      <a [routerLink]="[{outlets:{sidebar:['distributer']}}]"
+        class="list-group-item list-group-item-action hover fontm"> <i class="fa fa-share-alt-square ml-2 mr-3"
+          aria-hidden="true"> </i>Distributor</a>
 
-      <a [routerLink]="[{outlets:{sidebar:['retailer']}}]" class="list-group-item list-group-item-action hover fontm"> <i
-          class="fa  fa-asl-interpreting ml-2 mr-3" aria-hidden="true"> </i>Retailers</a>
+      <a [routerLink]="[{outlets:{sidebar:['retailer']}}]" class="list-group-item list-group-item-action hover fontm">
+        <i class="fa  fa-asl-interpreting ml-2 mr-3" aria-hidden="true"> </i>Retailers</a>
 
-      <a [routerLink]="[{outlets:{sidebar:['notification']}}]" class="list-group-item list-group-item-action hover  fontm"> <i
-          class="fa fa-bell ml-2 mr-3" aria-hidden="true"> </i>Notification</a>
+      <a [routerLink]="[{outlets:{sidebar:['notification']}}]"
+        class="list-group-item list-group-item-action hover  fontm"> <i class="fa fa-bell ml-2 mr-3" aria-hidden="true">
+        </i>Notification</a>
 
       <a [routerLink]="[{outlets:{sidebar:['reports']}}]" class="list-group-item list-group-item-action hover fontm"> <i
           class="fa fa-file ml-2 mr-3" aria-hidden="true"> </i>Reports</a>
 
-      <a [routerLink]="[{outlets:{sidebar:['attendence']}}]" class="list-group-item list-group-item-action hover fontm"> <i
-          class="fa fa-user-times ml-2 mr-3" aria-hidden="true"> </i>Attendence</a>
+      <a [routerLink]="[{outlets:{sidebar:['attendence']}}]" class="list-group-item list-group-item-action hover fontm">
+        <i class="fa fa-user-times ml-2 mr-3" aria-hidden="true"> </i>Attendence</a>
       <!-- ################ MATERS  ########################## -->
       <a class="list-group-item list-group-item-action  fontm" data-toggle="collapse" data-target="#demo"> <i
-          class="fa fa-tachometer ml-2 mr-3" aria-hidden="true"> </i>Masters<i class="fa fa-caret-down ml-2" aria-hidden="true"></i></a>
+          class="fa fa-tachometer ml-2 mr-3" aria-hidden="true"> </i>Masters<i class="fa fa-caret-down ml-2"
+          aria-hidden="true"></i></a>
 
       <a id="demo" class="collapse scroll-sidebar">
         <li class="ml-4 font-weight-lighter list-group-item small hover  fontm"
@@ -104,7 +104,7 @@
       </div>
     </nav>
 
-    <div class="container-fluid" >
+    <div class="container-fluid">
       <!-- <router-outlet name="Sidebar"></router-outlet> -->
       <router-outlet name="sidebar"></router-outlet>
     </div>
