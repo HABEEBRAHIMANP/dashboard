@@ -29,7 +29,37 @@
   <!-- ############################################################################ -->
   <mat-drawer-container class="example-container">
     <mat-drawer #sideNav mode="side" opened="false" [position]="nav_position">
-      Drawer content
+      <hr>
+      
+      <div class="container">
+        <mat-form-field >
+          <mat-label>Status Wise</mat-label>
+          <mat-select multiple  name="arrBrands">
+            <mat-option *ngFor="let status of  statusWise" > {{status.strName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="container">
+        <mat-form-field >
+          <mat-label>Distributer</mat-label>
+          <mat-select multiple [(ngModel)]=filterObj.arrDistributerId name="arrDistributerId">
+            <mat-option *ngFor="let arrDistributerId of  distlist" [value]="arrDistributerId._id"> {{arrDistributerId.strName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="container">
+        <mat-form-field >
+          <mat-label>Executive</mat-label>
+          <mat-select multiple [(ngModel)]=filterObj.arrExecutiveId name="arrExecutiveId">
+            <mat-option *ngFor="let arrExecutiveId of  employee" [value]="arrExecutiveId._id"> {{arrExecutiveId.strName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      
+      <button class="form-control btn-outline-secondary mt-1
+      " (click)="onpager($event)">  Apply</button>
+
     </mat-drawer>
     <mat-drawer-content>
 
@@ -46,7 +76,7 @@
           </tr>
         </thead>
         <tbody  >
-          <tr *ngFor="let objOrder of orderList_obj;let i = index">
+          <tr *ngFor="let objOrder of orderList_obj;let i = index" >
             <td>{{i + 1}}</td>
             <td>{{objOrder.strOrderId}}</td>
             <td>{{objOrder.strName}}</td>
@@ -63,7 +93,7 @@
                   d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
               </svg></td>
             <td>
-              <i class="fa fa-trash"></i>
+              <i class="fa fa-trash" (click)="openLg(content,objOrder.strOrderId)"></i>
             </td>
         </tbody>
       </table>
@@ -75,3 +105,33 @@
 <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
   (page)="onpager($event)">
 </mat-paginator>
+
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Order Details</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    <p class="text-secondary">ORDER ID :  <span style="color: black;"> {{orderdetails.strOrderId}}</span></p>
+    <p class="text-secondary">RETAILER ID :</p>
+    <p class="text-secondary">SHOP NAME :  <span style="color: black;"> {{orderdetails.objAddress.strName}}</span></p>
+    <p class="text-secondary">SHOP AREA : <span style="color: black;"> {{orderdetails.objAddress.strHouseArea}}</span></p>
+    <p class="text-secondary">GST NO : </p>
+    <p class="text-secondary">PHONE : <span style="color: black;"> {{orderdetails.objAddress.strMobileNo}}</span></p>
+    <p class="text-secondary">ORDER TIME : </p>
+    <p class="text-secondary">ORDER AMOUNT :  <span style="color: black;"> {{orderdetails.dblTotalOrderAmount}}</span></p>
+    <p class="text-secondary">PAYMENT METHOD :  <span style="color: black;"> {{orderdetails.strModePayment}}</span></p>
+    <p class="text-secondary">DISTRIBUTOR : </p>
+    <p class="text-secondary">NOTES : </p>
+    <p class="text-secondary">ORDER STATUS : <span style="color: red;"> {{orderdetails.strOrderStatus}}</span><i class="fa fa-pencil ml-4" ></i></p>
+
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+      <button class="btn btn-success"> Update</button>
+  </div>
+</ng-template>

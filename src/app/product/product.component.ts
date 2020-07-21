@@ -105,7 +105,7 @@ export class ProductComponent implements OnInit {
       "strSort":this.sortname,
       "intLimit":event.pageSize,
       "intPageNo":event.pageIndex,
-      "arrBrand": this.filterObj.arrBrands,
+      "arrBrands": this.filterObj.arrBrands,
       "arrCategory":this.filterObj.arrCategory
 
     }
