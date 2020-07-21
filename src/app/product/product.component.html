@@ -13,6 +13,11 @@
         <i class="fa fa-search"></i>
 
       </div>
+      <div class="border-ligth form-control col-md-4 rounded-pill">
+        <p  class="border-0 col-md-10"> Import</p> 
+
+      </div>
+
 
 
 
@@ -29,7 +34,35 @@
   </div>
   <mat-drawer-container class="example-container">
     <mat-drawer #sideNav mode="side" opened="false" [position]="nav_position">
-      Drawer content
+      <div class="container">
+        <mat-form-field >
+          <mat-label>Brands</mat-label>
+          <mat-select multiple [(ngModel)]=filterObj.arrBrands name="arrBrands">
+            <mat-option *ngFor="let arrBrands of  filterbrand" [value]="arrBrands.strName"> {{arrBrands.strName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="container">
+        <mat-form-field >
+          <mat-label>Category</mat-label>
+          <mat-select multiple [(ngModel)]=filterObj.arrCategory name="arrCategory">
+            <mat-option *ngFor="let arrCategory of  filtercategory" [value]="arrCategory.strName"> {{arrCategory.strName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="container " hidden>
+        <mat-form-field >
+          <mat-label>Material</mat-label>
+          <mat-select multiple>
+            <mat-option *ngFor="let Material of  filtermaterial" [value]="Material.strName"> {{Material.strName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <button class="form-control btn-outline-secondary mt-1
+      " (click)="onpager($event)">  Apply</button>
+
     </mat-drawer>
     <mat-drawer-content>
 

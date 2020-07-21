@@ -1,19 +1,34 @@
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4"></div>
-        <div class="col-md-4 border mt-5 " style="background-color: rgb(224, 216, 206);">
+        <div class="col-md-4 border mt-5 " style="background-color: #E9EDFF">
             <h2 align="center" class="mt-5">
                 Login
             </h2>
-            <input type="email" [(ngModel)]="login_obj.strName" class="form-control mt-2 "  placeholder="Enter your email">
+            <input type="email" (focus)="fn_input_touched()" [(ngModel)]="login_obj.strName" class="form-control mt-2 "
+                placeholder="Enter your email">
+            <div class="alert alert-danger small" *ngIf="!(username_exists)">
+                Username not correct
+            </div>
+            <div *ngIf="login_obj.strName.length < 2 && inputTouched" class="alert alert-danger  "
+                style="font-size: 12px;text-align:center;">
+                Username must be grater than 2!
+            </div>
+            <!-- ############################################## PASSWORD ################################### -->
 
-            <input type="password" [(ngModel)]="login_obj.strPassword" class="form-control mt-3"  placeholder="Enter password">
+            <input type="password" (focus)="fn_input_touched2()" [(ngModel)]="login_obj.strPassword"
+                class="form-control mt-3" placeholder="Enter password">
 
-            <button class="btn-outline-secondary mt-3 form-control col-md-3" type="submit"  (click)="fn_login_email()">LOGIN
-            </button> 
+            <div *ngIf="login_obj.strPassword.length < 2 && inputTouched2" class="alert alert-danger  "
+                style="font-size: 12px;text-align:center;">
+                Enter password
+            </div>
 
-            
+            <button [disabled]="login_obj.strPassword.length < 2 || login_obj.strName.length < 2 " class="btn-outline-secondary mt-3 form-control col-md-3" type="submit"
+                (click)="fn_login_email()">LOGIN
+            </button>
+
+
             <p class="small text-center text-danger">Forget password?</p>
         </div>
         <div class="col-md-4"></div>
