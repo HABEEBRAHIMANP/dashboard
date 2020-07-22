@@ -24,6 +24,7 @@ interface genders {
 export class ProductDetailsComponent implements OnInit {
 
   @Input() fromParent;
+  
   arrSizeStock = [];
   arrColorStock = [];
   public popover;

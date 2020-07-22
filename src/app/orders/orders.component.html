@@ -67,25 +67,25 @@
     </mat-drawer>
     <mat-drawer-content>
 
-      <table class="table table-striped " matSort (matSortChange)="sortData($event);onpager($event);">
+      <table class="table table-striped text-center" matSort (matSortChange)="sortData($event);onpager($event);">
         <thead>
           <tr>
             <th>Si.No</th>
             <th mat-sort-header="strOrderId">Order ID</th>
-            <th mat-sort-header="strName">Name</th>
+            <th mat-sort-header="strName">Shop Name</th>
             <th mat-sort-header="time">Order Time</th>
-            <th mat-sort-header="dist">Distributer</th>
+            <!-- <th mat-sort-header="dist">Distributer</th> -->
             <th mat-sort-header="Status">Status</th>
             <th mat-sort-header="Amount">Amount</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="text-center">
           <tr *ngFor="let objOrder of orderList_obj;let i = index" (click)="openLg(objOrder)">
-            <td>{{i + 1}}</td>
-            <td>{{objOrder.strOrderId}}</td>
-            <td>{{objOrder.strName}}</td>
+            <td class="text-left">{{i + 1}}</td>
+            <td class="text-center" >{{objOrder.strOrderId}}</td>
+            <td >{{objOrder.objAddress.strName}}</td>
             <td>{{objOrder.strCreatedTime}}</td>
-            <td>{{objOrder.strDistributer}}</td>
+            <!-- <td>{{objOrder.strDistributer}}</td> -->
             <!-- <td *ngIf="objOrder.chrStatus == 'N'" >pending </td> -->
             <td>{{objOrder.strOrderStatus}}</td>
             <td>{{objOrder.dblTotalOrderAmount}}</td>
