@@ -1,0 +1,31 @@
+<div id="content1" #content1>
+    <div class="modal-header">
+      <h4 class="modal-title">Order Details</h4>
+      <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="modal-body">
+      <p class="text-secondary">ORDER ID : <span style="color: black;"> {{orderdetails.strOrderId}}</span></p>
+      <p class="text-secondary">RETAILER ID :</p>
+      <p class="text-secondary">SHOP NAME : <span style="color: black;"> {{orderdetails.objAddress.strName}}</span></p>
+      <p class="text-secondary">SHOP AREA : <span style="color: black;"> {{orderdetails.objAddress.strHouseArea}}</span>
+      </p>
+      <p class="text-secondary">GST NO : </p>
+      <p class="text-secondary">PHONE : <span style="color: black;"> {{orderdetails.objAddress.strMobileNo}}</span></p>
+      <p class="text-secondary">ORDER TIME : </p>
+      <p class="text-secondary">ORDER AMOUNT : <span style="color: black;"> {{orderdetails.dblTotalOrderAmount}}</span>
+      </p>
+      <p class="text-secondary">PAYMENT METHOD : <span style="color: black;"> {{orderdetails.strModePayment}}</span></p>
+      <p class="text-secondary">DISTRIBUTOR : </p>
+      <p class="text-secondary">NOTES : </p>
+      <p class="text-secondary">ORDER STATUS : <span style="color: red;"> {{orderdetails.strOrderStatus}}</span><i
+          class="fa fa-pencil ml-4"></i></p>
+  
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger mr-5 float-left" (click)="downloadPDF()">Export PDF</button>
+      <button type="button" class="btn btn-light" (click)="closDilog()">Close</button>
+      <button class="btn btn-success"> Update</button>
+    </div>
+  </div>

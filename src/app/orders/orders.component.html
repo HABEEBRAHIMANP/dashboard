@@ -1,6 +1,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
 
 <div class="container-fluid">
 
@@ -10,15 +12,15 @@
     </div>
     <div class="row col-6">
 
-      <div class="col-7" >
+      <div class="col-7">
       </div>
-      <div class="border-ligth form-control col-md-4 rounded-pill row mt-2" >
+      <div class="border-ligth form-control col-md-4 rounded-pill row mt-2">
         <!-- hgdfdf --><input type="text" placeholder=" Search" class="border-0 col-md-10">
         <i class="fa fa-search"></i>
 
 
       </div>
-      <mat-icon (click)="sideNav.toggle()" style="float: right;" class="col-1 mt-2 ml-4" >filter_list</mat-icon>
+      <mat-icon (click)="sideNav.toggle()" style="float: right;" class="col-1 mt-2 ml-4">filter_list</mat-icon>
 
 
 
@@ -30,40 +32,42 @@
   <mat-drawer-container class="example-container">
     <mat-drawer #sideNav mode="side" opened="false" [position]="nav_position">
       <hr>
-      
+
       <div class="container">
-        <mat-form-field >
+        <mat-form-field>
           <mat-label>Status Wise</mat-label>
-          <mat-select multiple  name="arrBrands">
-            <mat-option *ngFor="let status of  statusWise" > {{status.strName}}</mat-option>
+          <mat-select multiple name="arrBrands">
+            <mat-option *ngFor="let status of  statusWise"> {{status.strName}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
 
       <div class="container">
-        <mat-form-field >
+        <mat-form-field>
           <mat-label>Distributer</mat-label>
           <mat-select multiple [(ngModel)]=filterObj.arrDistributerId name="arrDistributerId">
-            <mat-option *ngFor="let arrDistributerId of  distlist" [value]="arrDistributerId._id"> {{arrDistributerId.strName}}</mat-option>
+            <mat-option *ngFor="let arrDistributerId of  distlist" [value]="arrDistributerId._id">
+              {{arrDistributerId.strName}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       <div class="container">
-        <mat-form-field >
+        <mat-form-field>
           <mat-label>Executive</mat-label>
           <mat-select multiple [(ngModel)]=filterObj.arrExecutiveId name="arrExecutiveId">
-            <mat-option *ngFor="let arrExecutiveId of  employee" [value]="arrExecutiveId._id"> {{arrExecutiveId.strName}}</mat-option>
+            <mat-option *ngFor="let arrExecutiveId of  employee" [value]="arrExecutiveId._id">
+              {{arrExecutiveId.strName}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      
+
       <button class="form-control btn-outline-secondary mt-1
-      " (click)="onpager($event)">  Apply</button>
+      " (click)="onpager($event)"> Apply</button>
 
     </mat-drawer>
     <mat-drawer-content>
 
-      <table class="table table-striped text-center" matSort (matSortChange)="sortData($event);onpager($event);">
+      <table class="table table-striped " matSort (matSortChange)="sortData($event);onpager($event);">
         <thead>
           <tr>
             <th>Si.No</th>
@@ -75,8 +79,8 @@
             <th mat-sort-header="Amount">Amount</th>
           </tr>
         </thead>
-        <tbody  >
-          <tr *ngFor="let objOrder of orderList_obj;let i = index" >
+        <tbody>
+          <tr *ngFor="let objOrder of orderList_obj;let i = index" (click)="openLg(objOrder)">
             <td>{{i + 1}}</td>
             <td>{{objOrder.strOrderId}}</td>
             <td>{{objOrder.strName}}</td>
@@ -85,21 +89,12 @@
             <!-- <td *ngIf="objOrder.chrStatus == 'N'" >pending </td> -->
             <td>{{objOrder.strOrderStatus}}</td>
             <td>{{objOrder.dblTotalOrderAmount}}</td>
-            <td><svg class="bi bi-pencil-square" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                <path fill-rule="evenodd"
-                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-              </svg></td>
-            <td>
-              <i class="fa fa-trash" (click)="openLg(content,objOrder.strOrderId)"></i>
-            </td>
+
         </tbody>
       </table>
     </mat-drawer-content>
   </mat-drawer-container>
-<!-- ##############################################################################3 -->
+  <!-- ##############################################################################3 -->
 
 </div>
 <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
@@ -108,30 +103,3 @@
 
 
 
-<ng-template #content let-modal>
-  <div class="modal-header">
-      <h4 class="modal-title">Order Details</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-      </button>
-  </div>
-  <div class="modal-body">
-    <p class="text-secondary">ORDER ID :  <span style="color: black;"> {{orderdetails.strOrderId}}</span></p>
-    <p class="text-secondary">RETAILER ID :</p>
-    <p class="text-secondary">SHOP NAME :  <span style="color: black;"> {{orderdetails.objAddress.strName}}</span></p>
-    <p class="text-secondary">SHOP AREA : <span style="color: black;"> {{orderdetails.objAddress.strHouseArea}}</span></p>
-    <p class="text-secondary">GST NO : </p>
-    <p class="text-secondary">PHONE : <span style="color: black;"> {{orderdetails.objAddress.strMobileNo}}</span></p>
-    <p class="text-secondary">ORDER TIME : </p>
-    <p class="text-secondary">ORDER AMOUNT :  <span style="color: black;"> {{orderdetails.dblTotalOrderAmount}}</span></p>
-    <p class="text-secondary">PAYMENT METHOD :  <span style="color: black;"> {{orderdetails.strModePayment}}</span></p>
-    <p class="text-secondary">DISTRIBUTOR : </p>
-    <p class="text-secondary">NOTES : </p>
-    <p class="text-secondary">ORDER STATUS : <span style="color: red;"> {{orderdetails.strOrderStatus}}</span><i class="fa fa-pencil ml-4" ></i></p>
-
-  </div>
-  <div class="modal-footer">
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
-      <button class="btn btn-success"> Update</button>
-  </div>
-</ng-template>
