@@ -10,7 +10,7 @@
  }
  tbody {
   display:block;
-  /* height:450px; */
+  height:80vh;
   overflow:auto;
 }
 thead, tbody tr {
@@ -18,9 +18,16 @@ thead, tbody tr {
   width:100%;
   table-layout:fixed;
 }
-mat-paginator {
+/* mat-paginator {
   position: absolute;
   bottom: 0;
   text-align: center;
   margin: 0 auto;
+} */
+.posss{
+  position: fixed;
+  bottom: 0;
+}
+.example-container{
+  margin-bottom: 10%;
 }
