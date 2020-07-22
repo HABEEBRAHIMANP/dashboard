@@ -1,30 +1,41 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { HttpClient, HttpHeaders, } from '@angular/common/http';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+
+
+import { Component, OnInit, Input } from '@angular/core';
+import { FormControlName, FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { ApiserviceService } from '../../apiservice.service';
+import { Observable, from } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpParams, HttpClientModule } from '@angular/common/http';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { stringify } from 'querystring';
+import { JSDocTagName, IfStmt } from '@angular/compiler/src/output/output_ast';
+import { PageEvent } from '@angular/material/paginator';
 
 const token = localStorage.getItem('strToken');
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token, 'strAppInfo': 'TNT1' })
-
 interface genders {
   value: string;
   viewValue: string;
 }
-
-
 @Component({
   selector: 'app-addproduct',
   templateUrl: './addproduct.component.html',
   styleUrls: ['./addproduct.component.css']
 })
-export class AddproductComponent implements OnInit {
-  public imageArray = [];
-  public imagePreviewArray = [];
+export class  AddproductComponent implements OnInit {
+
+  @Input() fromParent;
+
+  arrSizeStock = [];
+  arrColorStock = [];
   public popover;
+  // private productD:any={
+  //   "strProductId":this.fromParent._id
+  // }
+
+
 
   private master: any = {
     "strCollection": "cln_brand",
@@ -54,8 +65,15 @@ export class AddproductComponent implements OnInit {
   }
 
 
-  constructor(private http: HttpClient, private modalServ: NgbModal) { }
+  constructor(private http: HttpClient,
+    private modalServ: NgbModal,
+    private objFormBuilder: FormBuilder,
+    private apiService: ApiserviceService) { }
 
+  public imageUrls: any = ''
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings = {};
   ngOnInit(): void {
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
@@ -67,38 +85,33 @@ export class AddproductComponent implements OnInit {
     this.Autocompletesub();
     this.materials()
     this.fn_color();
+    this.fn_size();
+    console.log(this.fromParent);
+    this.fn_getProductDetails();
+    this.fn_product();
+    console.log(this.fromParent)
+
+    // console.log(this.productD)
+
+
   }
-  onFileInput(e) {
-    if (e.target.files.length > 0) {
-      const file = e.target.files[0];
-      this.imageArray.push(file);
-      const reader = new FileReader();
-      reader.onload = e => this.imagePreviewArray.push(reader.result);
-      reader.readAsDataURL(file);
-    }
+  onItemSelect(item: any) {
+    console.log(item);
   }
-  fn_remove_img(index) {
-    this.imagePreviewArray.splice(index, 1);
-    this.imageArray.splice(index, 1);
+  onSelectAll(items: any) {
+    console.log(items);
   }
-  public greeting: any
-  public changeGreeting(greeting: any): void {
-    const isOpen = this.popover.isOpen();
-    this.popover.close();
-    if (greeting !== this.greeting || !isOpen) {
-      this.greeting = greeting;
-      this.popover.open(greeting);
-    }
-  }
+
   // ################## AUTO COMPOLETE ###############
   myControl = new FormControl();
   control1 = new FormControl();
-
+  details_obj: any = []
   options: string[];
   categorymain: string[];
   categorysub: string[];
   materialList: string[];
-  colorpicker: any = []
+  colorpicker: any = [];
+  private dataform: any[]
 
 
   filteredOptions: Observable<string[]>;
@@ -117,11 +130,12 @@ export class AddproductComponent implements OnInit {
   }
   valueChanged(e) {
     this.master.strValue = e
-    console.log(this.master)
+    // console.log(this.master)
   }
   AutocompleteCate() {
     this.http.post('http://15.206.134.157:3000/common/get_autocomplete', this.category, { headers }).subscribe((body) => {
       this.categorymain = body['arrList'];
+      let hdhd = this.fromParent._id
 
       // console.log(body)
 
@@ -154,12 +168,12 @@ export class AddproductComponent implements OnInit {
   }
   valuechangeMaterial(e) {
     this.material.strValue = e;
-    console.log(this.material);
+    // console.log(this.material);
   }
 
   fn_color() {
     this.http.post('http://15.206.134.157:3000/master/get_master', this.color, { headers }).subscribe((body) => {
-      console.log(body)
+      // console.log(body)
       this.colorpicker = body['cln_color']
 
 
@@ -168,11 +182,128 @@ export class AddproductComponent implements OnInit {
   closDilog() {
     this.modalServ.dismissAll();
   }
-  
+
   gender: genders[] = [
-    {value: 'none', viewValue: 'none'},
-    {value: 'men', viewValue: 'men'},
-    {value: 'women', viewValue: 'women'}
+    { value: 'none', viewValue: 'none' },
+    { value: 'men', viewValue: 'men' },
+    { value: 'women', viewValue: 'women' }
   ];
 
+  fn_getProductDetails() {
+    this.http.post('http://15.206.134.157:3000/product/get_product_details', { 'strProductId': this.fromParent._id }, { headers }).subscribe((body) => {
+      this.details_obj = body
+
+      console.log(body)
+      // this.productD.push('strProductId',this.fromParent._id)
+
+    });
+  }
+
+
+
+  form = this.objFormBuilder.group({
+    strName: ['', Validators.required],
+    strProductId: ['', Validators.required],
+    dblMRP: ['', Validators.required],
+    dblSellingPrice: ['', Validators.required],
+    dblRetailerPrice: ['', Validators.required],
+    strBrandId: ['', Validators.required],
+    dblTotalStock: ['', Validators.required],
+    strGenderCategory: ['', Validators.required],
+    strCategoryId: ['', Validators.required],
+    strDescription: ['', Validators.required],
+    // arrImageUrl: 'https://axef.s3.ap-south-1.amazonaws.com/0mdlmaster1594911093064.webp',
+    strUnit: ['', Validators.required],
+    arrScheme: [[23, 34]],
+    arrSizeStock: this.objFormBuilder.group({
+      strName: ['', Validators.required],
+      dblStock: ['', Validators.required]
+    }),
+
+    arrColorStock: this.objFormBuilder.group({
+      strName: ['', Validators.required],
+      dblStock: ['', Validators.required]
+    })
+
+
+
+  });
+
+
+  public sizeList_obj = []
+
+  fn_size() {
+
+    let size = {
+      "arrCollection": [
+        { "strCollection": "cln_size", "intLimit": 10 },]
+    }
+    this.apiService.fn_OrderPost('master/get_master', size).subscribe((body) => {
+      console.log(body)
+      this.sizeList_obj = body['cln_size']
+    });
+  }
+  // ###################################### IMAGEE UPLOAD   ###########################
+  // ________________________________________STARTS________________________________
+  public imageArray = [];
+  public imagePreviewArray = [];
+
+
+
+
+
+  fn_remove_img(index) {
+    this.imagePreviewArray.splice(index, 1);
+    this.imageArray.splice(index, 1);
+  }
+
+  onFileInput(e) {
+    if (e.target.files.length > 0) {
+      const file = e.target.files[0];
+      this.imageArray.push(file);
+      const reader = new FileReader();
+      reader.onload = e => this.imagePreviewArray.push(reader.result);
+      reader.readAsDataURL(file);
+    }
+  }
+
+  fn_reg_comp() {
+    const formData = new FormData();
+    console.log(this.form.value)
+    this.imageArray.forEach(img => {
+      formData.append('image', img);
+      console.log(img.name);
+      this.apiService.fun_apiPostImage('file/files_upload', formData, '3001').subscribe((body) => {
+        console.log(body)
+        if (body['blnAPIStatus'] = true) {
+
+          let parameter = { ...this.form.value }
+
+          Object.assign(parameter, { arrImageUrl: body['arrImageUrl'] })
+
+
+          setTimeout(() => {
+            this.apiService.fn_OrderPost('product/create_product', parameter, '3001').subscribe(body => {
+              console.log(this.form.value)
+            });
+          }, 400);
+        }
+      });
+
+
+
+
+
+    })
+  }
+
+
+  // _______________________________________END_____________________________________________________________________
+
+  public productObj: any = {}
+  fn_product() {
+    console.log(this.productObj)
+  }
+
 }
+

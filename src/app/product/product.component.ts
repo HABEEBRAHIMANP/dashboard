@@ -68,6 +68,9 @@ export class ProductComponent implements OnInit {
     // }, (reason) => {s
     // });
   }
+  opdenAddproductComponnet(){
+    const modalRef = this.modalServ.open(ProductDetailsComponent,{size:'lg'})
+  }
   OpenDeleteDiloge(res) {
     const modalRef= this.modalServ.open(DeleteProductComponent, { size: 'md', centered: true })
     let data = res

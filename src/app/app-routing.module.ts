@@ -70,7 +70,7 @@ const routes: Routes = [
       },
       {
         path: 'addproduct',
-        component: ProductDetailsComponent, outlet: 'sidebar'
+        component: AddproductComponent, outlet: 'sidebar'
       },
       {
         path: 'masters',

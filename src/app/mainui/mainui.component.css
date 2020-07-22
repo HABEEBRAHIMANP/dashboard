@@ -45,7 +45,8 @@
 
 }
 .hover:hover{
- background-color: #E9EDFF
+ background-color:  #647ff8d8
+ /* #E9EDFF */
 }
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
   background-color: rgba(251, 253, 253, 0.972);
