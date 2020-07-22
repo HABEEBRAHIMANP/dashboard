@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-<div class="d-flex" id="wrapper" style="position: relative; display: block; overflow: hidden;">
+<div class="d-flex" id="wrapper" style="position: relative; display: block; overflow: hidden;max-height: 580px;">
 
   <!-- Sidebar -->
   <div class="bg-light border-right mt-2 " id="sidebar-wrapper">
@@ -41,9 +41,9 @@
       <a [routerLink]="[{outlets:{sidebar:['attendence']}}]" class="list-group-item list-group-item-action hover fontm">
         <i class="fa fa-user-times ml-2 mr-3" aria-hidden="true"> </i>Attendence</a>
       <!-- ################ MATERS  ########################## -->
-      <a class="list-group-item list-group-item-action  fontm" data-toggle="collapse" data-target="#demo"> <i
-          class="fa fa-tachometer ml-2 mr-3" aria-hidden="true"> </i>Masters<i class="fa fa-caret-down ml-2"
-          aria-hidden="true"></i></a>
+      <a class="list-group-item list-group-item-action  fontm" data-toggle="collapse" data-target="#demo">
+          class="fa fa-tachometer ml-2 mr-3" aria-hidden="true"> Masters
+          </a>
 
       <a id="demo" class="collapse scroll-sidebar">
         <li class="ml-4 font-weight-lighter list-group-item small hover  fontm"
