@@ -55,6 +55,18 @@ export class OrderdetailsComponent implements OnInit {
   
       doc.save('test.pdf');
     }
+    // ============================== ORDER UPDATE =================================
+    fn_orderUpdate(data){
+      
+      let param = {
+        "strOrderId" : data.strOrderId,
+        // "strOrderStatus": data.strOrderStatus
+
+      }
+      this.apiService.fn_OrderPost('order/update_order',param,'3001').subscribe(res =>{
+        console.log(res)
+      })
+    }
 
 
 
