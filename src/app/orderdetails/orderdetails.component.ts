@@ -4,6 +4,7 @@ import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas'
 (window as any).html2canvas = html2canvas;
 import { ApiserviceService } from '../apiservice.service';
+// import { ToastrService } from 'ngx-toastr';
 
 interface Status {
   strOrderStatus: string;
@@ -75,12 +76,18 @@ export class OrderdetailsComponent implements OnInit {
 
     }
     this.apiService.fn_OrderPost('order/update_order', param, '3001').subscribe(res => {
-      console.log(res)
+      console.log
+      if(res['blnAPIStatus']== true){
+        this.closDilog()
+      }
+
     }, (error) => {
       console.log(error['error']);
       if(error['error']['arrErrors']=="CANT_UPDATE"|| error['error']['arrErrors'] == "INVALID_STATUS" ){
           
         this.statusup = true;
+
+
       }
     })
   }

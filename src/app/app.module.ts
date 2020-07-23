@@ -48,6 +48,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import {MatSortModule} from '@angular/material/sort';
 import { OrderdetailsComponent } from './orderdetails/orderdetails.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -102,6 +103,8 @@ import { OrderdetailsComponent } from './orderdetails/orderdetails.component';
      MatIconModule,
      MatListModule,
      MatSortModule,
+
+     ToastrModule,
 
 
      
