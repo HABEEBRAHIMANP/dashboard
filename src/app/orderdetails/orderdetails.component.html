@@ -28,6 +28,9 @@
       </mat-option>
     </mat-select>
   </mat-form-field></p>
+  <div class="alert alert-danger small" *ngIf="statusup">
+    Cant {{statusdetails.strOrderStatus}}
+ </div>
   
     </div>
     <div class="modal-footer">
