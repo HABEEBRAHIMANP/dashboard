@@ -31,7 +31,6 @@ export class LoginComponent {
   fn_login_email() {
     this.http.post('http://15.206.134.157:3000/user/login_user', this.login_obj, { headers }).subscribe((body) => {
       // this.username_exists = err['blnAPIStatus']
-      console.log(body)
       if (body) {
         this.username_exists = body['blnAPIStatus']
         if (body['blnAPIStatus'] == true) {
@@ -42,7 +41,6 @@ export class LoginComponent {
             this.route.navigate(['/mainui'])
           } else {
             this.route.navigate(['/login'])
-            console.log('not admin')
           }
 
         }
@@ -56,12 +54,10 @@ export class LoginComponent {
         console.log(this.errors)
         if(this.errors['arrErrors'][0] == "CREDENTIAL_INVALID"){
           this.password_worng = false;
-          console.log(this.errors)
 
         }
         if(this.errors['arrErrors'][0] == "INVALID_USER_NAME"){
           this.username_exists = false;
-          console.log(this.errors)
 
         }
         
@@ -78,6 +74,7 @@ export class LoginComponent {
   fn_input_touched2() {
     this.inputTouched2 = true;
   }
+  
 
 
 }
