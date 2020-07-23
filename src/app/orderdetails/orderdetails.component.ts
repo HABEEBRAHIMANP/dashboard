@@ -25,7 +25,7 @@ export class OrderdetailsComponent implements OnInit {
   }
   public orderdetails: any = {
     "strOrderStatus": '',
-    
+
   }
   openLg() {
     let param = {
@@ -69,27 +69,34 @@ export class OrderdetailsComponent implements OnInit {
 
     let param = {
       "strOrderId": data.strOrderId,
-      "strOrderStatus":this.statusdetails.strOrderStatus
-      
+      "strOrderStatus": this.statusdetails.strOrderStatus
+
       // "strOrderStatus": data.strOrderStatus
 
     }
     this.apiService.fn_OrderPost('order/update_order', param, '3001').subscribe(res => {
       console.log(res)
+    }, (error) => {
+      console.log(error['error']);
+      if(error['error']['arrErrors']=="CANT_UPDATE"|| error['error']['arrErrors'] == "INVALID_STATUS" ){
+          
+        this.statusup = true;
+      }
     })
   }
-  public statusdetails={
-    'strOrderStatus':""
-    
+  public statusup = false;
+  public statusdetails = {
+    'strOrderStatus': ""
+
   }
   public status: any = [
-    {'strOrderStatus' :'PENDING'},
-    {'strOrderStatus' :'CONFIRM'},
-    {'strOrderStatus' :'SHIPPED'},
-    {'strOrderStatus' :'DELIVERED'},
-    {'strOrderStatus' :'CANCEL'},
-    {'strOrderStatus' :'RETURNED'},
-    {'strOrderStatus' :'REFUNDED'}
+    { 'strOrderStatus': 'PENDING' },
+    { 'strOrderStatus': 'CONFIRM' },
+    { 'strOrderStatus': 'SHIPPED' },
+    { 'strOrderStatus': 'DELIVERED' },
+    { 'strOrderStatus': 'CANCEL' },
+    { 'strOrderStatus': 'RETURNED' },
+    { 'strOrderStatus': 'REFUNDED' }
 
 
   ]
@@ -97,7 +104,7 @@ export class OrderdetailsComponent implements OnInit {
 
 
 
- 
+
 
 
 }
