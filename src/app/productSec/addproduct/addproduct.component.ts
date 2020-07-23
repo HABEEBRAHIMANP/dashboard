@@ -8,9 +8,6 @@ import { Observable, from } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams, HttpClientModule } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { stringify } from 'querystring';
-import { JSDocTagName, IfStmt } from '@angular/compiler/src/output/output_ast';
-import { PageEvent } from '@angular/material/paginator';
 
 const token = localStorage.getItem('strToken');
 
@@ -24,7 +21,7 @@ interface genders {
   templateUrl: './addproduct.component.html',
   styleUrls: ['./addproduct.component.css']
 })
-export class  AddproductComponent implements OnInit {
+export class AddproductComponent implements OnInit {
 
   @Input() fromParent;
 
@@ -190,7 +187,7 @@ export class  AddproductComponent implements OnInit {
   ];
 
   fn_getProductDetails() {
-    this.http.post('http://15.206.134.157:3000/product/get_product_details', { 'strProductId': this.fromParent._id }, { headers }).subscribe((body) => {
+    this.apiService.fn_OrderPost('product/get_product_details', { 'strProductId': this.fromParent._id }).subscribe((body) => {
       this.details_obj = body
 
       console.log(body)
@@ -212,9 +209,8 @@ export class  AddproductComponent implements OnInit {
     strGenderCategory: ['', Validators.required],
     strCategoryId: ['', Validators.required],
     strDescription: ['', Validators.required],
-    // arrImageUrl: 'https://axef.s3.ap-south-1.amazonaws.com/0mdlmaster1594911093064.webp',
     strUnit: ['', Validators.required],
-    arrScheme: [[23, 34]],
+    arrScheme: [[]],
     arrSizeStock: this.objFormBuilder.group({
       strName: ['', Validators.required],
       dblStock: ['', Validators.required]
@@ -244,7 +240,6 @@ export class  AddproductComponent implements OnInit {
     });
   }
   // ###################################### IMAGEE UPLOAD   ###########################
-  // ________________________________________STARTS________________________________
   public imageArray = [];
   public imagePreviewArray = [];
 
@@ -275,18 +270,18 @@ export class  AddproductComponent implements OnInit {
       console.log(img.name);
       this.apiService.fun_apiPostImage('file/files_upload', formData, '3001').subscribe((body) => {
         console.log(body)
-        if (body['blnAPIStatus'] = true) {
+        if(body['blnAPIStatus']	= true){
 
           let parameter = { ...this.form.value }
 
           Object.assign(parameter, { arrImageUrl: body['arrImageUrl'] })
+  
 
-
-          setTimeout(() => {
-            this.apiService.fn_OrderPost('product/create_product', parameter, '3001').subscribe(body => {
-              console.log(this.form.value)
-            });
-          }, 400);
+            setTimeout(() => {
+              this.apiService.fn_OrderPost('product/create_product', parameter, '3001').subscribe(body => {
+                console.log(this.form.value) 
+              });
+            }, 400);
         }
       });
 
@@ -298,12 +293,35 @@ export class  AddproductComponent implements OnInit {
   }
 
 
+
+
   // _______________________________________END_____________________________________________________________________
 
   public productObj: any = {}
   fn_product() {
     console.log(this.productObj)
   }
+
+  public fieldArray: Array<any> = [];
+  public newAttribute: any = {};
+
+
+
+
+
+  addFieldValue() {
+    this.fieldArray.push(this.newAttribute)
+    this.newAttribute = {};
+  }
+
+  deleteFieldValue(index) {
+    this.fieldArray.splice(index, 1);
+  }
+  fn_check(){
+    console.log(this.form.value)
+  }
+
+
 
 }
 

@@ -27,7 +27,7 @@
             <div class="">
                 <label class="small" for="mrp">MRP </label>
                 <input type="number" class="form-control" id="mrp" aria-describedby="name" formControlName="dblMRP"
-                    value="fromParent.strName" placeholder="MRP">
+                    placeholder="MRP">
 
             </div>
         </div>
@@ -69,23 +69,14 @@
             </mat-autocomplete>
 
             <input type="text" class="form-control  " [matAutocomplete]="auto" placeholder="Brand"
-                (input)="valueChanged($event.target.value)" (input)="Autocomplete()" formControlName="strBrandId" >
+                (input)="valueChanged($event.target.value)" (input)="Autocomplete()" formControlName="strBrandId">
+
 
         </div>
-        <!-- gender -->
-        <!-- <div class="col-md-6">
-            <div class="">
-                <label class="small" for="product">Gemder</label>
-                <input type="text" class="form-control" id="strGenderCategory" aria-describedby="gender"
-                    placeholder="Gender " formControlName="strGenderCategory">
-
-            </div>
-        </div> -->
         <div class="col-md-6">
             <div class="form-group">
                 <label for="sel1">Gender <span class="required">*</span></label>
-                <select class="form-control" formControlName="strGenderCategory"
-                    [(ngModel)]=fromParent.strGenderCategory [value]="" placeholder="Select Gender">
+                <select class="form-control" formControlName="strGenderCategory" [value]="" placeholder="Select Gender">
                     <option value="Men">Men</option>
                     <option value="Women">Women</option>
                     <option value="Kids">Kids</option>
@@ -116,8 +107,111 @@
             <label class="small" for="product">Sub Category</label>
             <input type="text" class="form-control mt-2  " [formControl]="control1" [matAutocomplete]="auto2"
                 placeholder="Sub Category" (input)="valueChangedsub($event.target.value)" (input)="Autocompletesub()"
-                formControlName="SubCategory" [(ngModel)]=fromParent.SubCategory>
+                formControlName="SubCategory">
         </div>
+        <!-- +++++++++++++++++++++++++++++++++++++++++++= STOCK COLOR AND SIZE+++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <form formGroupName="arrSizeStock">
+            <div class="col-md-6">
+                <table class="table table-striped table-bordered">
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                <mat-form-field>
+                                    <input matInput id="newAttributeCountry" formControlName="strName"
+                                        name="newAttributeCountry" placeholder="Size">
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field>
+                                    <input matInput id="newAttributeCity" formControlName="dblStock"
+                                        name="newAttributeCity" placeholder="Stock">
+                                </mat-form-field>
+                            </td>
+
+                            <td>
+                                <button class="btn btn-default" type="button" (click)="addFieldValue()">Add</button>
+                            </td>
+                        </tr>
+
+                        <tr *ngFor="let field of fieldArray; let i = index">
+                            <td>
+
+                                <mat-form-field>
+                                    <input matInput formControlName="strName" name="{{field.country}}"
+                                        placeholder="Size">
+                                </mat-form-field>
+
+                            </td>
+                            <td>
+                                <mat-form-field>
+                                    <input matInput formControlName="dblStock" name="{{field.city}}"
+                                        placeholder="Stock">
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <button class="btn btn-default" type="button"
+                                    (click)="deleteFieldValue(i)">Delete</button>
+                            </td>
+                        </tr>
+
+
+
+                    </tbody>
+                </table>
+            </div>
+        </form>
+        <form formGroupName="arrColorStock">
+            <div class="col-md-6">
+                <table class="table table-striped table-bordered">
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                <mat-form-field>
+                                    <input matInput id="newAttributeCountry" formControlName="strName"
+                                        name="newAttributeCountry" placeholder="Color">
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field>
+                                    <input matInput id="newAttributeCity" formControlName="dblStock"
+                                        name="newAttributeCity" placeholder="Stock">
+                                </mat-form-field>
+                            </td>
+
+                            <td>
+                                <button class="btn btn-default" type="button" (click)="addFieldValue()">Add</button>
+                            </td>
+                        </tr>
+
+                        <tr *ngFor="let field of fieldArray; let i = index">
+                            <td>
+
+                                <mat-form-field>
+                                    <input matInput formControlName="strName" name="{{field.country}}"
+                                        placeholder="Size">
+                                </mat-form-field>
+
+                            </td>
+                            <td>
+                                <mat-form-field>
+                                    <input matInput formControlName="dblStock" name="{{field.city}}"
+                                        placeholder="Stock">
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <button class="btn btn-default" type="button"
+                                    (click)="deleteFieldValue(i)">Delete</button>
+                            </td>
+                        </tr>
+
+
+
+                    </tbody>
+                </table>
+            </div>
+        </form>
         <!-- material -->
         <div class="col-md-6">
             <mat-autocomplete #auto3="matAutocomplete">
@@ -128,84 +222,9 @@
             <label class="small" for="stock">Materials</label>
             <input type="text" class="form-control mt-2  " [formControl]="control1" [matAutocomplete]="auto3"
                 placeholder="Material name" (input)="valuechangeMaterial($event.target.value)" (input)="materials()"
-                formControlName="Material" [(ngModel)]=fromParent.Material>
+                formControlName="Material">
         </div>
 
-        <!-- SIZE STOCK -->
-        <!-- enter SIZE -->
-        <div>
-            <form formGroupName="arrSizeStock" class="mt-2">
-
-
-                <mat-form-field appearance="fill">
-                    <mat-label>size</mat-label>
-                    <mat-select formControlName="strName" [(ngModel)]=fromParent multiple>
-                        <mat-option *ngFor="let topping of sizeList_obj" [value]="topping.strName">{{topping.strName}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <!-- <div class="col-md-12 mt-4">
-
-                    <label class="small" for="mrp">Size </label>
-                    <input type="text" class="form-control" id="mrp" aria-describedby="name" formControlName="strName"
-                        placeholder="size">
-
-
-                </div> -->
-                <div class="col-md-12 mt-4">
-                    <label class="small" for="mrp">stock </label>
-                    <input type="number" class="form-control" id="mrp" aria-describedby="name"
-                        formControlName="dblStock" [(ngModel)]=fromParent.dblStock placeholder="dblStock">
-
-                </div>
-            </form>
-            <!-- ###############color############### -->
-            <form formGroupName="arrColorStock">
-
-                <mat-form-field appearance="fill">
-                    <mat-label>Color</mat-label>
-                    <mat-select formControlName="strName" multiple>
-                        <mat-option *ngFor="let topping of  colorpicker" [value]="topping.strName">{{topping.strName}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-
-
-                <div class="">
-                    <div class="">
-                        <label class="small" for="mrp">stock </label>
-                        <input type="number" class="form-control" id="mrp" aria-describedby="name"
-                            formControlName="dblStock" placeholder="stock">
-
-                    </div>
-                </div>
-            </form>
-        </div>
-        <!-- ###############description -->
-        <div class="col-md-6">
-            <label class="small" for="product"> Descreption</label>
-            <input type="text" class="form-control" id="strGender" aria-describedby="gender"
-                formControlName="strDescription" placeholder="Descreption">
-
-        </div>
-        <!-- _______________________________________________________ -->
-        <div class="col-md-6">
-            <div class="ml-2 mt-2">
-                <span class="fontm mr-2"> Product to </span> <input type="checkbox"> <span class="fontm mr-2">
-                    B2B</span><input type="checkbox"><span class="fontm">B2C</span>
-            </div>
-            <div class="border mt-2 rounded bg-light text-dark carryBorder rounded">
-                <p class="text-center">ITEM UNIT IN</p>
-                <input type="radio" name="unit" class=" ml-2 " value="Liter" formControlName="strUnit"
-                    [(ngModel)]=fromParent.strUnit> liter
-                <input type="radio" name="unit" class=" ml-2 " value="Kg" formControlName="strUnit"
-                    [(ngModel)]=fromParent.strUnit> Kg
-                <input type="radio" name="unit" class=" ml-2 " value="Qty" formControlName="strUnit"
-                    [(ngModel)]=fromParent.strUnit> Qty
-            </div>
-        </div>
 
 
         <!-- IMges -->
@@ -228,34 +247,9 @@
 
         </div>
 
-    </div>
 
-    <!-- 
-        <div class="col-md-6" *ngFor='let url of urls'>
-            <div class="col-md-4">
-                <div class="form-group" style="position: relative;">
-                    <img [src]="url" style="width: 250px;" />
-                    <span class="image-delete-btn"><i class="fa fa-trash"></i></span>
-                </div>
-            </div> -->
-    <!-- <div class="col-md-6" *ngIf="strButtonName ==='Update'">
-        <div class="form-group">
-            <img class="img-responsive edit-img-br" src="{{strImageUrl}}">
+        <div>
+            <button (click)="fn_check()">okkk</button>
         </div>
-    </div> -->
-    <!-- </div> -->
-    <p>
-        Form Status: {{ form.status }}
-    </p>
-    <p>
-        <button type="submit" (click)="fn_reg_comp()">Update Profile</button>
-    </p>
-
-
-
-
+    </div>
 </form>
-<!-- 
-    <ng-multiselect-dropdown [placeholder]="'custom placeholder'" [data]="dropdownList" [(ngModel)]="selectedItems"
-        (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-    </ng-multiselect-dropdown>  -->
