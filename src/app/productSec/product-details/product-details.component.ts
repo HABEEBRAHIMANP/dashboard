@@ -301,5 +301,9 @@ export class ProductDetailsComponent implements OnInit {
   fn_product(){
     console.log(this.productObj)
   }
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ public strBrandIds:any={}
+ public option:any={}
+
 
 }

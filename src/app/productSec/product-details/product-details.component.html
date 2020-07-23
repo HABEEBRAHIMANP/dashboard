@@ -65,14 +65,19 @@
         <div class="col-md-6">
             <label class="small" for="product">Brand</label>
             <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of options" [value]="option.strName">
+                <mat-option *ngFor="let option of options" [value]="option.strName" [(ngModel)]="option.strName" >
                     {{option.strName}}
                 </mat-option>
             </mat-autocomplete>
 
             <input type="text" class="form-control  " [matAutocomplete]="auto" placeholder="Brand"
-                (input)="valueChanged($event.target.value)" (input)="Autocomplete()" formControlName="strBrandId"
+                (input)="valueChanged($event.target.value)" (input)="Autocomplete()" formControlName="strBrandId" [(ngModel)]="strBrandIds.str"
                 [(ngModel)]=fromParent.strBrandId>
+
+
+            <div *ngIf="strBrandIds.str.length != option.strName " class="alert alert-danger  " style="font-size: 12px;text-align:center;">
+                Username must be grater than 2!
+            </div>
         </div>
         <!-- gender -->
         <!-- <div class="col-md-6">
@@ -86,7 +91,8 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="sel1">Gender <span class="required">*</span></label>
-                <select class="form-control" formControlName="strGenderCategory" [(ngModel)]=fromParent.strGenderCategory [value]="" placeholder="Select Gender">
+                <select class="form-control" formControlName="strGenderCategory"
+                    [(ngModel)]=fromParent.strGenderCategory [value]="" placeholder="Select Gender">
                     <option value="Men">Men</option>
                     <option value="Women">Women</option>
                     <option value="Kids">Kids</option>
@@ -134,13 +140,13 @@
 
         <!-- SIZE STOCK -->
         <!-- enter SIZE -->
-        <div>   
+        <div>
             <form formGroupName="arrSizeStock" class="mt-2">
 
 
                 <mat-form-field appearance="fill">
                     <mat-label>size</mat-label>
-                    <mat-select formControlName="strName" [(ngModel)]=fromParent  multiple>
+                    <mat-select formControlName="strName" [(ngModel)]=fromParent multiple>
                         <mat-option *ngFor="let topping of sizeList_obj" [value]="topping.strName">{{topping.strName}}
                         </mat-option>
                     </mat-select>
@@ -199,9 +205,12 @@
             </div>
             <div class="border mt-2 rounded bg-light text-dark carryBorder rounded">
                 <p class="text-center">ITEM UNIT IN</p>
-                <input type="radio" name="unit" class=" ml-2 " value="Liter" formControlName="strUnit" [(ngModel)]=fromParent.strUnit> liter
-                <input type="radio" name="unit" class=" ml-2 " value="Kg" formControlName="strUnit" [(ngModel)]=fromParent.strUnit> Kg
-                <input type="radio" name="unit" class=" ml-2 " value="Qty" formControlName="strUnit" [(ngModel)]=fromParent.strUnit> Qty
+                <input type="radio" name="unit" class=" ml-2 " value="Liter" formControlName="strUnit"
+                    [(ngModel)]=fromParent.strUnit> liter
+                <input type="radio" name="unit" class=" ml-2 " value="Kg" formControlName="strUnit"
+                    [(ngModel)]=fromParent.strUnit> Kg
+                <input type="radio" name="unit" class=" ml-2 " value="Qty" formControlName="strUnit"
+                    [(ngModel)]=fromParent.strUnit> Qty
             </div>
         </div>
 
@@ -220,7 +229,7 @@
             <button class="btn-sm alert-danger" (click)="fn_remove_img(i);">delete</button>
             <img class="card-img-top" [src]="img" alt="no images!!" style="width:30%">
         </div>
-        <div >
+        <div>
             <img [src]=fromParent.strImageUrl style="width:30%">
 
 
