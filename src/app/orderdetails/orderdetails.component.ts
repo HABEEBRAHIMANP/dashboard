@@ -1,15 +1,20 @@
-import { Component, OnInit ,ViewChild,ElementRef, Input} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, ɵConsole } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas'
 (window as any).html2canvas = html2canvas;
 import { ApiserviceService } from '../apiservice.service';
 
+interface Status {
+  strOrderStatus: string;
+  // viewValue: string;
+}
 @Component({
   selector: 'app-orderdetails',
   templateUrl: './orderdetails.component.html',
   styleUrls: ['./orderdetails.component.css']
 })
+
 
 export class OrderdetailsComponent implements OnInit {
   @Input() fromParent;
@@ -18,7 +23,10 @@ export class OrderdetailsComponent implements OnInit {
   ngOnInit(): void {
     this.openLg();
   }
-    public orderdetails: any;
+  public orderdetails: any = {
+    "strOrderStatus": '',
+    
+  }
   openLg() {
     let param = {
       "strOrderId": this.fromParent.strOrderId
@@ -33,40 +41,59 @@ export class OrderdetailsComponent implements OnInit {
   }
 
 
-    // ================================= PDF =======================
-    @ViewChild('content1', {static: false}) content: ElementRef;
+  // ================================= PDF =======================
+  @ViewChild('content1', { static: false }) content: ElementRef;
 
 
-    public downloadPDF() {
-      const doc = new jsPDF();
-  
-      const specialElementHandlers = {
-        '#editor': function (element, renderer) {
-          return true;
-        }
-      };
-  
-      const content = this.content.nativeElement;
-  
-      doc.fromHTML(content.innerHTML, 15, 15, {
-        width: 190,
-        'elementHandlers': specialElementHandlers
-      });
-  
-      doc.save('test.pdf');
-    }
-    // ============================== ORDER UPDATE =================================
-    fn_orderUpdate(data){
-      
-      let param = {
-        "strOrderId" : data.strOrderId,
-        // "strOrderStatus": data.strOrderStatus
+  public downloadPDF() {
+    const doc = new jsPDF();
 
+    const specialElementHandlers = {
+      '#editor': function (element, renderer) {
+        return true;
       }
-      this.apiService.fn_OrderPost('order/update_order',param,'3001').subscribe(res =>{
-        console.log(res)
-      })
+    };
+
+    const content = this.content.nativeElement;
+
+    doc.fromHTML(content.innerHTML, 15, 15, {
+      width: 190,
+      'elementHandlers': specialElementHandlers
+    });
+
+    doc.save('test.pdf');
+  }
+  // ============================== ORDER UPDATE =================================
+  fn_orderUpdate(data) {
+    console.log(this.statusdetails)
+
+    let param = {
+      "strOrderId": data.strOrderId,
+      "strOrderStatus":this.statusdetails.strOrderStatus
+      
+      // "strOrderStatus": data.strOrderStatus
+
     }
+    this.apiService.fn_OrderPost('order/update_order', param, '3001').subscribe(res => {
+      console.log(res)
+    })
+  }
+  public statusdetails={
+    'strOrderStatus':""
+    
+  }
+  public status: any = [
+    {'strOrderStatus' :'PENDING'},
+    {'strOrderStatus' :'CONFIRM'},
+    {'strOrderStatus' :'SHIPPED'},
+    {'strOrderStatus' :'DELIVERED'},
+    {'strOrderStatus' :'CANCEL'},
+    {'strOrderStatus' :'RETURNED'},
+    {'strOrderStatus' :'REFUNDED'}
+
+
+  ]
+
 
 
 

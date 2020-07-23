@@ -20,7 +20,14 @@
       <p class="text-secondary">DISTRIBUTOR : </p>
       <p class="text-secondary">NOTES : </p>
       <p class="text-secondary">ORDER STATUS : <span style="color: red;"> {{orderdetails.strOrderStatus}}</span><i
-          class="fa fa-pencil ml-4"></i></p>
+          class="fa fa-pencil ml-4"></i>   <mat-form-field appearance="fill">
+    <mat-label>ORDER STATUS UPDATE</mat-label>
+    <mat-select [(ngModel)]="statusdetails.strOrderStatus" name="food">
+      <mat-option *ngFor="let status of status" [value]="status.strOrderStatus">
+        {{status.strOrderStatus}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field></p>
   
     </div>
     <div class="modal-footer">
