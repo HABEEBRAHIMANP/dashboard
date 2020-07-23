@@ -17,7 +17,7 @@
             <!-- ############################################## PASSWORD ################################### -->
 
             <input type="password" (focus)="fn_input_touched2()" [(ngModel)]="login_obj.strPassword"
-                class="form-control mt-3" placeholder="Enter password">
+                class="form-control mt-3" placeholder="Enter password" (keydown.enter)="fn_login_email()">
 
             <div *ngIf="login_obj.strPassword.length < 2 && inputTouched2" class="alert alert-danger  "
                 style="font-size: 12px;text-align:center;">
@@ -27,8 +27,8 @@
                wrong password
             </div>
 
-            <button [disabled]="login_obj.strPassword.length < 2 || login_obj.strName.length < 2 " class="btn-outline-secondary mt-3 form-control col-md-3" type="submit"
-                (click)="fn_login_email()">LOGIN
+            <button   class="btn-outline-secondary mt-3 form-control col-md-3" type="submit"
+                (click)="fn_login_email()" >LOGIN
             </button>
 
 

@@ -13,7 +13,8 @@
     <div class="list-group list-group-flush element" style="height:500px; overflow-y: scroll;">
 
       <a [routerLink]="[{outlets:{sidebar:['dashboard']}}]" class="list-group-item hover list-group-item-action  fontm">
-        <i class="fa fa-tachometer ml-2 mr-3" aria-hidden="true">  </i> <i class="fal fa-tachometer-alt-slowest"></i>Dashboard</a>
+        <i class="fa fa-tachometer ml-2 mr-3" aria-hidden="true"> </i> <i
+          class="fal fa-tachometer-alt-slowest"></i>Dashboard</a>
 
       <a [routerLink]="[{outlets:{sidebar:['orders']}}]" class="list-group-item list-group-item-action hover fontm"> <i
           class="fa fa-cart-plus ml-2 mr-3" aria-hidden="true"> </i>Order</a>
@@ -43,7 +44,7 @@
       <!-- ################ MATERS  ########################## -->
       <a class="list-group-item list-group-item-action  fontm" data-toggle="collapse" data-target="#demo"> <i
           class="fa fa-tachometer ml-2 mr-3" aria-hidden="true"> </i>Masters
-          </a>
+      </a>
 
       <a id="demo" class="collapse scroll-sidebar">
         <li class="ml-4 font-weight-lighter list-group-item small hover  fontm"
@@ -56,10 +57,8 @@
           [routerLink]="[{outlets:{sidebar:['size']}}]">Size</li>
         <li class="ml-4 font-weight-lighter list-group-item small hover  fontm"
           [routerLink]="[{outlets:{sidebar:['color']}}]">Color</li>
-        <li class="ml-4 font-weight-lighter list-group-item small hover  fontm"
-          [routerLink]="[{outlets:{sidebar:['size']}}]">Location</li>
-        <li class="ml-4 font-weight-lighter list-group-item small hover  fontm"
-          [routerLink]="[{outlets:{sidebar:['size']}}]">Sub Category</li>
+        <li class="ml-4 font-weight-lighter list-group-item small hover  fontm">Location</li>
+        <li class="ml-4 font-weight-lighter list-group-item small hover  fontm">Sub Category</li>
       </a>
 
 
