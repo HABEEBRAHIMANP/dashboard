@@ -12,6 +12,7 @@
   display:block;
   height:80vh;
   overflow:auto;
+  z-index: -5;
 }
 thead, tbody tr {
   display:table;
