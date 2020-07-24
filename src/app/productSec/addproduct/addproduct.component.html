@@ -175,7 +175,7 @@
                             </td>
                             <td>
                                 <mat-form-field>
-                                    <input matInput id="newAttributeCity" formControlName="dblStock"
+                                    <input type="number" matInput id="newAttributeCity" formControlName="dblStock"
                                         name="newAttributeCity" placeholder="Stock">
                                 </mat-form-field>
                             </td>
@@ -196,7 +196,7 @@
                             </td>
                             <td>
                                 <mat-form-field>
-                                    <input matInput formControlName="dblStock" name="{{field.city}}"
+                                    <input type="number" matInput formControlName="dblStock" name="{{field.city}}"
                                         placeholder="Stock">
                                 </mat-form-field>
                             </td>
@@ -224,32 +224,39 @@
                 placeholder="Material name" (input)="valuechangeMaterial($event.target.value)" (input)="materials()"
                 formControlName="Material">
         </div>
+        <!-- ||||||||||||||||||| item UINIT IN |||||||||||||||||||||||||||| -->
+        <div class="col-md-6">
+            <div class="ml-2 mt-2">
+                <span class="fontm mr-2"> Product to </span> <input type="checkbox"> <span class="fontm mr-2">
+                    B2B</span><input type="checkbox"><span class="fontm">B2C</span>
+            </div>
+            <div class="border mt-2 rounded bg-light text-dark carryBorder rounded">
+                <p class="text-center">ITEM UNIT IN</p>
+                <input type="radio" name="unit" class=" ml-2 " value="Liter" formControlName="strUnit"> liter
+                <input type="radio" name="unit" class=" ml-2 " value="Kg" formControlName="strUnit"> Kg
+                <input type="radio" name="unit" class=" ml-2 " value="Qty" formControlName="strUnit"> Qty
+            </div>
+        </div>
+        <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+        <div class="col-md-6">
+            <label class="small" for="product"> Descreption</label>
+            <input type="text" class="form-control" id="strGender" aria-describedby="gender"
+                formControlName="strDescription" placeholder="Descreption">
 
+        </div>
 
 
         <!-- IMges -->
-        <div class="col-md-6">
-            <div class="form-group m-t-30">
-                <!-- <input type="file" accept="image/*" multiple (change)="onSelectFile($event)" /> -->
-                <input type="file" accept="image/*" multiple (change)="onFileInput($event);">
-            </div>
-        </div>
+        <img *ngFor='let url of urls' [src]="url" height="200"> <br />
 
-        <!-- imageUpload start-->
-
-        <div *ngFor="let img of imagePreviewArray; let i=index">
-            <button class="btn-sm alert-danger" (click)="fn_remove_img(i);">delete</button>
-            <img class="card-img-top" [src]="img" alt="no images!!" style="width:30%">
-        </div>
-        <div>
-            <img [src]=fromParent.strImageUrl style="width:30%">
+        <input type='file' (change)="onSelectFile($event)" multiple>
+        <button (click)="uploadFiles()">uplisdsf</button>
 
 
-        </div>
 
 
         <div>
-            <button (click)="fn_check()">okkk</button>
+            <button (click)="fn_finalProductUpload()">okkk</button>
         </div>
     </div>
 </form>
