@@ -240,58 +240,102 @@ export class AddproductComponent implements OnInit {
     });
   }
   // ###################################### IMAGEE UPLOAD   ###########################
-  public imageArray = [];
-  public imagePreviewArray = [];
+  // public imageArray = [];
+  // public imagePreviewArray = [];
 
 
 
 
 
-  fn_remove_img(index) {
-    this.imagePreviewArray.splice(index, 1);
-    this.imageArray.splice(index, 1);
-  }
+  // fn_remove_img(index) {
+  //   this.imagePreviewArray.splice(index, 1);
+  //   this.imageArray.splice(index, 1);
+  // }
 
-  onFileInput(e) {
-    if (e.target.files.length > 0) {
-      const file = e.target.files[0];
-      this.imageArray.push(file);
-      const reader = new FileReader();
-      reader.onload = e => this.imagePreviewArray.push(reader.result);
-      reader.readAsDataURL(file);
-    }
-  }
+  // onFileInput(e) {
+  //   if (e.target.files.length > 0) {
+  //     const file = e.target.files[0];
+  //     this.imageArray.push(file);
+  //     const reader = new FileReader();
+  //     reader.onload = e => this.imagePreviewArray.push(reader.result);
+  //     reader.readAsDataURL(file);
+  //   }
+  // }
 
-  fn_reg_comp() {
-    const formData = new FormData();
-    console.log(this.form.value)
-    this.imageArray.forEach(img => {
-      formData.append('image', img);
-      console.log(img.name);
-      this.apiService.fun_apiPostImage('file/files_upload', formData, '3001').subscribe((body) => {
-        console.log(body)
-        if(body['blnAPIStatus']	= true){
+  // fn_reg_comp() {
+  //   const formData = new FormData();
+  //   console.log(this.form.value)
+  //   this.imageArray.forEach(img => {
+  //     formData.append('image', img);
+  //     console.log(img.name);
+  //     this.apiService.fun_apiPostImage('file/files_upload', formData, '3001').subscribe((body) => {
+  //       console.log(body)
+  //       if(body['blnAPIStatus']	= true){
 
-          let parameter = { ...this.form.value }
+  //         let parameter = { ...this.form.value }
 
-          Object.assign(parameter, { arrImageUrl: body['arrImageUrl'] })
-  
+  //         Object.assign(parameter, { arrImageUrl: body['arrImageUrl'] })
 
-            setTimeout(() => {
-              this.apiService.fn_OrderPost('product/create_product', parameter, '3001').subscribe(body => {
-                console.log(this.form.value) 
-              });
-            }, 400);
+
+  //           setTimeout(() => {
+  //             this.apiService.fn_OrderPost('product/create_product', parameter, '3001').subscribe(body => {
+  //               console.log(this.form.value) 
+  //             });
+  //           }, 400);
+  //       }
+  //     });
+
+
+
+
+
+  //   })
+  // }
+  // +++++++++++++++++++++++++=====================+++++image uplaod start ++++++++++++++++======================+++++
+  urls = [];
+  public filesAmount = []
+  // |||||||||||||||||||||||||||||||||| IMAGE PREVIEW AND UPLOAD ||||||||||||||||||||||||||||||||||
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      var filesAmount = event.target.files.length;
+      for (let i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+
+        reader.onload = (event: any) => {
+          console.log(event.target.result);
+          this.urls.push(event.target.result);
         }
-      });
+        reader.readAsDataURL(event.target.files[i]);
+      }
 
+      const file = event.target.files[0]
+      this.filesAmount.push(file)
+    }
 
-
-
-
-    })
   }
+  //  ||||||||||||||||||||||||||||||||||| IMAGE UPLOD ||||||||||||||||||||||||||||||||||||||
+  public parameter =[]
+  uploadFiles() {
+    const frmData = new FormData();
+    this.filesAmount.forEach(image => {
+      frmData.append('image', image);
+    });
+    this.apiService.fun_apiPostImage('file/files_upload', frmData, '3001').subscribe((body) => {
 
+      this.parameter = { ...this.form.value }
+
+      Object.assign(this.parameter, { arrImageUrl: body['arrImageUrl'] })
+   
+    });
+
+  }
+  // |||||||||||||||||||||||||||||||||||||||||final UPLoad |||||||||||||||||||||||||||||||||||||||||||||
+  fn_finalProductUpload(){
+    this.apiService.fn_OrderPost('product/create_product', this.parameter, '3001').subscribe(body => {
+      console.log(this.form.value) 
+    });
+  }
+ 
 
 
 
@@ -317,9 +361,7 @@ export class AddproductComponent implements OnInit {
   deleteFieldValue(index) {
     this.fieldArray.splice(index, 1);
   }
-  fn_check(){
-    console.log(this.form.value)
-  }
+
 
 
 
