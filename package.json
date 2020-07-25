@@ -31,6 +31,8 @@
     "ng-multiselect-dropdown": "^0.2.10",
     "ng2-charts": "^2.3.2",
     "ngx-color": "^5.1.4",
+    "ngx-dropzone": "^2.2.2",
+    "ngx-papaparse": "^3.0.4",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

@@ -48,12 +48,12 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import {MatSortModule} from '@angular/material/sort';
 import { OrderdetailsComponent } from './orderdetails/orderdetails.component';
+import { BulkUploadComponent } from './Modalpopup/bulk-upload/bulk-upload.component';
+import { PapaParseModule } from 'ngx-papaparse';
 
+import {MatTabsModule} from '@angular/material/tabs';
 
-
-
-
-
+import { NgxDropzoneModule } from 'ngx-dropzone';
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,6 +80,7 @@ import { OrderdetailsComponent } from './orderdetails/orderdetails.component';
     ColorComponent,
     ProductDetailsComponent,
     OrderdetailsComponent,
+    BulkUploadComponent,
     
   ],
   imports: [
@@ -98,10 +99,13 @@ import { OrderdetailsComponent } from './orderdetails/orderdetails.component';
     BrowserAnimationsModule,
     ColorChromeModule,
     MatSnackBarModule,
-
+    PapaParseModule,
+    MatTabsModule,
      MatIconModule,
      MatListModule,
      MatSortModule,
+     NgxDropzoneModule,
+     
 
 
      
@@ -109,7 +113,8 @@ import { OrderdetailsComponent } from './orderdetails/orderdetails.component';
 
     ChartsModule,
     NgMultiSelectDropDownModule.forRoot(),
-    MatPaginatorModule
+    MatPaginatorModule,
+    
     
  
   ],

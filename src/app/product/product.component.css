@@ -18,3 +18,13 @@ thead, tbody tr {
   width:100%;
   table-layout:fixed;
 }
+.bulk-btn{
+  border: 2px solid gray;
+  color: gray;
+ margin-bottom: 1%;
+ margin-left: 3%;
+  padding: 8px 20px;
+  
+  font-size: 10px;
+  font-weight: bold;
+}

@@ -1,0 +1,22 @@
+.container{
+    margin-bottom: 5%;
+    margin-top: 5%;
+    height: 500px;
+    overflow-y: hidden;
+    
+}
+.upload-btn{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    
+}
+.inputdata{
+    text-align: center;
+    margin-bottom: 2%;
+}
+.table{
+    overflow-x: scroll;
+}
+.custom-dropzone{
+    height: 500px;
+}

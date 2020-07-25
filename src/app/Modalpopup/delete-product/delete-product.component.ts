@@ -1,6 +1,7 @@
 import { Component, OnInit ,Input} from '@angular/core';
 import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { ApiserviceService } from '../../apiservice.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-delete-product',
   templateUrl: './delete-product.component.html',
@@ -9,10 +10,12 @@ import { ApiserviceService } from '../../apiservice.service';
 export class DeleteProductComponent implements OnInit {
   @Input() fromParent;
   constructor(private modalServ: NgbModal,
-    private apiService : ApiserviceService) { }
+    private apiService : ApiserviceService,
+    public router:Router) { }
 
   ngOnInit(): void {
   }
+  public errors=[];
   closDilog(){
     this.modalServ.dismissAll(DeleteProductComponent);
   }
@@ -23,6 +26,13 @@ export class DeleteProductComponent implements OnInit {
     }
     this.apiService.fun_apiDelete('product/delete_product',param, '3001').subscribe((body) => {
       console.log(body)
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
   

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 
 const token = localStorage.getItem('strToken');
@@ -25,7 +26,7 @@ export class AddproductComponent implements OnInit {
   public imageArray = [];
   public imagePreviewArray = [];
   public popover;
-
+  public errors=[];
   private master: any = {
     "strCollection": "cln_brand",
     "strValue": "",
@@ -54,7 +55,7 @@ export class AddproductComponent implements OnInit {
   }
 
 
-  constructor(private http: HttpClient, private modalServ: NgbModal) { }
+  constructor(private http: HttpClient, private modalServ: NgbModal,public router:Router) { }
 
   ngOnInit(): void {
     this.filteredOptions = this.myControl.valueChanges
@@ -113,6 +114,13 @@ export class AddproductComponent implements OnInit {
 
       // console.log(body)
 
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
   valueChanged(e) {
@@ -125,6 +133,13 @@ export class AddproductComponent implements OnInit {
 
       // console.log(body)
 
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
   valueChangedCate(e) {
@@ -137,6 +152,13 @@ export class AddproductComponent implements OnInit {
 
       // console.log(body)
 
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
   valueChangedsub(e) {
@@ -150,6 +172,13 @@ export class AddproductComponent implements OnInit {
       this.materialList = body['arrList'];
       // console.log(body)
 
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
   valuechangeMaterial(e) {
@@ -163,6 +192,13 @@ export class AddproductComponent implements OnInit {
       this.colorpicker = body['cln_color']
 
 
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
   closDilog() {

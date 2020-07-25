@@ -4,6 +4,7 @@ import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas'
 (window as any).html2canvas = html2canvas;
 import { ApiserviceService } from '../apiservice.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orderdetails',
@@ -13,11 +14,13 @@ import { ApiserviceService } from '../apiservice.service';
 
 export class OrderdetailsComponent implements OnInit {
   @Input() fromParent;
-  constructor(private apiService: ApiserviceService, private modalService: NgbModal) { }
+  constructor(private apiService: ApiserviceService, private modalService: NgbModal,
+    public router:Router) { }
 
   ngOnInit(): void {
     this.openLg();
   }
+  public errors=[];
     public orderdetails: any;
   openLg() {
     let param = {
@@ -26,6 +29,14 @@ export class OrderdetailsComponent implements OnInit {
     this.apiService.fn_OrderPost('order/get_order_details', param, '3001').subscribe(body => {
       console.log(body, 'orderdetails')
       this.orderdetails = body
+    },
+    (error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     })
   }
   closDilog() {

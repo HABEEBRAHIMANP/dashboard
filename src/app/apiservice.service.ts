@@ -44,6 +44,8 @@ export class ApiserviceService {
     param.forEach((element) => {
       formData.append('images',element,"");
     });
+    
+    formData.append('strType',"BULK_IMPORT",);
     return this.http.post(this.myurl(this.host, port, path), formData, options)
   }
   private setHeaders() {

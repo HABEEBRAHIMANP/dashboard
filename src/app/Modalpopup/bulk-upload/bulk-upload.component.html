@@ -1,0 +1,76 @@
+<ngb-tabset [destroyOnHide]="false">
+    <ngb-tab title="Data">
+      <ng-template ngbTabContent>
+        <div class="container">
+            <div  class="inputdata"> 
+                <input type="file" #fileImportInput name="CSV File Upload" accept=".csv" (change)="handleFileSelect($event)">
+            </div>
+            <div>
+                <table  class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Si.No</th>
+                            <th>Product Name</th>
+                            <th>Product Id</th>
+                            <th>Product description</th>
+                            <th>Category Id</th>
+                            <th>Brand Id</th>
+                            <th>Gender category</th>
+                            <th>Target type</th>
+                            <th>Total stock</th>
+                            <!-- <th>Total sale</th> -->
+                            <th>Sub category</th>
+                            <th>Unit</th>
+                            <th>Product MRP</th>
+                            <th>Selling price</th>
+                            <th>Retail price</th>
+        
+                        </tr>
+                    </thead>
+                    <tbody class="element text-center">
+                        <tr *ngFor="let objproduct of test ;let i = index">
+                            <td>{{i + 1}}</td>
+                            <td>{{objproduct.strName}}</td>
+                            <td>{{objproduct.strProductId}}</td>
+                            <td>{{objproduct.strDescription}}</td>
+                            <td>{{objproduct.strCategoryId}}</td>
+                            <td>{{objproduct.strBrandId}}</td>
+                            <td>{{objproduct.strGenderCategory}}</td>
+                            <td>{{objproduct.strTargetType}}</td>
+                            <td>{{objproduct.dblTotalStock}}</td>
+                            <!-- <td>{{objproduct.intTotalSales}}</td> -->
+                            <td>{{objproduct.strSubCategory}}</td>
+                            <td>{{objproduct.strUnit}}</td>
+                            <td>{{objproduct.dblMRP}}</td>
+                            <td>{{objproduct.dblSellingPrice}}</td>
+                            <td>{{objproduct.dblRetailerPrice}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <button class="upload-btn" (click)="fn_bulkUpload()">Upload</button>
+            </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab>
+      <ng-template ngbTabTitle> Image</ng-template>
+      <ng-template ngbTabContent>
+        <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+            <ngx-dropzone-label>
+                <div>
+                    <h2 *ngIf="!errorMessage">Drop Images</h2>
+                    <h2 *ngIf="errorMessage">Name not matches with product id !! please try again</h2>
+                </div>
+            </ngx-dropzone-label>
+            <ngx-dropzone-image-preview  ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+            </ngx-dropzone-image-preview>
+        </div>
+        <div class="text-center">
+            <button class="upload-btn" (click)="fn_imageUpload()">Upload</button>
+        </div>
+      </ng-template>
+    </ngb-tab>
+</ngb-tabset>

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { ApiserviceService } from '../apiservice.service';
@@ -18,7 +19,8 @@ export class OrdersComponent implements OnInit {
   isExpanded = false;
   public orderList_obj: any = []
 
-  constructor(private apiService: ApiserviceService, private modalService: NgbModal) { }
+  constructor(private apiService: ApiserviceService, private modalService: NgbModal,
+    public router: Router) { }
   nav_position: string = 'end';
 
   onTogglePosition(position: string) {
@@ -31,6 +33,7 @@ export class OrdersComponent implements OnInit {
     this.fn_distributerList();
     this.fn_employeeList();
   }
+  public errors=[];
   length = 1000000;
   pageSize: number
   pageSizeOptions: number[] = [, 5, 10, 25, 100, 200, 500]
@@ -52,6 +55,13 @@ export class OrdersComponent implements OnInit {
     this.apiService.fn_OrderPost('order/get_order', param, '3001').subscribe(res => {
       console.log("res", res);
       this.orderList_obj = res['arrList'];
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
 

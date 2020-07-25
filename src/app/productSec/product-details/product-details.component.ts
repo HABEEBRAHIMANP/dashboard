@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControlName, FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ApiserviceService } from '../../apiservice.service';
@@ -27,6 +28,7 @@ export class ProductDetailsComponent implements OnInit {
   arrSizeStock = [];
   arrColorStock = [];
   public popover;
+  public errors=[];
   // private productD:any={
   //   "strProductId":this.fromParent._id
   // }
@@ -64,7 +66,8 @@ export class ProductDetailsComponent implements OnInit {
   constructor(private http: HttpClient,
     private modalServ: NgbModal,
     private objFormBuilder: FormBuilder,
-    private apiService: ApiserviceService) { }
+    private apiService: ApiserviceService,
+    public router:Router) { }
 
   public imageUrls: any = ''
   dropdownList = [];
@@ -122,6 +125,13 @@ export class ProductDetailsComponent implements OnInit {
 
       // console.log(body)
 
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
   valueChanged(e) {
@@ -135,6 +145,13 @@ export class ProductDetailsComponent implements OnInit {
 
       // console.log(body)
 
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
   valueChangedCate(e) {
@@ -147,6 +164,13 @@ export class ProductDetailsComponent implements OnInit {
 
       // console.log(body)
 
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
   valueChangedsub(e) {
@@ -160,6 +184,13 @@ export class ProductDetailsComponent implements OnInit {
       this.materialList = body['arrList'];
       // console.log(body)
 
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
   valuechangeMaterial(e) {
@@ -173,6 +204,13 @@ export class ProductDetailsComponent implements OnInit {
       this.colorpicker = body['cln_color']
 
 
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
   closDilog() {
@@ -192,6 +230,13 @@ export class ProductDetailsComponent implements OnInit {
       console.log(body)
       // this.productD.push('strProductId',this.fromParent._id)
 
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
 
@@ -237,6 +282,13 @@ export class ProductDetailsComponent implements OnInit {
     this.apiService.fn_OrderPost('master/get_master', size).subscribe((body) => {
       console.log(body)
       this.sizeList_obj = body['cln_size']
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
   // ###################################### IMAGEE UPLOAD   ###########################
@@ -283,6 +335,13 @@ export class ProductDetailsComponent implements OnInit {
                 console.log(this.form.value) 
               });
             }, 400);
+        }
+      },(error)=>{
+        if(error){
+          this.errors=error['error']
+          if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+            this.router.navigateByUrl('/login');
+          }
         }
       });
 

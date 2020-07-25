@@ -11,6 +11,7 @@ import { AddproductComponent } from '../productSec/addproduct/addproduct.compone
 import { ProductDetailsComponent } from '../productSec/product-details/product-details.component';
 import { Sort } from '@angular/material/sort';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { BulkUploadComponent } from '../Modalpopup/bulk-upload/bulk-upload.component';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'strAppInfo': 'TNT1' });
 
@@ -40,6 +41,7 @@ export class ProductComponent implements OnInit {
     this.fn_filtercate();
     this.fn_filterMaterial();
   }
+  public errors=[];
   fn_productList() {
     let param = {
       "strSort": '',
@@ -47,6 +49,13 @@ export class ProductComponent implements OnInit {
     }
     this.apiService.fn_OrderPost('product/get_product', param).subscribe((body) => {
       this.prodGET_obj = body['arrList']
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.route.navigateByUrl('/login');
+        }
+      }
     });
 
   }
@@ -57,6 +66,14 @@ export class ProductComponent implements OnInit {
     }
     this.apiService.fun_apiDelete('product/delete_product', { "arrDeleteId": [this.prodelete._id] }, '3001').subscribe((body) => {
       console.log(this.prodelete)
+    },
+    (error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.route.navigateByUrl('/login');
+        }
+      }
     });
   }
   Openeditproduct(res) {
@@ -73,6 +90,10 @@ export class ProductComponent implements OnInit {
     let data = res
     modalRef.componentInstance.fromParent = data;
   }
+  Openbulk() {
+    this.modalServ.open(BulkUploadComponent,{ size: 'xl' })
+   
+  }
   closDilog() {
     this.modalServ.dismissAll();
   }
@@ -83,6 +104,13 @@ export class ProductComponent implements OnInit {
   Autocomplete() {
     this.apiService.fn_OrderPost('common/get_autocomplete', this.master ).subscribe((body) => {
       this.options = body['arrList']
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.route.navigateByUrl('/login');
+        }
+      }
     });
 
   }
@@ -112,6 +140,14 @@ export class ProductComponent implements OnInit {
     this.apiService.fn_OrderPost('product/get_product', param).subscribe((body) => {
       this.prodGET_obj = body['arrList']
     console.log(param)  
+    },
+    (error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.route.navigateByUrl('/login');
+        }
+      }
     });
 
 
@@ -148,6 +184,13 @@ export class ProductComponent implements OnInit {
     this.apiService.fn_OrderPost('master/get_master',param).subscribe(res=>{
         this.filterbrand = res['cln_brand']
         console.log(res)
+    },(error)=>{
+      if(error){
+        this.errors=error['error']
+        if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+          this.route.navigateByUrl('/login');
+        }
+      }
     })
   }
   public filtercategory=[]
@@ -161,6 +204,14 @@ export class ProductComponent implements OnInit {
     this.apiService.fn_OrderPost('master/get_master',param).subscribe(res=>{
       this.filtercategory = res['cln_category']
       console.log(res)
+  },
+  (error)=>{
+    if(error){
+      this.errors=error['error']
+      if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+        this.route.navigateByUrl('/login');
+      }
+    }
   })
   }
 
@@ -175,6 +226,13 @@ export class ProductComponent implements OnInit {
     this.apiService.fn_OrderPost('master/get_master',param).subscribe(res=>{
       this.filtermaterial = res['cln_material']
       console.log(res)
+  },(error)=>{
+    if(error){
+      this.errors=error['error']
+      if(this.errors['arrErrors'][0] == "INVALID_TOKEN_PROVIDED"){
+        this.route.navigateByUrl('/login');
+      }
+    }
   })
   }
   public filterObj={'arrBrands':[],"arrCategory":[]}
