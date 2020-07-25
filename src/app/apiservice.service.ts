@@ -28,7 +28,7 @@ export class ApiserviceService {
     };
     return this.http.request('delete',this.myurl(this.host, port, path), options)
   }
-  fun_apiPostImage(path: string = "", param, port ? : string): Observable < any > {
+  fun_apiPostImage(path: string = "", param, port ? : string,strFileNames?:string): Observable < any > {
     let headers = new HttpHeaders({
       // 'Content-Type': 'multipart/form-data',
       // 'Accept': 'multipart/form-data',
@@ -44,7 +44,7 @@ export class ApiserviceService {
     param.forEach((element) => {
       formData.append('images',element,"");
     });
-    
+    formData.append("strFileNames",strFileNames)
     formData.append('strType',"BULK_IMPORT",);
     return this.http.post(this.myurl(this.host, port, path), formData, options)
   }

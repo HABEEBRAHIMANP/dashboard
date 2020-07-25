@@ -13,7 +13,8 @@ import { Router } from '@angular/router';
 })
 export class BulkUploadComponent implements OnInit {
  errorMessage=false;
-  files: File[] = [];
+  files= [];
+  
   @Input() fromParent;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   selectedCSVFileName: any;
@@ -31,7 +32,7 @@ export class BulkUploadComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25, 100]
   test=[];
   length=this.test.length;
-  
+   arrImageUrl=[]
   // csv bulk upload
   handleFileSelect(evt) {
     let files = evt.target.files; // FileList object
@@ -45,15 +46,17 @@ export class BulkUploadComponent implements OnInit {
         header: true,
         complete: (results) => {
           results.data.forEach(objItem => {
-            if (objItem.productTitle.length > 0 && objItem.productId.length > 0 && objItem.description.length > 0 &&
+            if (objItem.productTitle.length > 0 && objItem.productId.length > 0 && !objItem.productId.match("[.]") && objItem.description.length > 0 &&
               objItem.category.length > 0 && objItem.brand.length >0 && objItem.gender.length>0
               && objItem.mrp.length>0 && objItem.sellingPrice.length>0 && objItem.retailerPrice.length>0
               && objItem.target.length>0 && objItem.totalStock.length>0  && objItem.unit.length>0) {
-              let image_number=Number(objItem.image_number);
-              let img=[];
+              let image_number=Number(objItem.imageNumber.trim());
+              console.log(image_number)
+              this.arrImageUrl=[]
               for(let j=0;j<image_number;j++){
-                let strImageUrl="https://axef.s3.ap-south-1.amazonaws.com/"+j+objItem.strProductId+"-"+(j+1)+".webp"
-              img.push(strImageUrl)
+                let strImageUrl="https://axef.s3.ap-south-1.amazonaws.com/"+j+objItem.productId+"-"+(j+1)+".webp"
+                this.arrImageUrl.push(strImageUrl)
+              console.log(this.arrImageUrl)
               }
                 let productDetails = {
                   strName: objItem.productTitle,
@@ -73,13 +76,15 @@ export class BulkUploadComponent implements OnInit {
                   strSubCategory: objItem.subCategory,
                   arrSizeStock:objItem.size.split('/'),
                   arrColorStock:objItem.color.split('/'),
-                  arrImageUrl:img
+                  arrImageUrl:this.arrImageUrl
                 };
                 this.test.push(productDetails);
+                console.log(productDetails.arrImageUrl)
              }
             });
             console.log(this.test);
             console.log(this.test.length)
+            
           }
         });
       }
@@ -90,9 +95,9 @@ export class BulkUploadComponent implements OnInit {
     this.errorMessage=false;
     console.log(event);
     let imageName=event.addedFiles;
-    console.log(imageName[0].name.slice(0,-5))
+    // console.log(imageName[0].name.slice(0,-7))
     for(let i=0;i<this.test.length;i++){
-      if(imageName[i].name.slice(0,-5)==this.test[i].strProductId || imageName[i].name.slice(0,-4)==this.test[i].strProductId ){
+      if(imageName[i].name.slice(0,-7)==this.test[i].strProductId || imageName[i].name.slice(0,-6 )==this.test[i].strProductId ){
         this.files.push(...event.addedFiles);
       }
       
@@ -101,18 +106,26 @@ export class BulkUploadComponent implements OnInit {
        
       }
     }
+    
 }
 // image bulk upload function
 fn_imageUpload(){
 
       const formData = new FormData();
-  
+     let divider="#";
+     
+let strFilenames=""
   for (let i = 0; i < this.files.length; i++) { 
-    formData.append("file[]", this.files[i]);
+    let arrFilenameParts=this.files[i].name.split(".")
+    strFilenames+=divider+arrFilenameParts[0]
+    formData.append( arrFilenameParts[0],this.files[i],arrFilenameParts[0]);
+
+    
     }
+  // formData.append("strFilenames",strFilenames.toString())
+   console.log(strFilenames);
    
-   
-    this.apiService.fun_apiPostImage('file/files_upload', formData, '3001').subscribe((body) => {
+    this.apiService.fun_apiPostImage('file/files_upload', formData, '3001',strFilenames).subscribe((body) => {
       console.log(body)
     },(error)=>{
       if(error){
@@ -122,6 +135,7 @@ fn_imageUpload(){
         }
       }
     })
+    new Response(formData).text().then(console.log)
 }
 // image remove selected
 onRemove(event) {
